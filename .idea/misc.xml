@@ -6,6 +6,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background1.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background2.xml" value="0.1815" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background3.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/bottom_tint.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/card_back.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/circle2.xml" value="0.2005" />
@@ -35,10 +36,15 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/app_lay.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/best_seller.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/feed_back.xml" value="0.24895833333333334" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_enquiry.xml" value="0.25" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_helpline.xml" value="0.25" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_home.xml" value="0.2359375" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/full_view.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/header.xml" value="0.24895833333333334" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/help_adapter.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/layout_share_app.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/list_data.xml" value="0.24895833333333334" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/main_final.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/main_lay.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/nodate_dia.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/notification_shown_bi.xml" value="0.25" />
@@ -52,6 +58,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/menu/activity_menu.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/menu/bottom.xml" value="0.264" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/menu/toolbar.xml" value="0.25" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1815" />
       </map>
     </option>
   </component>

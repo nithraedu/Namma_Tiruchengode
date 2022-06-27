@@ -1,84 +1,122 @@
-package nithra.namma_tiruchengode;
+package nithra.namma_tiruchengode.Fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-import nithra.namma_tiruchengode.Fragment.Enquiry;
-import nithra.namma_tiruchengode.Fragment.Home;
+import nithra.namma_tiruchengode.Activity_Search;
+import nithra.namma_tiruchengode.Activity_Second_List;
+import nithra.namma_tiruchengode.BuildConfig;
+import nithra.namma_tiruchengode.Feedback.Feedback;
+import nithra.namma_tiruchengode.Feedback.Method;
+import nithra.namma_tiruchengode.Feedback.RetrofitClient;
+import nithra.namma_tiruchengode.MainActivity;
+import nithra.namma_tiruchengode.Notification.NotificationView;
+import nithra.namma_tiruchengode.PrivacyPolicy;
+import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.Category;
+import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
+import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
+import nithra.namma_tiruchengode.Utils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+public class Home extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     ArrayList<Category> titles;
     ArrayList<Integer> images2;
-    BottomNavigationView bottomnavigationview;
+    Adapter adapter;
+    Adapter2 adapter2;
     LinearLayout notification;
-    TextView notifi_count, search;
+    TextView notifi_count,search;
     SQLiteDatabase db1;
     TextView code, name;
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
-    ViewPager2 viewpager2;
-    Frag_Adapter frag_adapter;
+    DrawerLayout drawer;
+
+    public Home() {
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.app_lay);
-        viewpager2 = findViewById(R.id.viewpager2);
-        viewpager2.setUserInputEnabled(false);
-        frag_adapter = new Frag_Adapter(getSupportFragmentManager(), getLifecycle());
+        if (getArguments() != null) {
 
-        frag_adapter.addFragment(new Home());
-        frag_adapter.addFragment(new Enquiry());
-        viewpager2.setAdapter(frag_adapter);
-        bottomnavigationview = findViewById(R.id.bottomnavigationview);
-        bottomnavigationview.setOnItemSelectedListener(this);
-        bottomnavigationview.setSelectedItemId(R.id.bottom_home);
+        }
+    }
 
-
-
-       /* notification = findViewById(R.id.notification);
-        notifi_count = findViewById(R.id.notifi_count);
-        search=findViewById(R.id.search);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        db1 = openOrCreateDatabase("myDB", MODE_PRIVATE, null);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view= inflater.inflate(R.layout.main_lay, container, false);
+        notification = view.findViewById(R.id.notification);
+        notifi_count = view.findViewById(R.id.notifi_count);
+        drawer = view.findViewById(R.id.drawer_layout);
+        search=view.findViewById(R.id.search);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        db1 = getContext().openOrCreateDatabase("myDB", MODE_PRIVATE, null);
         String tablenew = "noti_cal";
         db1.execSQL("CREATE TABLE IF NOT EXISTS " + tablenew
                 + " (id integer NOT NULL PRIMARY KEY AUTOINCREMENT,title VARCHAR,message VARCHAR,date VARCHAR,time VARCHAR,isclose INT(4),isshow INT(4) default 0,type VARCHAR,"
                 + "bm VARCHAR,ntype VARCHAR,url VARCHAR);");
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        DrawerLayout drawer = view.findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                getActivity(), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        NavigationView navigationView = findViewById(R.id.nav_mm_view);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        NavigationView navigationView = view.findViewById(R.id.nav_mm_view);
         navigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
         View v = navigationView.inflateHeaderView(R.layout.header);
         code = v.findViewById(R.id.code);
@@ -89,72 +127,42 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         titles = new ArrayList<Category>();
         images2 = new ArrayList<Integer>();
 
-        RecyclerView list = findViewById(R.id.list);
-        RecyclerView list2 = findViewById(R.id.list2);
+        RecyclerView list = view.findViewById(R.id.list);
+        RecyclerView list2 = view.findViewById(R.id.list2);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false);
         list.setLayoutManager(gridLayoutManager);
 
-        GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
         list2.setLayoutManager(gridLayoutManager2);
-        adapter = new Adapter(this, titles);
-        adapter2 = new Adapter2(this, images2);
+        adapter = new Adapter(getContext(), titles);
+        adapter2 = new Adapter2(getContext(), images2);
         list.setAdapter(adapter);
         list2.setAdapter(adapter2);
-        Utils.mProgress(this, "Loading please wait...", false).show();
+        Utils.mProgress(getContext(), "Loading please wait...", false).show();
         category();
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(MainActivity.this,Activity_Search.class);
+                Intent i =new Intent(getContext(), Activity_Search.class);
                 startActivity(i);
             }
         });
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, NotificationView.class);
+                Intent i = new Intent(getContext(), NotificationView.class);
                 startActivity(i);
             }
-        });*/
-
-        bottomnavigationview.setOnItemSelectedListener(item -> {
-            Fragment currentFragment = null;
-            FragmentTransaction ft;
-            switch (item.getItemId()) {
-                case R.id.bottom_home:
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, firstFragment).commit();
-                    viewpager2.setCurrentItem(0);
-                    return true;
-
-                case R.id.bottom_city:
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
-                    return true;
-
-                case R.id.bottom_helpline:
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
-                    return true;
-
-                case R.id.bottom_enquiry:
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
-                    viewpager2.setCurrentItem(1);
-                    return true;
-            }
-            return false;
         });
-    }
 
+        return view;
+    }
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
-    }
-
-   /* @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(false);
         int id = item.getItemId();
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (id == R.id.nav_home) {
             drawer.closeDrawer(GravityCompat.START);
 
@@ -166,26 +174,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             intent.putExtra(Intent.EXTRA_TEXT, sharebody);
             startActivity(Intent.createChooser(intent, "Share Via"));
         } else if (id == R.id.nav_rateus) {
-            *//*Intent intent = new Intent();
+            /*Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=nithra.tamil.andaal.thiruppavai"));
-            startActivity(intent);*//*
+            startActivity(intent);*/
 
-            Utils.toast_normal(MainActivity.this, "Not Available in playstore");
+            Utils.toast_normal(getContext(), "Not Available in playstore");
 
         } else if (id == R.id.nav_feedback) {
             feedback();
 
         } else if (id == R.id.nav_policy) {
-            if (Utils.isNetworkAvailable(MainActivity.this)) {
-                Intent i = new Intent(MainActivity.this, PrivacyPolicy.class);
+            if (Utils.isNetworkAvailable(getContext())) {
+                Intent i = new Intent(getContext(), PrivacyPolicy.class);
                 startActivity(i);
             } else {
-                Utils.toast_normal(MainActivity.this, "Please connect to your internet");
+                Utils.toast_normal(getContext(), "Please connect to your internet");
             }
 
         } else if (id == R.id.nav_exit) {
-            finish();
+            getActivity().finish();
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -196,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         EditText email_edt, feedback_edt;
         TextView privacy;
         TextView submit_btn;
-        Dialog dialog = new Dialog(MainActivity.this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar_MinWidth);
+        Dialog dialog = new Dialog(getContext(), android.R.style.Theme_DeviceDefault_Dialog_NoActionBar_MinWidth);
         dialog.setContentView(R.layout.feed_back);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCanceledOnTouchOutside(false);
@@ -207,11 +215,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Utils.isNetworkAvailable(MainActivity.this)) {
-                    Intent intent = new Intent(MainActivity.this, PrivacyPolicy.class);
+                if (Utils.isNetworkAvailable(getContext())) {
+                    Intent intent = new Intent(getContext(), PrivacyPolicy.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(MainActivity.this, "please connect to the internet...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "please connect to the internet...", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -223,11 +231,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 String email = email_edt.getText().toString().trim();
 
                 if (feedback.equals("")) {
-                    Toast.makeText(MainActivity.this, "Please type your feedback or suggestion, Thank you", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please type your feedback or suggestion, Thank you", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (!Utils.isNetworkAvailable(MainActivity.this)) {
-                    Toast.makeText(MainActivity.this, "please connect to the internet...", Toast.LENGTH_SHORT).show();
+                if (!Utils.isNetworkAvailable(getContext())) {
+                    Toast.makeText(getContext(), "please connect to the internet...", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 try {
@@ -256,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                 JSONObject jsonObject = jsonArray.getJSONObject(0);
                                 System.out.println("======response feedbacks:" + jsonObject.getString("status"));
                                 dialog.dismiss();
-                                Toast.makeText(MainActivity.this, "Feedback sent, Thank you", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Feedback sent, Thank you", Toast.LENGTH_SHORT).show();
 
                             } catch (JSONException e) {
                                 System.out.println("======response e:" + e.toString());
@@ -276,11 +284,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-               *//* if (a == 1) {
+               /* if (a == 1) {
                     finish();
-                    Intent intent = new Intent(MainActivity.this, ExitScreen.class);
+                    Intent intent = new Intent(getContext(), ExitScreen.class);
                     startActivity(intent);
-                }*//*
+                }*/
                 dialog.dismiss();
             }
         });
@@ -313,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         visible();
     }
@@ -332,12 +340,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         } else {
             notifi_count.setVisibility(View.INVISIBLE);
         }
-       *//* Animation noti_shake = null;
+       /* Animation noti_shake = null;
         if (noti_count != 0) {
 
             noti_shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.noti_shake);
             notifi_count.startAnimation(noti_shake);
-        }*//*
+        }*/
     }
 
     public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
@@ -356,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             View listItem = layoutInflater.inflate(R.layout.adapter_main, parent, false);
-            ViewHolder viewHolder = new ViewHolder(listItem);
+            Adapter.ViewHolder viewHolder = new Adapter.ViewHolder(listItem);
             return viewHolder;
         }
 
@@ -371,7 +379,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             holder.card_category.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(MainActivity.this, Activity_Second_List.class);
+                    Intent i = new Intent(getContext(), Activity_Second_List.class);
                     i.putExtra("toolbartitle", titles.get(pos).category);
                     i.putExtra("id", pos+1);
                     i.putExtra("idd", titles.get(pos).id+1);
@@ -413,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         public Adapter2.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             View listItem = layoutInflater.inflate(R.layout.best_seller, parent, false);
-            ViewHolder viewHolder = new ViewHolder(listItem);
+            Adapter2.ViewHolder viewHolder = new Adapter2.ViewHolder(listItem);
             return viewHolder;
         }
 
@@ -435,33 +443,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 gridImage = itemView.findViewById(R.id.imageGrid);
             }
         }
-    }*/
-
-
-    public class Frag_Adapter extends FragmentStateAdapter {
-
-        private ArrayList<Fragment> fragmentList = new ArrayList<>();
-
-        public Frag_Adapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
-            super(fragmentManager, lifecycle);
-        }
-
-
-        @NonNull
-        @Override
-        public Fragment createFragment(int position) {
-            return fragmentList.get(position);
-        }
-
-        public void addFragment(Fragment fragment) {
-            fragmentList.add(fragment);
-        }
-
-        @Override
-        public int getItemCount() {
-            return fragmentList.size();
-        }
     }
-
 
 }

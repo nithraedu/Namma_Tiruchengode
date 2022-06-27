@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.Enquiry">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/toolbar"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cat_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="Enquiry"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="திருச்செங்கோட்டில் உங்களுக்கு தேவைப்படும் பொருள்/சேவை அல்லது வேறு ஏதாவது தகவல்கள் தேவைபட்டால் அதை தெரிவிக்கவும் நாங்கள் அதை கண்டறிந்து பகிர்கிறோம்"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name *"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background3"
+                    android:gravity="top|left"
+                    android:minHeight="35dp"
+                    android:inputType="textCapWords"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:textCursorDrawable="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Number *"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/contact_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background3"
+                    android:layout_marginTop="5dp"
+                    android:gravity="top|left"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:minHeight="35dp"
+                    android:padding="5dp"
+                    android:textCursorDrawable="@null" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email *"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background3"
+                    android:gravity="top|left"
+                    android:inputType="textEmailAddress"
+                    android:layout_marginTop="5dp"
+                    android:minHeight="35dp"
+                    android:padding="5dp"
+                    android:textCursorDrawable="@null"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Details of Enquiry *"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <EditText
+                    android:id="@+id/enquiry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background3"
+                    android:gravity="top|left"
+                    android:minLines="6"
+                    android:layout_marginTop="5dp"
+                    android:minHeight="150dp"
+                    android:padding="5dp"
+                    android:textCursorDrawable="@null" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/submit"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/background"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Submit"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
