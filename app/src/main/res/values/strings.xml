@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">நம்ம ஊரு திருச்செங்கோடு</string>
+    <string name="hint">Search</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="my_text"><u>* privacy policy</u></string>
+</resources>
