@@ -22,11 +22,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 import nithra.namma_tiruchengode.Fragment.Enquiry;
+import nithra.namma_tiruchengode.Fragment.Helpline;
 import nithra.namma_tiruchengode.Fragment.Home;
 import nithra.namma_tiruchengode.Retrofit.Category;
 
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener,Gotohome {
     ArrayList<Category> titles;
     ArrayList<Integer> images2;
     BottomNavigationView bottomnavigationview;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         frag_adapter.addFragment(new Home());
         frag_adapter.addFragment(new Enquiry());
+        frag_adapter.addFragment(new Helpline());
         viewpager2.setAdapter(frag_adapter);
         bottomnavigationview = findViewById(R.id.bottomnavigationview);
         bottomnavigationview.setOnItemSelectedListener(this);
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 case R.id.bottom_helpline:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
+                    viewpager2.setCurrentItem(2);
                     return true;
 
                 case R.id.bottom_enquiry:
@@ -148,6 +151,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
+    }
+
+    @Override
+    public void home() {
+        viewpager2.setCurrentItem(0);
+        bottomnavigationview.getMenu().getItem(0).setChecked(true);
     }
 
    /* @Override

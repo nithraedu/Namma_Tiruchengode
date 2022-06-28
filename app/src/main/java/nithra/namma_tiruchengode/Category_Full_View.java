@@ -42,13 +42,13 @@ public class Category_Full_View extends AppCompatActivity {
     Adapter2 adapter2;
     ArrayList<Full_View> images2;
     ArrayList<Full_View> images3;
-    CardView location, website, email, whatsapp, facebook, instagram, twitter,share;
+    CardView location, website, email, whatsapp, facebook, instagram, twitter, share;
     LinearLayout phone;
-    TextView text_address, owner_name, mobile_text, start_time, close_time, work_day, description,mobile_divider,name_divider;
+    TextView text_address, owner_name, mobile_text, start_time, close_time, work_day, description, mobile_divider, name_divider;
     String idd;
     ArrayList<Full_View> titles;
     RecyclerView list2, list3;
-    LinearLayout time,mobile_call,owner_lay;
+    LinearLayout time, mobile_call, owner_lay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class Category_Full_View extends AppCompatActivity {
         start_time = findViewById(R.id.start_time);
         close_time = findViewById(R.id.close_time);
         work_day = findViewById(R.id.work_day);
-        time=findViewById(R.id.time);
+        time = findViewById(R.id.time);
         titles = new ArrayList<Full_View>();
         images2 = new ArrayList<Full_View>();
         images3 = new ArrayList<Full_View>();
@@ -80,10 +80,10 @@ public class Category_Full_View extends AppCompatActivity {
         twitter = findViewById(R.id.twitter);
         share = findViewById(R.id.share);
         description = findViewById(R.id.description);
-        mobile_call=findViewById(R.id.mobile_call);
-        mobile_divider=findViewById(R.id.mobile_divider);
-        owner_lay=findViewById(R.id.owner_lay);
-        name_divider=findViewById(R.id.name_divider);
+        mobile_call = findViewById(R.id.mobile_call);
+        mobile_divider = findViewById(R.id.mobile_divider);
+        owner_lay = findViewById(R.id.owner_lay);
+        name_divider = findViewById(R.id.name_divider);
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
         if (extra != null) {
@@ -125,21 +125,21 @@ public class Category_Full_View extends AppCompatActivity {
                     list2.setAdapter(adapter2);
                     System.out.println("printsplit" + separated.toString());
 
-                    /*if (titles.get(0).getSectorName() == null) {
+                    if (titles.get(0).getSectorName().trim().isEmpty()) {
                         cat_name.setVisibility(View.GONE);
                     } else {
                         cat_name.setText(titles.get(0).getSectorName());
                         cat_name.setVisibility(View.VISIBLE);
                     }
 
-                    if (titles.get(0).getAddress() == null) {
+                    if (titles.get(0).getAddress().trim().isEmpty()) {
                         text_address.setVisibility(View.GONE);
                     } else {
                         text_address.setText(titles.get(0).getAddress());
                         text_address.setVisibility(View.VISIBLE);
                     }
 
-                    if (titles.get(0).getPersonName().trim() == null) {
+                    if (titles.get(0).getPersonName().trim().trim().isEmpty()) {
                         owner_lay.setVisibility(View.GONE);
                         name_divider.setVisibility(View.GONE);
                     } else {
@@ -148,7 +148,7 @@ public class Category_Full_View extends AppCompatActivity {
                         name_divider.setVisibility(View.VISIBLE);
                     }
 
-                    if (titles.get(0).getMobile() == null) {
+                    if (titles.get(0).getMobile().trim().isEmpty()) {
                         mobile_call.setVisibility(View.GONE);
                         mobile_divider.setVisibility(View.GONE);
                     } else {
@@ -157,47 +157,47 @@ public class Category_Full_View extends AppCompatActivity {
                         mobile_divider.setVisibility(View.VISIBLE);
                     }
 
-                    if (titles.get(0).getOpeningTime() == null) {
+                    if (titles.get(0).getOpeningTime().trim().isEmpty()) {
                         time.setVisibility(View.GONE);
                     } else {
                         start_time.setText(titles.get(0).getOpeningTime());
                         time.setVisibility(View.VISIBLE);
                     }
 
-                    if (titles.get(0).getClosingTime() == null) {
+                    if (titles.get(0).getClosingTime().trim().isEmpty()) {
                         time.setVisibility(View.GONE);
                     } else {
                         close_time.setText(titles.get(0).getClosingTime());
                         time.setVisibility(View.VISIBLE);
                     }
 
-                    if (titles.get(0).getLeaveDay() == null) {
+                    if (titles.get(0).getLeaveDay().trim().isEmpty()) {
                         work_day.setVisibility(View.GONE);
                     } else {
                         work_day.setText(titles.get(0).getLeaveDay());
                         work_day.setVisibility(View.VISIBLE);
                     }
 
-                    if (titles.get(0).getDescription() == null) {
+                    if (titles.get(0).getDescription().trim().isEmpty()) {
                         description.setVisibility(View.GONE);
                     } else {
                         description.setText(titles.get(0).getDescription());
                         description.setVisibility(View.VISIBLE);
-                    }*/
+                    }
 
-                    cat_name.setText(titles.get(0).getSectorName());
+                  /*  cat_name.setText(titles.get(0).getSectorName());
                     text_address.setText(titles.get(0).getAddress());
                     owner_name.setText(titles.get(0).getPersonName());
                     mobile_text.setText(titles.get(0).getMobile());
                     start_time.setText(titles.get(0).getOpeningTime());
                     close_time.setText(titles.get(0).getClosingTime());
                     work_day.setText(titles.get(0).getLeaveDay());
-                    description.setText(titles.get(0).getDescription());
+                    description.setText(titles.get(0).getDescription());*/
 
                     website.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (titles.get(0).getWebsite() != null) {
+                            if (titles.get(0).getWebsite() != null && !titles.get(0).getWebsite().trim().isEmpty()) {
                                 if (Utils.isNetworkAvailable(Category_Full_View.this)) {
                                     String url = titles.get(0).getWebsite().trim();
                                     System.out.println("urlprint" + url);
@@ -206,7 +206,7 @@ public class Category_Full_View extends AppCompatActivity {
                                     CustomTabsIntent customTabsIntent = builder.build();
                                     customTabsIntent.launchUrl(Category_Full_View.this, Uri.parse(url));
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Wharsapp not install...");
+                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
                                 Utils.toast_center(Category_Full_View.this, "Website not available...");
@@ -216,14 +216,14 @@ public class Category_Full_View extends AppCompatActivity {
                     location.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (titles.get(0).getLocation() != null) {
+                            if (titles.get(0).getLocation() != null && !titles.get(0).getLocation().trim().isEmpty()) {
                                 if (Utils.isNetworkAvailable(Category_Full_View.this)) {
                                     String url = titles.get(0).getLocation().trim();
                                     CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                                     CustomTabsIntent customTabsIntent = builder.build();
                                     customTabsIntent.launchUrl(Category_Full_View.this, Uri.parse(url));
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Wharsapp not install...");
+                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
                                 Utils.toast_center(Category_Full_View.this, "Location not available...");
@@ -233,7 +233,8 @@ public class Category_Full_View extends AppCompatActivity {
                     email.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (Utils.isNetworkAvailable(Category_Full_View.this)) {
+                            if (titles.get(0).getEmail() != null && !titles.get(0).getEmail().trim().isEmpty()) {
+                                if (Utils.isNetworkAvailable(Category_Full_View.this)) {
                                 /*Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                         "mailto", "abc@gmail.com", null));
                                 //emailIntent.setType("message/rfc822");
@@ -242,18 +243,22 @@ public class Category_Full_View extends AppCompatActivity {
                                 emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
                                 startActivity(Intent.createChooser(emailIntent, "Send email..."));*/
 
-                                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"abc@gmail.com"});
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "நம்ம ஊரு திருச்செங்கோடு");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Body Here");
-                                if (intent.resolveActivity(getPackageManager()) != null) {
-                                    startActivity(intent);
+                                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                                    intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{titles.get(0).getEmail().trim()});
+                                    intent.putExtra(Intent.EXTRA_SUBJECT, "நம்ம ஊரு திருச்செங்கோடு");
+                                    intent.putExtra(Intent.EXTRA_TEXT, "Body Here");
+                                    if (intent.resolveActivity(getPackageManager()) != null) {
+                                        startActivity(intent);
+                                    }
+
+
+                                } else {
+                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
-
-
                             } else {
-                                Utils.toast_center(Category_Full_View.this, "Wharsapp not install...");
+                                Utils.toast_center(Category_Full_View.this, "Email not available...");
+
                             }
                         }
                     });
@@ -273,7 +278,7 @@ public class Category_Full_View extends AppCompatActivity {
                     whatsapp.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (titles.get(0).getWhatsapp() != null) {
+                            if (titles.get(0).getWhatsapp() != null && !titles.get(0).getWhatsapp().trim().isEmpty()) {
                                 if (Utils.isNetworkAvailable(Category_Full_View.this)) {
                                     String phoneNumber = titles.get(0).getWhatsapp().trim();
                                     if (appInstalledOrNot("com.whatsapp") || appInstalledOrNot("com.whatsapp.w4b")) {
@@ -305,7 +310,7 @@ public class Category_Full_View extends AppCompatActivity {
                     facebook.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (titles.get(0).getFacebook() != null) {
+                            if (titles.get(0).getFacebook() != null && !titles.get(0).getFacebook().trim().isEmpty()) {
                                 if (Utils.isNetworkAvailable(Category_Full_View.this)) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(titles.get(0).getFacebook().trim()));
                                     startActivity(intent);
@@ -320,7 +325,7 @@ public class Category_Full_View extends AppCompatActivity {
                     instagram.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (titles.get(0).getInstagram() != null) {
+                            if (titles.get(0).getInstagram() != null && !titles.get(0).getInstagram().trim().isEmpty()) {
                                 if (Utils.isNetworkAvailable(Category_Full_View.this)) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(titles.get(0).getInstagram().trim()));
                                     startActivity(intent);
@@ -335,7 +340,7 @@ public class Category_Full_View extends AppCompatActivity {
                     twitter.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (titles.get(0).getInstagram() != null) {
+                            if (titles.get(0).getInstagram() != null && !titles.get(0).getInstagram().trim().isEmpty()) {
                                 if (Utils.isNetworkAvailable(Category_Full_View.this)) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(titles.get(0).getTwitter().trim()));
                                     startActivity(intent);

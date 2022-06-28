@@ -10,19 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,9 +21,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
@@ -48,6 +47,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import nithra.namma_tiruchengode.Activity_Search;
 import nithra.namma_tiruchengode.Activity_Second_List;
@@ -55,7 +56,6 @@ import nithra.namma_tiruchengode.BuildConfig;
 import nithra.namma_tiruchengode.Feedback.Feedback;
 import nithra.namma_tiruchengode.Feedback.Method;
 import nithra.namma_tiruchengode.Feedback.RetrofitClient;
-import nithra.namma_tiruchengode.MainActivity;
 import nithra.namma_tiruchengode.Notification.NotificationView;
 import nithra.namma_tiruchengode.PrivacyPolicy;
 import nithra.namma_tiruchengode.R;
@@ -70,15 +70,24 @@ import retrofit2.Response;
 public class Home extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     ArrayList<Category> titles;
     ArrayList<Integer> images2;
+    ArrayList<Integer> images3;
     Adapter adapter;
     Adapter2 adapter2;
+    Adapter3 adapter3;
     LinearLayout notification;
-    TextView notifi_count,search;
+    TextView notifi_count, search;
     SQLiteDatabase db1;
     TextView code, name;
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
     DrawerLayout drawer;
+    ViewPager2 slide, slide_2;
+
+
+    int currentPage = 0;
+    Timer timer;
+    final long DELAY_MS = 700;
+    final long PERIOD_MS = 3000;
 
     public Home() {
     }
@@ -86,19 +95,19 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.main_lay, container, false);
+        View view = inflater.inflate(R.layout.main_lay, container, false);
         notification = view.findViewById(R.id.notification);
         notifi_count = view.findViewById(R.id.notifi_count);
         drawer = view.findViewById(R.id.drawer_layout);
-        search=view.findViewById(R.id.search);
+        search = view.findViewById(R.id.search);
+        slide = view.findViewById(R.id.slide);
+        slide_2 = view.findViewById(R.id.slide_2);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         db1 = getContext().openOrCreateDatabase("myDB", MODE_PRIVATE, null);
         String tablenew = "noti_cal";
@@ -126,6 +135,13 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
 
         titles = new ArrayList<Category>();
         images2 = new ArrayList<Integer>();
+        images3 = new ArrayList<Integer>();
+        images2.add(R.drawable.slider);
+        images2.add(R.drawable.slider);
+        images2.add(R.drawable.slider);
+        images3.add(R.drawable.test1);
+        images3.add(R.drawable.test1);
+        images3.add(R.drawable.test1);
 
         RecyclerView list = view.findViewById(R.id.list);
         RecyclerView list2 = view.findViewById(R.id.list2);
@@ -135,17 +151,60 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
 
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
         list2.setLayoutManager(gridLayoutManager2);
+
         adapter = new Adapter(getContext(), titles);
-        adapter2 = new Adapter2(getContext(), images2);
+        adapter2 = new Adapter2(getContext(), images3);
+        adapter3 = new Adapter3(getContext(), images2);
         list.setAdapter(adapter);
-        list2.setAdapter(adapter2);
+        slide_2.setAdapter(adapter2);
+        slide.setAdapter(adapter3);
+
+
+
+        /*final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == 4-1) {
+                    currentPage = 0;
+                }
+                slide.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, DELAY_MS, PERIOD_MS);*/
+
+        /*final Handler handler1 = new Handler();
+        final Runnable Update1 = new Runnable() {
+            public void run() {
+                if (currentPage == 4-1) {
+                    currentPage = 0;
+                }
+                slide_2.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+                handler1.post(Update1);
+            }
+        }, DELAY_MS, PERIOD_MS);*/
+
+
         Utils.mProgress(getContext(), "Loading please wait...", false).show();
         category();
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(getContext(), Activity_Search.class);
+                Intent i = new Intent(getContext(), Activity_Search.class);
                 startActivity(i);
             }
         });
@@ -159,6 +218,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
 
         return view;
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(false);
@@ -381,8 +441,8 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                 public void onClick(View view) {
                     Intent i = new Intent(getContext(), Activity_Second_List.class);
                     i.putExtra("toolbartitle", titles.get(pos).category);
-                    i.putExtra("id", pos+1);
-                    i.putExtra("idd", titles.get(pos).id+1);
+                    i.putExtra("id", pos);
+                    i.putExtra("idd", titles.get(pos).id + 1);
                     startActivity(i);
                 }
             });
@@ -420,14 +480,14 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         @Override
         public Adapter2.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View listItem = layoutInflater.inflate(R.layout.best_seller, parent, false);
+            View listItem = layoutInflater.inflate(R.layout.slider_2, parent, false);
             Adapter2.ViewHolder viewHolder = new Adapter2.ViewHolder(listItem);
             return viewHolder;
         }
 
         @Override
         public void onBindViewHolder(@NonNull Adapter2.ViewHolder holder, int position) {
-            holder.gridImage.setImageResource(images.get(position));
+            holder.slide_mat.setImageResource(images.get(position));
         }
 
         @Override
@@ -436,13 +496,72 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            ImageView gridImage;
+            ImageView slide_mat;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-                gridImage = itemView.findViewById(R.id.imageGrid);
+                slide_mat = itemView.findViewById(R.id.slide_mat);
             }
         }
     }
+
+
+    public class Adapter3 extends RecyclerView.Adapter<Adapter3.ViewHolder> {
+        ArrayList<Integer> images;
+        LayoutInflater inflater;
+
+        public Adapter3(Context ctx, ArrayList<Integer> images) {
+            this.images = images;
+            this.inflater = LayoutInflater.from(ctx);
+        }
+
+        @NonNull
+        @Override
+        public Adapter3.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View listItem = layoutInflater.inflate(R.layout.slider, parent, false);
+            Adapter3.ViewHolder viewHolder = new Adapter3.ViewHolder(listItem);
+            return viewHolder;
+
+            /*View v;
+            LayoutInflater layoutInflater;
+            ViewHolder vh;
+            switch (viewType) {
+                case 0:
+                    layoutInflater = LayoutInflater.from(parent.getContext());
+                    v = layoutInflater.inflate(R.layout.slider, parent, false);
+                    vh = new Adapter3.ViewHolder(v);
+                    return  vh;
+                default:
+                    layoutInflater = LayoutInflater.from(parent.getContext());
+                    v = LayoutInflater.from(parent.getContext())
+                            .inflate(R.layout.slider_2, parent, false);
+                    vh = new ViewHolder(v);
+                    return vh;
+            }*/
+
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            holder.img_slide.setImageResource(images.get(position));
+        }
+
+
+        @Override
+        public int getItemCount() {
+            return images.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            ImageView img_slide;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                img_slide = itemView.findViewById(R.id.img_slide);
+            }
+        }
+    }
+
 
 }

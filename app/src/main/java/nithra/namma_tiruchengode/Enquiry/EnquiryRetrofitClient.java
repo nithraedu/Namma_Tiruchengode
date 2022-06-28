@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EnquiryRetrofitClient {
     private static Retrofit retrofit;
-    private static String BASE_URL = "";
+    private static String BASE_URL = "http://15.206.173.184/upload/nammaooru_tiruchengode/api/";
 
     public static Retrofit getRetrofit() {
         retrofit = new Retrofit.Builder()

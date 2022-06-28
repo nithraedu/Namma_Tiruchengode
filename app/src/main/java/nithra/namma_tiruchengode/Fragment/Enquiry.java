@@ -18,6 +18,7 @@ import java.util.HashMap;
 import nithra.namma_tiruchengode.Enquiry.EnquiryMethod;
 import nithra.namma_tiruchengode.Enquiry.EnquiryPojo;
 import nithra.namma_tiruchengode.Enquiry.EnquiryRetrofitClient;
+import nithra.namma_tiruchengode.Gotohome;
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.Category;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
@@ -30,6 +31,7 @@ import retrofit2.Response;
 public class Enquiry extends Fragment {
     EditText name, contact_number, email, enquiry;
     TextView submit;
+    Gotohome home;
 
     public Enquiry() {
     }
@@ -51,6 +53,9 @@ public class Enquiry extends Fragment {
         email = view.findViewById(R.id.email);
         enquiry = view.findViewById(R.id.enquiry);
         submit = view.findViewById(R.id.submit);
+        home=(Gotohome)getContext();
+
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +76,7 @@ public class Enquiry extends Fragment {
 
 
                 HashMap<String, String> map = new HashMap<>();
+                map.put("action","set_enquiry");
                 map.put("name", cus_name);
                 map.put("contact_number", cus_contact_number);
                 map.put("email", cus_email);
@@ -83,8 +89,12 @@ public class Enquiry extends Fragment {
                         if (response.isSuccessful()) {
                             String result = new Gson().toJson(response.body());
                             System.out.println("======response result:" + result);
-                            //Toast.makeText(getContext(), "Enquiry sent, Thank you", Toast.LENGTH_SHORT).show();
-
+                            name.getText().clear();
+                            contact_number.getText().clear();
+                            email.getText().clear();
+                            enquiry.getText().clear();
+                            Toast.makeText(getContext(), "Enquiry sent, Thank you", Toast.LENGTH_SHORT).show();
+                            home.home();
                         }
                         System.out.println("======response :" + response);
                     }

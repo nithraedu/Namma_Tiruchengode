@@ -133,41 +133,41 @@ public class Activity_Third_List extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ListAdapter_1.ViewHolder holder, int position) {
             int pos = position;
-    /*        if (titles.get(pos).sectorName == null) {
+            if (titles.get(pos).sectorName.trim().isEmpty()) {
                 holder.cat_title.setVisibility(View.GONE);
             } else {
                 holder.cat_title.setText(titles.get(pos).sectorName);
                 holder.cat_title.setVisibility(View.VISIBLE);
             }
-            if (titles.get(pos).address == null) {
+            if (titles.get(pos).address.trim().isEmpty()) {
                 holder.adderss.setVisibility(View.GONE);
             } else {
                 holder.adderss.setText(titles.get(pos).address);
                 holder.adderss.setVisibility(View.VISIBLE);
             }
 
-            if (titles.get(pos).openingTime == null) {
+            if (titles.get(pos).openingTime.trim().isEmpty()) {
                 holder.start_time.setVisibility(View.GONE);
             } else {
                 holder.start_time.setText(titles.get(pos).openingTime);
                 holder.start_time.setVisibility(View.VISIBLE);
             }
 
-            if (titles.get(pos).closingTime == null) {
+            if (titles.get(pos).closingTime.trim().isEmpty()) {
                 holder.close_time.setVisibility(View.GONE);
             } else {
                 holder.close_time.setText(titles.get(pos).closingTime);
                 holder.close_time.setVisibility(View.VISIBLE);
             }
 
-            if (titles.get(pos).leaveDay == null) {
+            if (titles.get(pos).leaveDay.trim().isEmpty()) {
                 holder.work_day.setVisibility(View.GONE);
             } else {
                 holder.work_day.setText(titles.get(pos).leaveDay);
                 holder.work_day.setVisibility(View.VISIBLE);
             }
 
-            if (titles.get(pos).logo==null){
+            if (titles.get(pos).logo.trim().isEmpty()){
                 holder.cat_icon.setVisibility(View.GONE);
             }else {
                 Glide.with(context).load(titles.get(pos).logo)
@@ -175,8 +175,8 @@ public class Activity_Third_List extends AppCompatActivity {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(holder.cat_icon);
                 holder.cat_icon.setVisibility(View.VISIBLE);
-            }*/
-            holder.cat_title.setText(titles.get(pos).sectorName);
+            }
+          /*  holder.cat_title.setText(titles.get(pos).sectorName);
             holder.adderss.setText(titles.get(pos).address);
             holder.start_time.setText(titles.get(pos).openingTime);
             holder.close_time.setText(titles.get(pos).closingTime);
@@ -184,7 +184,7 @@ public class Activity_Third_List extends AppCompatActivity {
             Glide.with(context).load(titles.get(pos).logo)
                     .error(R.drawable.warning)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.cat_icon);
+                    .into(holder.cat_icon);*/
             holder.list_click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -2,7 +2,6 @@ package nithra.namma_tiruchengode.Retrofit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
@@ -25,4 +24,10 @@ public interface RetrofitAPI {
     @FormUrlEncoded
     @POST("data.php")
     Call<ArrayList<Full_View>> getFullView(@FieldMap HashMap<String, String> data);
+
+
+    @FormUrlEncoded
+    @POST("data.php")
+    Call<ArrayList<Helplinepojo>> getHelpline(@FieldMap HashMap<String, String> data);
+
 }

@@ -43,6 +43,18 @@ public class Full_View {
     @SerializedName("address")
     @Expose
     public String address;
+    @SerializedName("email")
+    @Expose
+    public String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @SerializedName("description")
     @Expose
     public String description;

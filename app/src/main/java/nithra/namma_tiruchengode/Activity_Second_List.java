@@ -124,7 +124,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
     }
 
     public void spinner() {
-        spin.add(0, "All category");
+        //spin.add(0, "All category");
         for (int i=0;i<titles.size();i++){
             spin.add(titles.get(i).category);
         }
@@ -138,8 +138,8 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         list_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                cat_title.setText(titles.get(i-1).category);
-                subcategory(titles.get(i-1).getId());
+                cat_title.setText(titles.get(i).category);
+                subcategory(titles.get(i).getId());
             }
 
             @Override

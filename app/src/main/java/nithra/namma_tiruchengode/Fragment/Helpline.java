@@ -2,31 +2,38 @@ package nithra.namma_tiruchengode.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import nithra.namma_tiruchengode.Activity_Third_List;
 import nithra.namma_tiruchengode.Category_Full_View;
 import nithra.namma_tiruchengode.R;
-import nithra.namma_tiruchengode.Retrofit.Third_Category;
+import nithra.namma_tiruchengode.Retrofit.Helplinepojo;
+import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
+import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
+import nithra.namma_tiruchengode.Utils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Helpline extends Fragment {
-
+    ArrayList<Helplinepojo> titles;
+    RecyclerView recycle;
+    Help_Adapter adapter;
 
     public Helpline() {
     }
@@ -40,21 +47,52 @@ public class Helpline extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_helpline, container, false);
+        View view = inflater.inflate(R.layout.fragment_helpline, container, false);
+        recycle = view.findViewById(R.id.recycle);
+        titles = new ArrayList<Helplinepojo>();
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        recycle.setLayoutManager(gridLayoutManager);
+        adapter = new Help_Adapter(getContext(), titles);
+        recycle.setAdapter(adapter);
+        help();
         return view;
+    }
+
+
+    public void help() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("action", "get_helpline");
+        RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
+        Call<ArrayList<Helplinepojo>> call = retrofitAPI.getHelpline(map);
+        call.enqueue(new Callback<ArrayList<Helplinepojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Helplinepojo>> call, Response<ArrayList<Helplinepojo>> response) {
+                if (response.isSuccessful()) {
+                    String result = new Gson().toJson(response.body());
+                    System.out.println("======response result:" + result);
+                    titles.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                    Utils.mProgress.dismiss();
+                }
+                System.out.println("======response :" + response);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Helplinepojo>> call, Throwable t) {
+                System.out.println("======response t:" + t);
+            }
+        });
     }
 
 
     public class Help_Adapter extends RecyclerView.Adapter<Help_Adapter.ViewHolder> {
         private LayoutInflater inflater;
-        ArrayList<Third_Category> titles;
+        ArrayList<Helplinepojo> titles;
         public Context context;
-        String title;
 
-        public Help_Adapter(Context ctx, ArrayList<Third_Category> titles, String tool_title) {
+        public Help_Adapter(Context ctx, ArrayList<Helplinepojo> titles) {
             this.inflater = LayoutInflater.from(ctx);
             this.titles = titles;
-            this.title = tool_title;
             this.context = ctx;
         }
 
@@ -70,7 +108,20 @@ public class Helpline extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull Help_Adapter.ViewHolder holder, int position) {
             int pos = position;
+            holder.help_title.setText(titles.get(pos).getHelplineCategory());
+            holder.phone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String phone = titles.get(0).getMobile().trim();
+                    if (phone.equals("")) {
+                        Utils.toast_center(getContext(), "Mobile number not available");
+                    } else {
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                        startActivity(intent);
+                    }
 
+                }
+            });
 
         }
 
@@ -81,10 +132,13 @@ public class Helpline extends Fragment {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
+            TextView help_title;
+            LinearLayout phone;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-
+                help_title = itemView.findViewById(R.id.help_title);
+                phone = itemView.findViewById(R.id.phone);
             }
         }
     }

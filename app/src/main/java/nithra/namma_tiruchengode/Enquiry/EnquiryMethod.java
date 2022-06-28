@@ -12,6 +12,6 @@ import retrofit2.http.POST;
 
 public interface EnquiryMethod {
     @FormUrlEncoded
-    @POST("")
+    @POST("data.php")
     Call<ArrayList<EnquiryPojo>> getEnquiry(@FieldMap HashMap<String, String> data);
 }
