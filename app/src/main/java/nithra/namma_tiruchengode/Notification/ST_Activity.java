@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import nithra.namma_tiruchengode.MainActivity;
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.SharedPreference;
-import nithra.namma_tiruchengode.Utils;
+import nithra.namma_tiruchengode.Utils_Class;
 
 public class ST_Activity extends AppCompatActivity {
     SharedPreference sharedPreference = new SharedPreference();
@@ -118,7 +118,7 @@ public class ST_Activity extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 try {
-                    Utils.mProgress(ST_Activity.this, "Loading...", true).show();
+                    Utils_Class.mProgress(ST_Activity.this, "Loading...", true).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -128,7 +128,7 @@ public class ST_Activity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 try {
-                    Utils.mProgress.dismiss();
+                    Utils_Class.mProgress.dismiss();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import nithra.namma_tiruchengode.SharedPreference;
-import nithra.namma_tiruchengode.Utils;
+import nithra.namma_tiruchengode.Utils_Class;
 
 public class ServerUtilities {
     private static JSONArray jArray;
@@ -52,8 +52,8 @@ public class ServerUtilities {
                     json_data = jArray.getJSONObject(i);
                     isvalided = json_data.getInt("isvalid");
                     sharedPreference.putInt(context, "isvalid", isvalided);
-                    sharedPreference.putInt(context, "vcode", Utils.versioncode_get(context));
-                    sharedPreference.putInt(context, "fcm_update", Utils.versioncode_get(context));
+                    sharedPreference.putInt(context, "vcode", Utils_Class.versioncode_get(context));
+                    sharedPreference.putInt(context, "fcm_update", Utils_Class.versioncode_get(context));
                 }
             }
         } catch (JSONException e1) {
@@ -71,7 +71,7 @@ public class ServerUtilities {
         try {
             postDataParams.put("vname", vername);
             postDataParams.put("vcode", Integer.toString(vercode));
-            postDataParams.put("email", "" + Utils.android_id(context));
+            postDataParams.put("email", "" + Utils_Class.android_id(context));
             postDataParams.put("regid", regid);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class ServerUtilities {
                 System.out.println("result---/" + result);
                 for (int i = 0; i < jArray.length(); i++) {
                     json_data = jArray.getJSONObject(i);
-                    sharedPreference.putInt(context, "fcm_update", Utils.versioncode_get(context));
+                    sharedPreference.putInt(context, "fcm_update", Utils_Class.versioncode_get(context));
                 }
             }
         } catch (JSONException e1) {

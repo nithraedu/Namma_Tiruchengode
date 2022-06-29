@@ -37,7 +37,7 @@ import java.util.Random;
 
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.SharedPreference;
-import nithra.namma_tiruchengode.Utils;
+import nithra.namma_tiruchengode.Utils_Class;
 
 public class NotificationView extends AppCompatActivity {
     SharedPreference sharedPreference;
@@ -169,7 +169,7 @@ public class NotificationView extends AppCompatActivity {
             listView.setVisibility(View.GONE);
             val = 1;
         } else {
-            if (Utils.isNetworkAvailable(NotificationView.this)) {
+            if (Utils_Class.isNetworkAvailable(NotificationView.this)) {
             } else {
             }
             val = 0;

@@ -20,10 +20,7 @@ import nithra.namma_tiruchengode.Enquiry.EnquiryPojo;
 import nithra.namma_tiruchengode.Enquiry.EnquiryRetrofitClient;
 import nithra.namma_tiruchengode.Gotohome;
 import nithra.namma_tiruchengode.R;
-import nithra.namma_tiruchengode.Retrofit.Category;
-import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
-import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
-import nithra.namma_tiruchengode.Utils;
+import nithra.namma_tiruchengode.Utils_Class;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,13 +62,13 @@ public class Enquiry extends Fragment {
                 String cus_enquiry = enquiry.getText().toString().trim();
 
                 if (cus_name.equals("")) {
-                    Utils.toast_center(getContext(), "Please Enter Your Name...");
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
                 } else if (cus_contact_number.length() < 10) {
-                    Utils.toast_center(getContext(), "Please Enter Correct Mobile Number...");
+                    Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
                 } else if (cus_email.equals("")) {
-                    Utils.toast_center(getContext(), "Please Enter Your Email...");
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
                 } else if (cus_enquiry.equals("")) {
-                    Utils.toast_center(getContext(), "Please Enter Your enquiry...");
+                    Utils_Class.toast_center(getContext(), "Please Enter Your enquiry...");
                 }
 
 

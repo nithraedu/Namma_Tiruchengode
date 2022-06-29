@@ -18,5 +18,12 @@
     <color name="day_bg">#31aabf</color>
     <color name="lay_bg">#f7f7f7</color>
     <color name="icon_bg">#001b52</color>
+    <color name="third_card">#ff0000</color>
+    <color name="color1">#990100</color>
+    <color name="color2">#F37021</color>
+    <color name="color3">#0089D0</color>
+    <color name="color4">#6460AA</color>
+    <color name="color5">#CC004C</color>
+    <color name="color6">#0DB14B</color>
 
 </resources>

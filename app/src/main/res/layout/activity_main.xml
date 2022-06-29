@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,12 +26,23 @@
             android:theme="@style/BaseTheme"
             android:visibility="gone" />
 
-        <androidx.viewpager2.widget.ViewPager2
+        <nithra.namma_tiruchengode.autoimageslider.SliderView
             android:id="@+id/slide"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="190dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
+            app:sliderAnimationDuration="1000"
+            app:sliderAutoCycleDirection="right"
+            app:sliderIndicatorAnimationDuration="1000"
+            app:sliderIndicatorEnabled="true"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorRtlMode="off"
+            app:sliderIndicatorSelectedColor="@color/navigation_tint"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -110,7 +122,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -120,10 +131,24 @@
                 tools:ignore="MissingConstraints" />
         </LinearLayout>
 
-        <androidx.viewpager2.widget.ViewPager2
+        <nithra.namma_tiruchengode.autoimageslider.SliderView
             android:id="@+id/slide_2"
             android:layout_width="match_parent"
-            android:layout_height="80dp" />
+            android:layout_height="120dp"
+            app:sliderAnimationDuration="1000"
+            app:sliderAutoCycleDirection="right"
+            app:sliderIndicatorAnimationDuration="1000"
+            app:sliderIndicatorEnabled="true"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorRtlMode="off"
+            app:sliderIndicatorSelectedColor="@color/navigation_tint"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1"/>
+
 
         <ImageView
             android:layout_width="match_parent"

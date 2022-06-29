@@ -64,7 +64,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         show_cat.setLayoutManager(gridLayoutManager);
         adapter = new ListAdapter(this, sub_category, title);
         show_cat.setAdapter(adapter);
-        Utils.mProgress(Activity_Second_List.this, "Loading please wait...", false).show();
+        Utils_Class.mProgress(Activity_Second_List.this, "Loading please wait...", false).show();
         subcategory(title);
         category_1();
     }
@@ -111,7 +111,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
                     adapter = new ListAdapter(Activity_Second_List.this, sub_category, title);
                     show_cat.setAdapter(adapter);
                     //adapter.notifyDataSetChanged();
-                    Utils.mProgress.dismiss();
+                    Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
             }

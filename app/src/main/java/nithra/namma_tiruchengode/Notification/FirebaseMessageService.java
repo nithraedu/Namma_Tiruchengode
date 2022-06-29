@@ -18,7 +18,7 @@ import java.util.Map;
 
 import nithra.namma_tiruchengode.MainActivity;
 import nithra.namma_tiruchengode.SharedPreference;
-import nithra.namma_tiruchengode.Utils;
+import nithra.namma_tiruchengode.Utils_Class;
 
 public class FirebaseMessageService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = FirebaseMessageService.class.getSimpleName();
@@ -270,16 +270,16 @@ public class FirebaseMessageService extends com.google.firebase.messaging.Fireba
             if (sharedPreference.getInt(FirebaseMessageService.this, "isvalid") == 0) {
                 if (sharedPreference.getString(FirebaseMessageService.this, "token").length() > 0) {
 
-                    ServerUtilities.gcmpost(token, Utils.android_id(FirebaseMessageService.this), Utils.versionname_get(FirebaseMessageService.this),
-                            Utils.versioncode_get(FirebaseMessageService.this), FirebaseMessageService.this);
-                    sharedPreference.putInt(FirebaseMessageService.this, "fcm_update", Utils.versioncode_get(FirebaseMessageService.this));
+                    ServerUtilities.gcmpost(token, Utils_Class.android_id(FirebaseMessageService.this), Utils_Class.versionname_get(FirebaseMessageService.this),
+                            Utils_Class.versioncode_get(FirebaseMessageService.this), FirebaseMessageService.this);
+                    sharedPreference.putInt(FirebaseMessageService.this, "fcm_update", Utils_Class.versioncode_get(FirebaseMessageService.this));
 
                 }
 
-            } else if (sharedPreference.getInt(FirebaseMessageService.this, "fcm_update") < Utils.versioncode_get(FirebaseMessageService.this)) {
+            } else if (sharedPreference.getInt(FirebaseMessageService.this, "fcm_update") < Utils_Class.versioncode_get(FirebaseMessageService.this)) {
 
-                ServerUtilities.gcmupdate(FirebaseMessageService.this, Utils.versionname_get(FirebaseMessageService.this), Utils.versioncode_get(FirebaseMessageService.this), token);
-                sharedPreference.putInt(FirebaseMessageService.this, "fcm_update", Utils.versioncode_get(FirebaseMessageService.this));
+                ServerUtilities.gcmupdate(FirebaseMessageService.this, Utils_Class.versionname_get(FirebaseMessageService.this), Utils_Class.versioncode_get(FirebaseMessageService.this), token);
+                sharedPreference.putInt(FirebaseMessageService.this, "fcm_update", Utils_Class.versioncode_get(FirebaseMessageService.this));
             }
         }
 

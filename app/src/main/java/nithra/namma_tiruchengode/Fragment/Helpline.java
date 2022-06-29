@@ -20,12 +20,11 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import nithra.namma_tiruchengode.Category_Full_View;
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.Helplinepojo;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
-import nithra.namma_tiruchengode.Utils;
+import nithra.namma_tiruchengode.Utils_Class;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,7 +71,7 @@ public class Helpline extends Fragment {
                     System.out.println("======response result:" + result);
                     titles.addAll(response.body());
                     adapter.notifyDataSetChanged();
-                    Utils.mProgress.dismiss();
+                    Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
             }
@@ -114,7 +113,7 @@ public class Helpline extends Fragment {
                 public void onClick(View v) {
                     String phone = titles.get(0).getMobile().trim();
                     if (phone.equals("")) {
-                        Utils.toast_center(getContext(), "Mobile number not available");
+                        Utils_Class.toast_center(getContext(), "Mobile number not available");
                     } else {
                         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
                         startActivity(intent);

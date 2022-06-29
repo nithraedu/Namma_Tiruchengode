@@ -100,7 +100,7 @@ public class Category_Full_View extends AppCompatActivity {
       /*  list3.setLayoutManager(gridLayoutManager3);
         adapter2 = new Adapter2(this, images3);
         list3.setAdapter(adapter2);*/
-        Utils.mProgress(this, "Loading please wait...", false).show();
+        Utils_Class.mProgress(this, "Loading please wait...", false).show();
         fullview();
     }
 
@@ -198,7 +198,7 @@ public class Category_Full_View extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (titles.get(0).getWebsite() != null && !titles.get(0).getWebsite().trim().isEmpty()) {
-                                if (Utils.isNetworkAvailable(Category_Full_View.this)) {
+                                if (Utils_Class.isNetworkAvailable(Category_Full_View.this)) {
                                     String url = titles.get(0).getWebsite().trim();
                                     System.out.println("urlprint" + url);
                                     //String url = "http://15.206.173.184/upload/nammaooru_tiruchengode/dashboard.php";
@@ -206,10 +206,10 @@ public class Category_Full_View extends AppCompatActivity {
                                     CustomTabsIntent customTabsIntent = builder.build();
                                     customTabsIntent.launchUrl(Category_Full_View.this, Uri.parse(url));
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
+                                    Utils_Class.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
-                                Utils.toast_center(Category_Full_View.this, "Website not available...");
+                                Utils_Class.toast_center(Category_Full_View.this, "Website not available...");
                             }
                         }
                     });
@@ -217,16 +217,16 @@ public class Category_Full_View extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (titles.get(0).getLocation() != null && !titles.get(0).getLocation().trim().isEmpty()) {
-                                if (Utils.isNetworkAvailable(Category_Full_View.this)) {
+                                if (Utils_Class.isNetworkAvailable(Category_Full_View.this)) {
                                     String url = titles.get(0).getLocation().trim();
                                     CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                                     CustomTabsIntent customTabsIntent = builder.build();
                                     customTabsIntent.launchUrl(Category_Full_View.this, Uri.parse(url));
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
+                                    Utils_Class.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
-                                Utils.toast_center(Category_Full_View.this, "Location not available...");
+                                Utils_Class.toast_center(Category_Full_View.this, "Location not available...");
                             }
                         }
                     });
@@ -234,7 +234,7 @@ public class Category_Full_View extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (titles.get(0).getEmail() != null && !titles.get(0).getEmail().trim().isEmpty()) {
-                                if (Utils.isNetworkAvailable(Category_Full_View.this)) {
+                                if (Utils_Class.isNetworkAvailable(Category_Full_View.this)) {
                                 /*Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                         "mailto", "abc@gmail.com", null));
                                 //emailIntent.setType("message/rfc822");
@@ -254,10 +254,10 @@ public class Category_Full_View extends AppCompatActivity {
 
 
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
+                                    Utils_Class.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
-                                Utils.toast_center(Category_Full_View.this, "Email not available...");
+                                Utils_Class.toast_center(Category_Full_View.this, "Email not available...");
 
                             }
                         }
@@ -267,7 +267,7 @@ public class Category_Full_View extends AppCompatActivity {
                         public void onClick(View v) {
                             String phone = titles.get(0).getMobile().trim();
                             if (phone.equals("")) {
-                                Utils.toast_center(Category_Full_View.this, "Mobile number not available");
+                                Utils_Class.toast_center(Category_Full_View.this, "Mobile number not available");
                             } else {
                                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
                                 startActivity(intent);
@@ -279,7 +279,7 @@ public class Category_Full_View extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (titles.get(0).getWhatsapp() != null && !titles.get(0).getWhatsapp().trim().isEmpty()) {
-                                if (Utils.isNetworkAvailable(Category_Full_View.this)) {
+                                if (Utils_Class.isNetworkAvailable(Category_Full_View.this)) {
                                     String phoneNumber = titles.get(0).getWhatsapp().trim();
                                     if (appInstalledOrNot("com.whatsapp") || appInstalledOrNot("com.whatsapp.w4b")) {
                                         String toNumber = phoneNumber;
@@ -297,13 +297,13 @@ public class Category_Full_View extends AppCompatActivity {
                                             e.printStackTrace();
                                         }
                                     } else {
-                                        Utils.toast_center(Category_Full_View.this, "Whatsapp not install...");
+                                        Utils_Class.toast_center(Category_Full_View.this, "Whatsapp not install...");
                                     }
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
+                                    Utils_Class.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
-                                Utils.toast_center(Category_Full_View.this, "Whatsapp number not available...");
+                                Utils_Class.toast_center(Category_Full_View.this, "Whatsapp number not available...");
                             }
                         }
                     });
@@ -311,14 +311,14 @@ public class Category_Full_View extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (titles.get(0).getFacebook() != null && !titles.get(0).getFacebook().trim().isEmpty()) {
-                                if (Utils.isNetworkAvailable(Category_Full_View.this)) {
+                                if (Utils_Class.isNetworkAvailable(Category_Full_View.this)) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(titles.get(0).getFacebook().trim()));
                                     startActivity(intent);
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
+                                    Utils_Class.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
-                                Utils.toast_center(Category_Full_View.this, "Facebook account not available...");
+                                Utils_Class.toast_center(Category_Full_View.this, "Facebook account not available...");
                             }
                         }
                     });
@@ -326,14 +326,14 @@ public class Category_Full_View extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (titles.get(0).getInstagram() != null && !titles.get(0).getInstagram().trim().isEmpty()) {
-                                if (Utils.isNetworkAvailable(Category_Full_View.this)) {
+                                if (Utils_Class.isNetworkAvailable(Category_Full_View.this)) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(titles.get(0).getInstagram().trim()));
                                     startActivity(intent);
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
+                                    Utils_Class.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
-                                Utils.toast_center(Category_Full_View.this, "Instagram account not available...");
+                                Utils_Class.toast_center(Category_Full_View.this, "Instagram account not available...");
                             }
                         }
                     });
@@ -341,26 +341,26 @@ public class Category_Full_View extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             if (titles.get(0).getInstagram() != null && !titles.get(0).getInstagram().trim().isEmpty()) {
-                                if (Utils.isNetworkAvailable(Category_Full_View.this)) {
+                                if (Utils_Class.isNetworkAvailable(Category_Full_View.this)) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(titles.get(0).getTwitter().trim()));
                                     startActivity(intent);
                                 } else {
-                                    Utils.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
+                                    Utils_Class.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
-                                Utils.toast_center(Category_Full_View.this, "Twitter account not available...");
+                                Utils_Class.toast_center(Category_Full_View.this, "Twitter account not available...");
                             }
                         }
                     });
                     share.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Utils.toast_center(Category_Full_View.this, "Details not available...");
+                            Utils_Class.toast_center(Category_Full_View.this, "Details not available...");
                         }
                     });
 
                     adapter2.notifyDataSetChanged();
-                    Utils.mProgress.dismiss();
+                    Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
             }

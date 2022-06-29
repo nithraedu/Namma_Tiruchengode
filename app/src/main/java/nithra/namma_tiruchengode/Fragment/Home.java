@@ -36,6 +36,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -62,7 +64,11 @@ import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.Category;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
-import nithra.namma_tiruchengode.Utils;
+import nithra.namma_tiruchengode.Utils_Class;
+import nithra.namma_tiruchengode.autoimageslider.AutoSlidingImageAdapter;
+import nithra.namma_tiruchengode.autoimageslider.AutoSlidingImageAdapterNew;
+import nithra.namma_tiruchengode.autoimageslider.SliderAnimations;
+import nithra.namma_tiruchengode.autoimageslider.SliderView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,8 +78,8 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     ArrayList<Integer> images2;
     ArrayList<Integer> images3;
     Adapter adapter;
-    Adapter2 adapter2;
-    Adapter3 adapter3;
+    AutoSlidingImageAdapter adapter2;
+    AutoSlidingImageAdapterNew adapter3;
     LinearLayout notification;
     TextView notifi_count, search;
     SQLiteDatabase db1;
@@ -81,13 +87,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
     DrawerLayout drawer;
-    ViewPager2 slide, slide_2;
-
-
-    int currentPage = 0;
-    Timer timer;
-    final long DELAY_MS = 700;
-    final long PERIOD_MS = 3000;
+    SliderView slide,slide_2;
 
     public Home() {
     }
@@ -153,52 +153,32 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         list2.setLayoutManager(gridLayoutManager2);
 
         adapter = new Adapter(getContext(), titles);
-        adapter2 = new Adapter2(getContext(), images3);
-        adapter3 = new Adapter3(getContext(), images2);
+        adapter2 = new AutoSlidingImageAdapter(getContext(), images3);
+        adapter3 = new AutoSlidingImageAdapterNew(getContext(), images2);
         list.setAdapter(adapter);
-        slide_2.setAdapter(adapter2);
-        slide.setAdapter(adapter3);
+        slide.setSliderAdapter(adapter3);
+        slide.setSliderTransformAnimation(
+                SliderAnimations.SIMPLETRANSFORMATION
+        );
+        slide.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
+
+        slide.setScrollTimeInSec(5);
+        slide.setAutoCycle(true);
+        slide.startAutoCycle();
 
 
+        slide_2.setSliderAdapter(adapter2);
+        slide_2.setSliderTransformAnimation(
+                SliderAnimations.SIMPLETRANSFORMATION
+        );
+        slide_2.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
 
-        /*final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-                if (currentPage == 4-1) {
-                    currentPage = 0;
-                }
-                slide.setCurrentItem(currentPage++, true);
-            }
-        };
-
-        timer = new Timer(); // This will create a new Thread
-        timer.schedule(new TimerTask() { // task to be scheduled
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, DELAY_MS, PERIOD_MS);*/
-
-        /*final Handler handler1 = new Handler();
-        final Runnable Update1 = new Runnable() {
-            public void run() {
-                if (currentPage == 4-1) {
-                    currentPage = 0;
-                }
-                slide_2.setCurrentItem(currentPage++, true);
-            }
-        };
-
-        timer = new Timer(); // This will create a new Thread
-        timer.schedule(new TimerTask() { // task to be scheduled
-            @Override
-            public void run() {
-                handler1.post(Update1);
-            }
-        }, DELAY_MS, PERIOD_MS);*/
+        slide_2.setScrollTimeInSec(5);
+        slide_2.setAutoCycle(true);
+        slide_2.startAutoCycle();
 
 
-        Utils.mProgress(getContext(), "Loading please wait...", false).show();
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
         category();
 
         search.setOnClickListener(new View.OnClickListener() {
@@ -239,17 +219,17 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=nithra.tamil.andaal.thiruppavai"));
             startActivity(intent);*/
 
-            Utils.toast_normal(getContext(), "Not Available in playstore");
+            Utils_Class.toast_normal(getContext(), "Not Available in playstore");
 
         } else if (id == R.id.nav_feedback) {
             feedback();
 
         } else if (id == R.id.nav_policy) {
-            if (Utils.isNetworkAvailable(getContext())) {
+            if (Utils_Class.isNetworkAvailable(getContext())) {
                 Intent i = new Intent(getContext(), PrivacyPolicy.class);
                 startActivity(i);
             } else {
-                Utils.toast_normal(getContext(), "Please connect to your internet");
+                Utils_Class.toast_normal(getContext(), "Please connect to your internet");
             }
 
         } else if (id == R.id.nav_exit) {
@@ -275,7 +255,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         privacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Utils.isNetworkAvailable(getContext())) {
+                if (Utils_Class.isNetworkAvailable(getContext())) {
                     Intent intent = new Intent(getContext(), PrivacyPolicy.class);
                     startActivity(intent);
                 } else {
@@ -294,7 +274,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                     Toast.makeText(getContext(), "Please type your feedback or suggestion, Thank you", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (!Utils.isNetworkAvailable(getContext())) {
+                if (!Utils_Class.isNetworkAvailable(getContext())) {
                     Toast.makeText(getContext(), "please connect to the internet...", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -368,7 +348,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                     System.out.println("======response result:" + result);
                     titles.addAll(response.body());
                     adapter.notifyDataSetChanged();
-                    Utils.mProgress.dismiss();
+                    Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
             }
@@ -562,6 +542,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
             }
         }
     }
+
 
 
 }

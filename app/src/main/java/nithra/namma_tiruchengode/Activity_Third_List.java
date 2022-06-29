@@ -69,7 +69,7 @@ public class Activity_Third_List extends AppCompatActivity {
         show_cat.setLayoutManager(gridLayoutManager);
         adapter = new ListAdapter_1(this, third_category, title);
         show_cat.setAdapter(adapter);
-        Utils.mProgress(this, "Loading please wait...", false).show();
+        Utils_Class.mProgress(this, "Loading please wait...", false).show();
         third_category();
     }
 
@@ -96,7 +96,7 @@ public class Activity_Third_List extends AppCompatActivity {
                         nodata.setVisibility(View.GONE);
                     }*/
                     adapter.notifyDataSetChanged();
-                    Utils.mProgress.dismiss();
+                    Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
             }
@@ -146,26 +146,26 @@ public class Activity_Third_List extends AppCompatActivity {
                 holder.adderss.setVisibility(View.VISIBLE);
             }
 
-            if (titles.get(pos).openingTime.trim().isEmpty()) {
+           /* if (titles.get(pos).openingTime.trim().isEmpty()) {
                 holder.start_time.setVisibility(View.GONE);
             } else {
                 holder.start_time.setText(titles.get(pos).openingTime);
                 holder.start_time.setVisibility(View.VISIBLE);
-            }
+            }*/
 
             if (titles.get(pos).closingTime.trim().isEmpty()) {
                 holder.close_time.setVisibility(View.GONE);
             } else {
-                holder.close_time.setText(titles.get(pos).closingTime);
+                holder.close_time.setText("Closes "+titles.get(pos).closingTime);
                 holder.close_time.setVisibility(View.VISIBLE);
             }
 
-            if (titles.get(pos).leaveDay.trim().isEmpty()) {
+           /* if (titles.get(pos).leaveDay.trim().isEmpty()) {
                 holder.work_day.setVisibility(View.GONE);
             } else {
                 holder.work_day.setText(titles.get(pos).leaveDay);
                 holder.work_day.setVisibility(View.VISIBLE);
-            }
+            }*/
 
             if (titles.get(pos).logo.trim().isEmpty()){
                 holder.cat_icon.setVisibility(View.GONE);

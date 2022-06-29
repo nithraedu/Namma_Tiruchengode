@@ -2,10 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     android:orientation="horizontal">
     <ImageView
         android:id="@+id/slide_mat"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:scaleType="fitXY"
+
         android:src="@drawable/test1" />
 </LinearLayout>
