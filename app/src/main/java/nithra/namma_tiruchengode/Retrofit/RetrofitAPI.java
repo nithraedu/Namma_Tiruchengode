@@ -30,4 +30,23 @@ public interface RetrofitAPI {
     @POST("data.php")
     Call<ArrayList<Helplinepojo>> getHelpline(@FieldMap HashMap<String, String> data);
 
+    @FormUrlEncoded
+    @POST("data.php")
+    Call<ArrayList<Category_Main>> getCat_Main(@FieldMap HashMap<String, String> data);
+
+    @FormUrlEncoded
+    @POST("data.php")
+    Call<ArrayList<OtpGenerate>> getOtp_generate(@FieldMap HashMap<String, String> data);
+
+    @FormUrlEncoded
+    @POST("data.php")
+    Call<ArrayList<OtpVerifyPojo>> getOtp_verify(@FieldMap HashMap<String, String> data);
+
+    @FormUrlEncoded
+    @POST("data.php")
+    Call<ArrayList<AddPojo>> getadd_user(@FieldMap HashMap<String, String> data);
+
+    @FormUrlEncoded
+    @POST("data.php")
+    Call<ArrayList<SearchPojo>> getsearch(@FieldMap HashMap<String, String> data);
 }

@@ -4,26 +4,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
+import nithra.namma_tiruchengode.Activity_Search;
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.Helplinepojo;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
+import nithra.namma_tiruchengode.Retrofit.SearchPojo;
 import nithra.namma_tiruchengode.Utils_Class;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +41,8 @@ public class Helpline extends Fragment {
     ArrayList<Helplinepojo> titles;
     RecyclerView recycle;
     Help_Adapter adapter;
+    TextInputEditText name_txt;
+
 
     public Helpline() {
     }
@@ -48,11 +58,41 @@ public class Helpline extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_helpline, container, false);
         recycle = view.findViewById(R.id.recycle);
+        name_txt = view.findViewById(R.id.name_txt);
+
         titles = new ArrayList<Helplinepojo>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         recycle.setLayoutManager(gridLayoutManager);
         adapter = new Help_Adapter(getContext(), titles);
         recycle.setAdapter(adapter);
+
+        name_txt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayList<Helplinepojo> tempHistoryList = new ArrayList<Helplinepojo>();
+                tempHistoryList.clear();
+                for (int i = 0; i < titles.size(); i++) {
+                    if (titles.get(i).getHelplineCategory().toLowerCase(Locale.ROOT).contains(s.toString().toLowerCase(Locale.ROOT))) {
+                        tempHistoryList.add(titles.get(i));
+                    }
+                }
+                adapter = new Help_Adapter(getContext(), tempHistoryList);
+
+                recycle.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         help();
         return view;
     }
@@ -132,7 +172,7 @@ public class Helpline extends Fragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             TextView help_title;
-            LinearLayout phone;
+            CardView phone;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);

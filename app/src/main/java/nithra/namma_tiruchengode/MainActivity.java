@@ -1,5 +1,8 @@
 package nithra.namma_tiruchengode;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -21,13 +24,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
+import nithra.namma_tiruchengode.Fragment.Add;
 import nithra.namma_tiruchengode.Fragment.Enquiry;
 import nithra.namma_tiruchengode.Fragment.Helpline;
 import nithra.namma_tiruchengode.Fragment.Home;
+import nithra.namma_tiruchengode.Fragment.OtpVerify;
+import nithra.namma_tiruchengode.Fragment.Register;
 import nithra.namma_tiruchengode.Retrofit.Category;
 
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener,Gotohome {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnItemSelectedListener, Gotohome {
     ArrayList<Category> titles;
     ArrayList<Integer> images2;
     BottomNavigationView bottomnavigationview;
@@ -39,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     String versionName = BuildConfig.VERSION_NAME;
     ViewPager2 viewpager2;
     Frag_Adapter frag_adapter;
+    SharedPreferences pref;
+    SharedPreference sharedPreference = new SharedPreference();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.app_lay);
+
+        pref = getSharedPreferences("register", Context.MODE_PRIVATE);
+        System.out.println("=print="+pref.getInt("yes", 0));
+        System.out.println("android_id" + Utils_Class.android_id(this));
+
+
         viewpager2 = findViewById(R.id.viewpager2);
         viewpager2.setUserInputEnabled(false);
         frag_adapter = new Frag_Adapter(getSupportFragmentManager(), getLifecycle());
@@ -53,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         frag_adapter.addFragment(new Home());
         frag_adapter.addFragment(new Enquiry());
         frag_adapter.addFragment(new Helpline());
+        frag_adapter.addFragment(new Add());
+        frag_adapter.addFragment(new Register());
+        frag_adapter.addFragment(new OtpVerify());
         viewpager2.setAdapter(frag_adapter);
         bottomnavigationview = findViewById(R.id.bottomnavigationview);
         bottomnavigationview.setOnItemSelectedListener(this);
@@ -127,21 +146,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             switch (item.getItemId()) {
                 case R.id.bottom_home:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, firstFragment).commit();
-                    viewpager2.setCurrentItem(0);
+                    viewpager2.setCurrentItem(0,false);
                     return true;
 
                 case R.id.bottom_city:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
                     return true;
+                case R.id.bottom_shop:
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
+
+                    if (sharedPreference.getInt(getApplicationContext(),"yes") == 0) {
+                        viewpager2.setCurrentItem(4,false);
+
+                    }else {
+                        viewpager2.setCurrentItem(3,false);
+                    }
+                    return true;
 
                 case R.id.bottom_helpline:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
-                    viewpager2.setCurrentItem(2);
+                    viewpager2.setCurrentItem(2,false);
                     return true;
 
                 case R.id.bottom_enquiry:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
-                    viewpager2.setCurrentItem(1);
+                    viewpager2.setCurrentItem(1,false);
                     return true;
             }
             return false;
@@ -155,8 +184,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void home() {
-        viewpager2.setCurrentItem(0);
+        viewpager2.setCurrentItem(0,false);
         bottomnavigationview.getMenu().getItem(0).setChecked(true);
+    }
+
+    @Override
+    public void register() {
+        viewpager2.setCurrentItem(3,false);
+    }
+
+    @Override
+    public void verify() {
+        viewpager2.setCurrentItem(5,false);
+
     }
 
    /* @Override

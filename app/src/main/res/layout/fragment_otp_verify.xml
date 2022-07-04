@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Fragment.OtpVerify">
+
+    <LinearLayout
+        android:id="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/reg_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background3"
+            android:gravity="top|left"
+            android:hint="Name"
+            android:minHeight="35dp"
+            android:padding="5dp"
+            android:textCursorDrawable="@null"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background3"
+            android:gravity="top|left"
+            android:hint="OTP"
+            android:inputType="number"
+            android:minHeight="35dp"
+            android:padding="5dp"
+            android:textCursorDrawable="@null" />
+
+        <TextView
+            android:id="@+id/verify_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:background="@drawable/background"
+            android:text="Verify OTP"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

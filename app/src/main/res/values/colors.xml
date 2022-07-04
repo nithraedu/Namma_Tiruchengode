@@ -25,5 +25,6 @@
     <color name="color4">#6460AA</color>
     <color name="color5">#CC004C</color>
     <color name="color6">#0DB14B</color>
+    <color name="but_bg">#ff3a52</color>
 
 </resources>

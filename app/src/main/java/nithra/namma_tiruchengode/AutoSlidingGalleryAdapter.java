@@ -1,4 +1,4 @@
-package nithra.namma_tiruchengode.autoimageslider;
+package nithra.namma_tiruchengode;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,30 +11,31 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
-import nithra.namma_tiruchengode.R;
-import nithra.namma_tiruchengode.Retrofit.BannerSlider;
+import nithra.namma_tiruchengode.Retrofit.Full_View;
+import nithra.namma_tiruchengode.autoimageslider.SliderViewAdapter;
 
 
-public class AutoSlidingImageAdapter extends SliderViewAdapter<SliderViewAdapter.ViewHolder> {
+public class AutoSlidingGalleryAdapter extends SliderViewAdapter<SliderViewAdapter.ViewHolder> {
 
-    Context mContext;
-    ArrayList<BannerSlider> images;
+    ArrayList<Full_View> images;
     LayoutInflater inflater;
     Context context;
+    String[] glide_image;
 
 
-    public AutoSlidingImageAdapter(Context ctx, ArrayList<BannerSlider> images) {
-        mContext = ctx;
+    public AutoSlidingGalleryAdapter(Context ctx, ArrayList<Full_View> images, String[] check) {
         this.images = images;
         this.inflater = LayoutInflater.from(ctx);
         this.context = ctx;
+        this.glide_image = check;
+
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
 
-            return new SliderAdapterVHnew(LayoutInflater.from(parent.getContext()).inflate(R.layout.slider_2, null));
+            return new SliderAdapterVHnew(LayoutInflater.from(parent.getContext()).inflate(R.layout.best_seller, null));
     }
 
     @Override
@@ -42,30 +43,31 @@ public class AutoSlidingImageAdapter extends SliderViewAdapter<SliderViewAdapter
 
 
             SliderAdapterVHnew viewHolder = (SliderAdapterVHnew) holder;
-       // viewHolder.slide_mat.setImageResource(images.get(position));
         int pos = position;
-        Glide.with(context).load(images.get(pos).getBanner_slider_image())
+        Glide.with(context).load(glide_image[pos])
                 .error(R.drawable.tiruchengode)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(viewHolder.slide_mat);
+                .into(viewHolder.gridImage);
+        System.out.println("imageurl"+glide_image[pos]);
+
 
     }
 
     @Override
     public int getCount() {
-            return images.size();
+            return glide_image.length;
     }
 
     static class SliderAdapterVHnew extends ViewHolder {
         View itemView;
-        ImageView slide_mat;
+        ImageView gridImage;
 
 
 
         public SliderAdapterVHnew(View view) {
             super(view);
 
-            slide_mat = view.findViewById(R.id.slide_mat);
+            gridImage = view.findViewById(R.id.imageGrid);
 
             this.itemView = view;
         }

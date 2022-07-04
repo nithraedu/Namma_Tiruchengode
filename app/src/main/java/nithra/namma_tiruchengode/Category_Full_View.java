@@ -31,6 +31,8 @@ import java.util.HashMap;
 import nithra.namma_tiruchengode.Retrofit.Full_View;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
+import nithra.namma_tiruchengode.autoimageslider.SliderAnimations;
+import nithra.namma_tiruchengode.autoimageslider.SliderView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,15 +41,16 @@ public class Category_Full_View extends AppCompatActivity {
     TextView cat_title, cat_name;
     int pos;
     String list_title;
-    Adapter2 adapter2;
+    AutoSlidingGalleryAdapter adapter2;
     ArrayList<Full_View> images2;
     ArrayList<Full_View> images3;
-    CardView location, website, email, whatsapp, facebook, instagram, twitter, share;
-    LinearLayout phone;
+    CardView location, website, email, whatsapp, facebook, instagram, twitter, phone;
+    ImageView share;
     TextView text_address, owner_name, mobile_text, start_time, close_time, work_day, description, mobile_divider, name_divider;
     String idd;
     ArrayList<Full_View> titles;
-    RecyclerView list2, list3;
+    RecyclerView list3;
+    SliderView slide;
     LinearLayout time, mobile_call, owner_lay;
 
     @Override
@@ -72,7 +75,7 @@ public class Category_Full_View extends AppCompatActivity {
         titles = new ArrayList<Full_View>();
         images2 = new ArrayList<Full_View>();
         images3 = new ArrayList<Full_View>();
-        list2 = findViewById(R.id.list2);
+        slide = findViewById(R.id.slide);
         list3 = findViewById(R.id.list3);
         whatsapp = findViewById(R.id.whatsapp);
         facebook = findViewById(R.id.facebook);
@@ -95,7 +98,7 @@ public class Category_Full_View extends AppCompatActivity {
 
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         GridLayoutManager gridLayoutManager3 = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
-        list2.setLayoutManager(gridLayoutManager2);
+        //slide.setLayoutManager(gridLayoutManager2);
 
       /*  list3.setLayoutManager(gridLayoutManager3);
         adapter2 = new Adapter2(this, images3);
@@ -119,10 +122,19 @@ public class Category_Full_View extends AppCompatActivity {
                     titles.addAll(response.body());
                     images2.addAll(response.body());
 
-                    String currentString = titles.get(pos).getSliderImage();
+                    String currentString = titles.get(0).getSliderImage();
+                    System.out.println("image_print" +titles.get(0).getSliderImage());
                     String[] separated = currentString.split(",");
-                    adapter2 = new Adapter2(Category_Full_View.this, images2, separated);
-                    list2.setAdapter(adapter2);
+                    adapter2 = new AutoSlidingGalleryAdapter(Category_Full_View.this, images2, separated);
+                    slide.setSliderAdapter(adapter2);
+                    slide.setSliderTransformAnimation(
+                            SliderAnimations.SIMPLETRANSFORMATION
+                    );
+                    slide.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
+
+                    slide.setScrollTimeInSec(5);
+                    slide.setAutoCycle(true);
+                    slide.startAutoCycle();
                     System.out.println("printsplit" + separated.toString());
 
                     if (titles.get(0).getSectorName().trim().isEmpty()) {
@@ -139,23 +151,23 @@ public class Category_Full_View extends AppCompatActivity {
                         text_address.setVisibility(View.VISIBLE);
                     }
 
-                    if (titles.get(0).getPersonName().trim().trim().isEmpty()) {
+             /*       if (titles.get(0).getPersonName().trim().trim().isEmpty()) {
                         owner_lay.setVisibility(View.GONE);
                         name_divider.setVisibility(View.GONE);
                     } else {
                         owner_name.setText(titles.get(0).getPersonName().trim());
                         owner_lay.setVisibility(View.VISIBLE);
                         name_divider.setVisibility(View.VISIBLE);
-                    }
+                    }*/
 
-                    if (titles.get(0).getMobile().trim().isEmpty()) {
+                   /* if (titles.get(0).getMobile().trim().isEmpty()) {
                         mobile_call.setVisibility(View.GONE);
                         mobile_divider.setVisibility(View.GONE);
                     } else {
                         mobile_text.setText(titles.get(0).getMobile());
                         mobile_call.setVisibility(View.VISIBLE);
                         mobile_divider.setVisibility(View.VISIBLE);
-                    }
+                    }*/
 
                     if (titles.get(0).getOpeningTime().trim().isEmpty()) {
                         time.setVisibility(View.GONE);
@@ -181,7 +193,7 @@ public class Category_Full_View extends AppCompatActivity {
                     if (titles.get(0).getDescription().trim().isEmpty()) {
                         description.setVisibility(View.GONE);
                     } else {
-                        description.setText(titles.get(0).getDescription());
+                        description.setText(titles.get(0).getDescription()+"\n\nContact"+"\n"+titles.get(0).getMobile());
                         description.setVisibility(View.VISIBLE);
                     }
 

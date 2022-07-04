@@ -24,6 +24,7 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
+
                 <LinearLayout
                     android:id="@+id/notification"
                     android:layout_width="wrap_content"
@@ -52,6 +53,14 @@
                         android:textColor="#fff"
                         android:textSize="10dp" />
                 </LinearLayout>
+                <ImageView
+                    android:id="@+id/search"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end"
+                    android:backgroundTint="@color/black"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/ic_baseline_search_24" />
             </androidx.appcompat.widget.Toolbar>
 
             <ImageView

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import nithra.namma_tiruchengode.Retrofit.Category;
+import nithra.namma_tiruchengode.Retrofit.Category_Main;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
 import nithra.namma_tiruchengode.Retrofit.Sub_Category;
@@ -73,14 +74,14 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "get_category");
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
-        Call<ArrayList<Category>> call = retrofitAPI.getCategory(map);
-        call.enqueue(new Callback<ArrayList<Category>>() {
+        Call<ArrayList<Category_Main>> call = retrofitAPI.getCat_Main(map);
+        call.enqueue(new Callback<ArrayList<Category_Main>>() {
             @Override
-            public void onResponse(Call<ArrayList<Category>> call, Response<ArrayList<Category>> response) {
+            public void onResponse(Call<ArrayList<Category_Main>> call, Response<ArrayList<Category_Main>> response) {
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
-                    titles.addAll(response.body());
+                    titles.addAll(response.body().get(0).getCategory());
                     spinner();
                     adapter.notifyDataSetChanged();
                 }
@@ -88,7 +89,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Category>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Category_Main>> call, Throwable t) {
                 System.out.println("======response t:" + t);
             }
         });

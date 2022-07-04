@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,13 +30,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -49,8 +45,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import nithra.namma_tiruchengode.Activity_Search;
 import nithra.namma_tiruchengode.Activity_Second_List;
@@ -61,9 +55,12 @@ import nithra.namma_tiruchengode.Feedback.RetrofitClient;
 import nithra.namma_tiruchengode.Notification.NotificationView;
 import nithra.namma_tiruchengode.PrivacyPolicy;
 import nithra.namma_tiruchengode.R;
+import nithra.namma_tiruchengode.Retrofit.BannerSlider;
 import nithra.namma_tiruchengode.Retrofit.Category;
+import nithra.namma_tiruchengode.Retrofit.Category_Main;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
+import nithra.namma_tiruchengode.Retrofit.Slider;
 import nithra.namma_tiruchengode.Utils_Class;
 import nithra.namma_tiruchengode.autoimageslider.AutoSlidingImageAdapter;
 import nithra.namma_tiruchengode.autoimageslider.AutoSlidingImageAdapterNew;
@@ -77,17 +74,20 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     ArrayList<Category> titles;
     ArrayList<Integer> images2;
     ArrayList<Integer> images3;
+    ArrayList<Slider> cat_main;
+    ArrayList<BannerSlider> cat_banner;
     Adapter adapter;
     AutoSlidingImageAdapter adapter2;
     AutoSlidingImageAdapterNew adapter3;
     LinearLayout notification;
-    TextView notifi_count, search;
+    TextView notifi_count;
+    ImageView search;
     SQLiteDatabase db1;
     TextView code, name;
     int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
     DrawerLayout drawer;
-    SliderView slide,slide_2;
+    SliderView slide, slide_2;
 
     public Home() {
     }
@@ -133,12 +133,14 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         code.setText("" + versionCode);
         name.setText(versionName);
 
+        cat_main = new ArrayList<Slider>();
+        cat_banner = new ArrayList<BannerSlider>();
         titles = new ArrayList<Category>();
-        images2 = new ArrayList<Integer>();
+        //images2 = new ArrayList<Integer>();
         images3 = new ArrayList<Integer>();
+   /*     images2.add(R.drawable.slider);
         images2.add(R.drawable.slider);
-        images2.add(R.drawable.slider);
-        images2.add(R.drawable.slider);
+        images2.add(R.drawable.slider);*/
         images3.add(R.drawable.test1);
         images3.add(R.drawable.test1);
         images3.add(R.drawable.test1);
@@ -153,8 +155,8 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         list2.setLayoutManager(gridLayoutManager2);
 
         adapter = new Adapter(getContext(), titles);
-        adapter2 = new AutoSlidingImageAdapter(getContext(), images3);
-        adapter3 = new AutoSlidingImageAdapterNew(getContext(), images2);
+        adapter2 = new AutoSlidingImageAdapter(getContext(), cat_banner);
+        adapter3 = new AutoSlidingImageAdapterNew(getContext(), cat_main);
         list.setAdapter(adapter);
         slide.setSliderAdapter(adapter3);
         slide.setSliderTransformAnimation(
@@ -179,7 +181,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
 
 
         Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
-        category();
+        category_main();
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -359,6 +361,65 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
             }
         });
     }
+
+    public void category_main() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("action", "get_category");
+        RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
+        Call<ArrayList<Category_Main>> call = retrofitAPI.getCat_Main(map);
+        call.enqueue(new Callback<ArrayList<Category_Main>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Category_Main>> call, Response<ArrayList<Category_Main>> response) {
+                if (response.isSuccessful()) {
+                    String result = new Gson().toJson(response.body());
+                    System.out.println("======response result_Main:" + result);
+                    cat_main.addAll(response.body().get(1).getSlider());
+                    cat_main.addAll(response.body().get(1).getSlider());
+                    cat_main.addAll(response.body().get(1).getSlider());
+                    cat_banner.addAll(response.body().get(2).getBanner_slider());
+                    titles.addAll(response.body().get(0).getCategory());
+                    adapter.notifyDataSetChanged();
+                    adapter3.notifyDataSetChanged();
+                    adapter2.notifyDataSetChanged();
+                    Utils_Class.mProgress.dismiss();
+                }
+                System.out.println("======response :" + response);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Category_Main>> call, Throwable t) {
+                System.out.println("======response t:" + t);
+            }
+        });
+    }
+
+/*
+    public void category_banner() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("action", "get_category");
+        RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
+        Call<ArrayList<Category_Main>> call = retrofitAPI.getCat_Main(map);
+        call.enqueue(new Callback<ArrayList<Category_Main>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Category_Main>> call, Response<ArrayList<Category_Main>> response) {
+                if (response.isSuccessful()) {
+                    String result = new Gson().toJson(response.body());
+                    System.out.println("======response result_Main:" + result);
+                    cat_banner.addAll(response.body().get(2).getBanner_slider());
+                    adapter2.notifyDataSetChanged();
+                    Utils_Class.mProgress.dismiss();
+                }
+                System.out.println("======response :" + response);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Category_Main>> call, Throwable t) {
+                System.out.println("======response t:" + t);
+            }
+        });
+    }
+*/
+
 
     @Override
     public void onResume() {
@@ -542,7 +603,6 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
             }
         }
     }
-
 
 
 }

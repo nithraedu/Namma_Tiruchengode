@@ -53,7 +53,6 @@
         android:id="@+id/show_cat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         tools:listitem="@layout/list_data" />
     <TextView
         android:id="@+id/nodata"

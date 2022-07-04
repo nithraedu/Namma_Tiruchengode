@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable-v24/background4.xml" value="0.173" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable-v24/background5.xml" value="0.173" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background1.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background2.xml" value="0.1815" />
@@ -15,11 +16,14 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/exit_to_app.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/feedbackicon.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/home.xml" value="0.1675" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_add.xml" value="0.173" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_check_box_outline_blank.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_check_box_white_24dp.xml" value="0.1815" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_city.xml" value="0.173" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_delete_white_24dp.xml" value="0.1815" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_helpline.xml" value="0.173" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_menu.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_menu_share.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/new_bg10.xml" value="0.1815" />
@@ -33,6 +37,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/test1.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_category_full_view.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_otp.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_privacy_policy.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_search.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_second_list.xml" value="0.25" />
@@ -40,15 +45,18 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/app_lay.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/best_seller.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/feed_back.xml" value="0.24895833333333334" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_add.xml" value="0.264" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_enquiry.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_helpline.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_home.xml" value="0.2359375" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_otp_verify.xml" value="0.2359375" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_register.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/full_view.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/header.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/help_adapter.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/homepage_auto_slider_item.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/layout_share_app.xml" value="0.25" />
-        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/list_data.xml" value="0.24895833333333334" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/list_data.xml" value="0.264" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/main_final.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/main_lay.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/nodate_dia.xml" value="0.25" />
@@ -56,6 +64,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/notification_shown_st.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/notify_item.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/notify_view.xml" value="0.25" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/search_adapter.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/share_dialog.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/slider.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/slider_2.xml" value="0.24895833333333334" />
