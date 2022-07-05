@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Register extends Fragment {
-    EditText reg_name, reg_number;
+    TextInputEditText reg_name, reg_number;
     TextView get_otp;
     SharedPreferences pref;
     LinearLayout register;
@@ -63,16 +64,12 @@ public class Register extends Fragment {
         otp_gene = new ArrayList<OtpGenerate>();
 
 
-        if (pref.contains("Username") && pref.contains("Password")) {
-
-        }
-
-
         get_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 otp_generate();
-                home.verify();
                 /*SharedPreferences.Editor editor=pref.edit();
                 if (name.equals("nithra") && number.equals("0123456789"))
                 {
@@ -108,12 +105,20 @@ public class Register extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<OtpGenerate>> call, Response<ArrayList<OtpGenerate>> response) {
                 if (response.isSuccessful()) {
-                    String result = new Gson().toJson(response.body());
-                    System.out.println("======response result:" + result);
-                    otp_gene.addAll(response.body());
-                    sharedPreference.putString(getContext(), "register_otp", "" + otp_gene.get(0).getOtp());
-                    reg_name.getText().clear();
-                    reg_number.getText().clear();
+                    if (name.equals("")) {
+                        Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
+                    } else if (number.length() < 10) {
+                        Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
+                    }else {
+                        String result = new Gson().toJson(response.body());
+                        System.out.println("======response result:" + result);
+                        otp_gene.addAll(response.body());
+                        sharedPreference.putString(getContext(), "register_otp", "" + otp_gene.get(0).getOtp());
+                        reg_name.getText().clear();
+                        reg_number.getText().clear();
+                        home.verify();
+                    }
+
                 }
                 System.out.println("======response :" + response);
             }
@@ -124,6 +129,4 @@ public class Register extends Fragment {
             }
         });
     }
-
-
 }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OtpVerify extends Fragment {
-    EditText otp;
+    TextInputEditText otp;
     TextView verify_otp;
     Gotohome home;
     String verify;
@@ -65,9 +66,7 @@ public class OtpVerify extends Fragment {
                 }*/
             }
         });
-
-        otp_verify();
-
+        
         return view;
     }
 
@@ -85,7 +84,6 @@ public class OtpVerify extends Fragment {
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     sharedPreference.putInt(getContext(),"yes",1);
-
                     System.out.println("======response result:" + result);
                     otp.getText().toString();
                 }

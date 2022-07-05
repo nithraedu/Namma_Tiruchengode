@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Enquiry extends Fragment {
-    EditText name, contact_number, email, enquiry;
+    TextInputEditText name, contact_number, email, enquiry;
     TextView submit;
     Gotohome home;
 
@@ -61,15 +62,7 @@ public class Enquiry extends Fragment {
                 String cus_email = email.getText().toString().trim();
                 String cus_enquiry = enquiry.getText().toString().trim();
 
-                if (cus_name.equals("")) {
-                    Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
-                } else if (cus_contact_number.length() < 10) {
-                    Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
-                } else if (cus_email.equals("")) {
-                    Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
-                } else if (cus_enquiry.equals("")) {
-                    Utils_Class.toast_center(getContext(), "Please Enter Your enquiry...");
-                }
+
 
 
                 HashMap<String, String> map = new HashMap<>();
@@ -84,14 +77,24 @@ public class Enquiry extends Fragment {
                     @Override
                     public void onResponse(Call<ArrayList<EnquiryPojo>> call, Response<ArrayList<EnquiryPojo>> response) {
                         if (response.isSuccessful()) {
-                            String result = new Gson().toJson(response.body());
-                            System.out.println("======response result:" + result);
-                            name.getText().clear();
-                            contact_number.getText().clear();
-                            email.getText().clear();
-                            enquiry.getText().clear();
-                            Toast.makeText(getContext(), "Enquiry sent, Thank you", Toast.LENGTH_SHORT).show();
-                            home.home();
+                            if (cus_name.equals("")) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
+                            } else if (cus_contact_number.length() < 10) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
+                            } else if (cus_email.equals("")) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
+                            } else if (cus_enquiry.equals("")) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Your enquiry...");
+                            }else {
+                                String result = new Gson().toJson(response.body());
+                                System.out.println("======response result:" + result);
+                                name.getText().clear();
+                                contact_number.getText().clear();
+                                email.getText().clear();
+                                enquiry.getText().clear();
+                                Toast.makeText(getContext(), "Enquiry sent, Thank you", Toast.LENGTH_SHORT).show();
+                                home.home();
+                            }
                         }
                         System.out.println("======response :" + response);
                     }

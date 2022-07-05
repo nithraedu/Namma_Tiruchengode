@@ -9,8 +9,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,12 +24,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-import nithra.namma_tiruchengode.Activity_Search;
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.Helplinepojo;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
-import nithra.namma_tiruchengode.Retrofit.SearchPojo;
 import nithra.namma_tiruchengode.Utils_Class;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,8 +59,6 @@ public class Helpline extends Fragment {
         titles = new ArrayList<Helplinepojo>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         recycle.setLayoutManager(gridLayoutManager);
-        adapter = new Help_Adapter(getContext(), titles);
-        recycle.setAdapter(adapter);
 
         name_txt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,12 +71,13 @@ public class Helpline extends Fragment {
                 ArrayList<Helplinepojo> tempHistoryList = new ArrayList<Helplinepojo>();
                 tempHistoryList.clear();
                 for (int i = 0; i < titles.size(); i++) {
-                    if (titles.get(i).getHelplineCategory().toLowerCase(Locale.ROOT).contains(s.toString().toLowerCase(Locale.ROOT))) {
+                    if (titles.get(i).helplineCategory.toLowerCase(Locale.ROOT).contains(s.toString().toLowerCase(Locale.ROOT))) {
                         tempHistoryList.add(titles.get(i));
+                        System.out.println("listprint" + titles.get(i).helplineCategory);
+
                     }
                 }
                 adapter = new Help_Adapter(getContext(), tempHistoryList);
-
                 recycle.setAdapter(adapter);
 
             }
@@ -92,7 +87,7 @@ public class Helpline extends Fragment {
 
             }
         });
-
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
         help();
         return view;
     }
@@ -110,7 +105,8 @@ public class Helpline extends Fragment {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
                     titles.addAll(response.body());
-                    adapter.notifyDataSetChanged();
+                    adapter = new Help_Adapter(getContext(), titles);
+                    recycle.setAdapter(adapter);
                     Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);

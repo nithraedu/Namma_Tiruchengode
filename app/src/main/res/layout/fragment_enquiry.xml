@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Fragment.Enquiry">
 
@@ -49,101 +50,108 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Name *"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:hint="Name *"
+                    android:theme="@style/AppThemetextinput"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/black">
 
-                <EditText
-                    android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background3"
-                    android:gravity="top|left"
-                    android:minHeight="35dp"
-                    android:inputType="textCapWords"
-                    android:layout_marginTop="5dp"
-                    android:padding="5dp"
-                    android:textCursorDrawable="@null" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contact Number *"
+                    android:hint="Contact Number *"
+                    android:theme="@style/AppThemetextinput"
+                    app:endIconMode="clear_text"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    app:hintTextColor="@color/black"
+                    app:prefixText="+91">
 
-                <EditText
-                    android:id="@+id/contact_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background3"
-                    android:layout_marginTop="5dp"
-                    android:gravity="top|left"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:minHeight="35dp"
-                    android:padding="5dp"
-                    android:textCursorDrawable="@null" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/contact_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:imeOptions="actionDone"
+                        android:maxLength="10"
+                        android:minLines="1"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Email *"
+                    android:hint="Email *"
+                    android:theme="@style/AppThemetextinput"
+                    app:endIconMode="clear_text"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    app:hintTextColor="@color/black">
 
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background3"
-                    android:gravity="top|left"
-                    android:inputType="textEmailAddress"
-                    android:layout_marginTop="5dp"
-                    android:minHeight="35dp"
-                    android:padding="5dp"
-                    android:textCursorDrawable="@null"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:imeOptions="actionDone"
+                        android:minLines="1"
+                        android:inputType="textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Details of Enquiry *"
+                    android:hint="Details of Enquiry *"
+                    android:theme="@style/AppThemetextinput"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/black">
 
-                <EditText
-                    android:id="@+id/enquiry"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background3"
-                    android:gravity="top|left"
-                    android:minLines="6"
-                    android:layout_marginTop="5dp"
-                    android:minHeight="150dp"
-                    android:padding="5dp"
-                    android:textCursorDrawable="@null" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/enquiry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:imeOptions="actionDone"
+                        android:minHeight="150dp"
+                        android:minLines="6"
+                        android:gravity="top|left"
+                        android:inputType="text|textMultiLine|textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
+
 
             </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/background5"
+            android:orientation="horizontal">
             <TextView
                 android:id="@+id/submit"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@drawable/background"
                 android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:padding="10dp"
                 android:text="Submit"
-                android:textColor="@color/black"
-                android:textSize="18dp" />
-
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

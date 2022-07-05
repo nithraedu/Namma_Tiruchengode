@@ -9,6 +9,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background1.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background2.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background3.xml" value="0.1815" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background6.xml" value="0.173" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/bottom_tint.xml" value="0.1675" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/card_back.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/circle2.xml" value="0.2005" />
@@ -51,6 +52,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_home.xml" value="0.2359375" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_otp_verify.xml" value="0.2359375" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_register.xml" value="0.25" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/fragment_t_code.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/full_view.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/header.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/help_adapter.xml" value="0.24895833333333334" />
@@ -69,6 +71,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/slider.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/slider_2.xml" value="0.24895833333333334" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/st_lay.xml" value="0.25" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/t_code_adapter.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/testing.xml" value="0.264" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/third_adapter.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/menu/activity_menu.xml" value="0.25" />

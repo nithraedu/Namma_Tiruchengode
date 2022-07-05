@@ -30,6 +30,7 @@ import nithra.namma_tiruchengode.Fragment.Helpline;
 import nithra.namma_tiruchengode.Fragment.Home;
 import nithra.namma_tiruchengode.Fragment.OtpVerify;
 import nithra.namma_tiruchengode.Fragment.Register;
+import nithra.namma_tiruchengode.Fragment.T_code;
 import nithra.namma_tiruchengode.Retrofit.Category;
 
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         frag_adapter.addFragment(new Add());
         frag_adapter.addFragment(new Register());
         frag_adapter.addFragment(new OtpVerify());
+        frag_adapter.addFragment(new T_code());
         viewpager2.setAdapter(frag_adapter);
         bottomnavigationview = findViewById(R.id.bottomnavigationview);
         bottomnavigationview.setOnItemSelectedListener(this);
@@ -151,6 +153,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 case R.id.bottom_city:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
+                    viewpager2.setCurrentItem(6,false);
+
                     return true;
                 case R.id.bottom_shop:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
@@ -197,6 +201,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void verify() {
         viewpager2.setCurrentItem(5,false);
 
+    }
+
+    @Override
+    public void enquiry() {
+        viewpager2.setCurrentItem(1,false);
     }
 
    /* @Override

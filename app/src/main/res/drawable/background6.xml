@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <corners android:radius="25dp" />
-    <solid android:color="@color/but_bg" />
+    <solid android:color="#ffcd0c" />
     <padding
         android:bottom="0dp"
         android:left="0dp"
@@ -13,5 +13,5 @@
         android:height="20dp" />
     <stroke
         android:width="2dp"
-        android:color="@color/but_bg" />
+        android:color="#ffcd0c" />
 </shape>

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class Add extends Fragment {
     Spinner list_category, list_subcategory;
     ArrayList<String> spin;
     ArrayList<String> spin_1;
-    TextInputEditText shop_txt, add_txt, num_txt, what_txt, email_txt, web_txt, open_txt, close_txt;
+    TextInputEditText shop_txt, add_txt, num_txt, what_txt, email_txt, web_txt, open_txt, close_txt,details;
     EditText locat_link, fb_link, insta_link, twit_link;
     TextView submit;
 
@@ -57,7 +58,6 @@ public class Add extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
-
         list_category = view.findViewById(R.id.list_category);
         list_subcategory = view.findViewById(R.id.list_subcategory);
         shop_txt = view.findViewById(R.id.shop_txt);
@@ -73,6 +73,7 @@ public class Add extends Fragment {
         insta_link = view.findViewById(R.id.insta_link);
         twit_link = view.findViewById(R.id.twit_link);
         submit = view.findViewById(R.id.submit);
+        details = view.findViewById(R.id.details);
 
         titles = new ArrayList<Category>();
         spin = new ArrayList<>();
@@ -93,6 +94,7 @@ public class Add extends Fragment {
                 String facebook = fb_link.getText().toString().trim();
                 String insta = insta_link.getText().toString().trim();
                 String twitter = twit_link.getText().toString().trim();
+                String description = details.getText().toString().trim();
 
                 HashMap<String, String> map = new HashMap<>();
                 map.put("action", "add_post");
@@ -103,6 +105,7 @@ public class Add extends Fragment {
                 map.put("mobile", mob_num);
                 map.put("whats_app", what_num);
                 map.put("email", email);
+                map.put("email", email);
                 map.put("website", web);
                 map.put("start_time", open_time);
                 map.put("end_time", close_time);
@@ -110,6 +113,7 @@ public class Add extends Fragment {
                 map.put("facebook", facebook);
                 map.put("instagram", insta);
                 map.put("twitter", twitter);
+                map.put("description", description);
                 RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
                 Call<ArrayList<AddPojo>> call = retrofitAPI.getadd_user(map);
                 call.enqueue(new Callback<ArrayList<AddPojo>>() {
@@ -130,9 +134,8 @@ public class Add extends Fragment {
                             fb_link.getText().clear();
                             insta_link.getText().clear();
                             twit_link.getText().clear();
+                            details.getText().clear();
                             Toast.makeText(getContext(), "Your shop added successfully, Thank you", Toast.LENGTH_SHORT).show();
-
-
                         }
                         System.out.println("======response :" + response);
                     }
@@ -197,10 +200,12 @@ public class Add extends Fragment {
                 if (i == 0) {
                     sub_category.clear();
                     spin_1.add(0, "Sub category");
+                    list_subcategory.setEnabled(false);
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spin_1);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     list_subcategory.setAdapter(adapter);
                 } else {
+                    list_subcategory.setEnabled(true);
                     sub_category.clear();
                     spin_1.clear();
                     subcategory(titles.get(i - 1).id);

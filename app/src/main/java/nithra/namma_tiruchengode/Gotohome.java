@@ -4,4 +4,5 @@ public interface Gotohome {
     void home();
     void register();
     void verify();
+    void enquiry();
 }

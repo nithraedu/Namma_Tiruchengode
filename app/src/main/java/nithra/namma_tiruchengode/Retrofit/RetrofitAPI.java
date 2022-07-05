@@ -49,4 +49,9 @@ public interface RetrofitAPI {
     @FormUrlEncoded
     @POST("data.php")
     Call<ArrayList<SearchPojo>> getsearch(@FieldMap HashMap<String, String> data);
+
+    @FormUrlEncoded
+    @POST("data.php")
+    Call<ArrayList<T_codePojo>> gettcode(@FieldMap HashMap<String, String> data);
+
 }
