@@ -105,7 +105,6 @@ public class Add extends Fragment {
                 map.put("mobile", mob_num);
                 map.put("whats_app", what_num);
                 map.put("email", email);
-                map.put("email", email);
                 map.put("website", web);
                 map.put("start_time", open_time);
                 map.put("end_time", close_time);

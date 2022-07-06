@@ -1,7 +1,11 @@
 package nithra.namma_tiruchengode;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +31,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     Title_Interface re_touch;
     String title;
 
+
     public ListAdapter(Context ctx,ArrayList<Sub_Category> titles,String tool_title) {
         this.inflater = LayoutInflater.from(ctx);
         this.titles = titles;
@@ -47,7 +52,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int pos=position;
+
         holder.cat_title.setText(titles.get(pos).subCategory);
+        //holder.count.setText(titles.get(pos).view_count);
+        System.out.println("checkcount"+titles.get(pos).view_count);
         Glide.with(context).load(titles.get(pos).subCategoryLogo)
                 .error(R.drawable.warning)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -62,6 +70,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 System.out.println("==check id"+titles.get(pos).getId());
                 context.startActivity(i);
                 re_touch.category();
+
             }
         });
     }
@@ -75,14 +84,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView cat_icon;
-        TextView cat_title;
+        TextView cat_title,count;
         LinearLayout list_click;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cat_icon = itemView.findViewById(R.id.cat_icon);
             cat_title = itemView.findViewById(R.id.cat_title);
             list_click=itemView.findViewById(R.id.list_click);
+            //count=itemView.findViewById(R.id.count);
+
         }
     }
 }

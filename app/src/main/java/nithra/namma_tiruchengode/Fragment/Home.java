@@ -95,7 +95,6 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -374,8 +373,8 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result_Main:" + result);
                     cat_main.addAll(response.body().get(1).getSlider());
-                    cat_main.addAll(response.body().get(1).getSlider());
-                    cat_main.addAll(response.body().get(1).getSlider());
+                 /*   cat_main.addAll(response.body().get(1).getSlider());
+                    cat_main.addAll(response.body().get(1).getSlider());*/
                     cat_banner.addAll(response.body().get(2).getBanner_slider());
                     titles.addAll(response.body().get(0).getCategory());
                     adapter.notifyDataSetChanged();

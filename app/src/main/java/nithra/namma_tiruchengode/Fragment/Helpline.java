@@ -147,7 +147,7 @@ public class Helpline extends Fragment {
             holder.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String phone = titles.get(0).getMobile().trim();
+                    String phone = titles.get(pos).getMobile().trim();
                     if (phone.equals("")) {
                         Utils_Class.toast_center(getContext(), "Mobile number not available");
                     } else {

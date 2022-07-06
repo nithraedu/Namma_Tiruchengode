@@ -52,6 +52,8 @@ public class Category_Full_View extends AppCompatActivity {
     RecyclerView list3;
     SliderView slide;
     LinearLayout time, mobile_call, owner_lay;
+    TextView btShowmore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,23 @@ public class Category_Full_View extends AppCompatActivity {
         close_time = findViewById(R.id.close_time);
         work_day = findViewById(R.id.work_day);
         time = findViewById(R.id.time);
+        btShowmore = findViewById(R.id.btShowmore);
+
+        btShowmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (btShowmore.getText().toString().equalsIgnoreCase("Show more...")) {
+                    description.setMaxLines(Integer.MAX_VALUE);//your TextView
+                    btShowmore.setText("Show less");
+                } else {
+                    description.setMaxLines(3);//your TextView
+                    btShowmore.setText("Show more...");
+                }
+            }
+        });
+
+
         titles = new ArrayList<Full_View>();
         images2 = new ArrayList<Full_View>();
         images3 = new ArrayList<Full_View>();
@@ -123,7 +142,7 @@ public class Category_Full_View extends AppCompatActivity {
                     images2.addAll(response.body());
 
                     String currentString = titles.get(0).getSliderImage();
-                    System.out.println("image_print" +titles.get(0).getSliderImage());
+                    System.out.println("image_print" + titles.get(0).getSliderImage());
                     String[] separated = currentString.split(",");
                     adapter2 = new AutoSlidingGalleryAdapter(Category_Full_View.this, images2, separated);
                     slide.setSliderAdapter(adapter2);
@@ -193,9 +212,17 @@ public class Category_Full_View extends AppCompatActivity {
                     if (titles.get(0).getDescription().trim().isEmpty()) {
                         description.setVisibility(View.GONE);
                     } else {
-                        description.setText(titles.get(0).getDescription()+"\n\nContact"+"\n"+titles.get(0).getMobile());
+                        description.setText(titles.get(0).getDescription() + "\n\nContact" + "\n" + titles.get(0).getMobile());
                         description.setVisibility(View.VISIBLE);
                     }
+
+
+                    if (description.getLineCount() > 3) {
+                        btShowmore.setVisibility(View.VISIBLE);
+                    } else {
+                        btShowmore.setVisibility(View.GONE);
+                    }
+
 
                   /*  cat_name.setText(titles.get(0).getSectorName());
                     text_address.setText(titles.get(0).getAddress());

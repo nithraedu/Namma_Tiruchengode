@@ -8,6 +8,10 @@ public class Sub_Category {
     @Expose
     public String id;
 
+    @SerializedName("view_count")
+    @Expose
+    public String view_count;
+
     @SerializedName("sub_category")
     @Expose
     public String subCategory;

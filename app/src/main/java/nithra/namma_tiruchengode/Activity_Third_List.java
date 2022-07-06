@@ -167,7 +167,7 @@ public class Activity_Third_List extends AppCompatActivity {
                 holder.work_day.setVisibility(View.VISIBLE);
             }*/
 
-            if (titles.get(pos).logo.trim().isEmpty()){
+           /* if (titles.get(pos).logo.trim().isEmpty()){
                 holder.cat_icon.setVisibility(View.GONE);
             }else {
                 Glide.with(context).load(titles.get(pos).logo)
@@ -175,16 +175,16 @@ public class Activity_Third_List extends AppCompatActivity {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(holder.cat_icon);
                 holder.cat_icon.setVisibility(View.VISIBLE);
-            }
+            }*/
           /*  holder.cat_title.setText(titles.get(pos).sectorName);
             holder.adderss.setText(titles.get(pos).address);
             holder.start_time.setText(titles.get(pos).openingTime);
             holder.close_time.setText(titles.get(pos).closingTime);
-            holder.work_day.setText(titles.get(pos).leaveDay);
+            holder.work_day.setText(titles.get(pos).leaveDay);*/
             Glide.with(context).load(titles.get(pos).logo)
                     .error(R.drawable.warning)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.cat_icon);*/
+                    .into(holder.cat_icon);
             holder.list_click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

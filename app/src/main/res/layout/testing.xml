@@ -278,14 +278,30 @@
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/description"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
-                    android:text="Nithra android development company"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:text="Nithra android development company "
+                        android:textColor="@color/black"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:id="@+id/btShowmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:text="Show more..."
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/holo_blue_light" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -411,7 +427,7 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="5dp"
                 android:background="#C5B9B9"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -465,7 +481,7 @@
                         android:layout_height="wrap_content"
                         android:text="-"
                         android:textColor="@color/black"
-                        android:textSize="20dp"/>
+                        android:textSize="20dp" />
 
                     <TextView
                         android:id="@+id/close_time"
@@ -664,6 +680,54 @@
 
             </LinearLayout>
 
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="Write your comments"
+                android:theme="@style/AppThemetextinput"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/black"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|left"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textMultiLine|textCapSentences"
+                    android:minHeight="100dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background4"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"
+                        android:textColor="@color/white"
+                        android:textSize="13dp" />
+                </LinearLayout>
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -679,7 +743,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
         </LinearLayout>
 
