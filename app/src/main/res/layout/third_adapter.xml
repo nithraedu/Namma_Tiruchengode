@@ -110,6 +110,21 @@
                             android:textSize="13dp" />
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_view_icon" />
+                    <TextView
+                        android:id="@+id/count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="count"
+                        android:textColor="@color/black" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/work_day"

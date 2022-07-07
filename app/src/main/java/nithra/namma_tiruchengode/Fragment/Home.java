@@ -61,6 +61,7 @@ import nithra.namma_tiruchengode.Retrofit.Category_Main;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
 import nithra.namma_tiruchengode.Retrofit.Slider;
+import nithra.namma_tiruchengode.SharedPreference;
 import nithra.namma_tiruchengode.Utils_Class;
 import nithra.namma_tiruchengode.autoimageslider.AutoSlidingImageAdapter;
 import nithra.namma_tiruchengode.autoimageslider.AutoSlidingImageAdapterNew;
@@ -88,6 +89,8 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     String versionName = BuildConfig.VERSION_NAME;
     DrawerLayout drawer;
     SliderView slide, slide_2;
+    SharedPreference sharedPreference = new SharedPreference();
+
 
     public Home() {
     }
@@ -483,6 +486,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                     i.putExtra("toolbartitle", titles.get(pos).category);
                     i.putExtra("id", pos);
                     i.putExtra("idd", titles.get(pos).id + 1);
+                    sharedPreference.putInt(getContext(),"key_send",pos);
                     startActivity(i);
                 }
             });

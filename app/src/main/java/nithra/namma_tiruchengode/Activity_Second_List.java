@@ -1,5 +1,6 @@
 package nithra.namma_tiruchengode;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +26,7 @@ import nithra.namma_tiruchengode.Retrofit.Category_Main;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
 import nithra.namma_tiruchengode.Retrofit.Sub_Category;
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,12 +37,14 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
     ArrayList<Sub_Category> sub_category;
     ArrayList<Category> titles;
     RecyclerView show_cat;
-    int pos;
+    int pos,key;
     String title;
     TextView cat_title;
     Intent intent;
     Bundle extra;
     ListAdapter adapter;
+    SharedPreference sharedPreference = new SharedPreference();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +58,10 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         intent = getIntent();
         extra = intent.getExtras();
         if (extra != null) {
-            title = extra.getString("toolbartitle");
+            //title = extra.getString("toolbartitle");
             pos = extra.getInt("id");
         }
+        key=sharedPreference.getInt(getApplicationContext(),"key_send");
         titles = new ArrayList<Category>();
         spin = new ArrayList<>();
         sub_category = new ArrayList<Sub_Category>();
@@ -66,7 +72,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         adapter = new ListAdapter(this, sub_category, title);
         show_cat.setAdapter(adapter);
         Utils_Class.mProgress(Activity_Second_List.this, "Loading please wait...", false).show();
-        subcategory(title);
+        //subcategory(title);
         category_1();
     }
 
@@ -99,6 +105,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "get_sub_category");
         map.put("category_id", pos);
+        System.out.println("print_map" +map);
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
         Call<ArrayList<Sub_Category>> call = retrofitAPI.getSubCategory(map);
         call.enqueue(new Callback<ArrayList<Sub_Category>>() {
@@ -126,7 +133,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
 
     public void spinner() {
         //spin.add(0, "All category");
-        for (int i=0;i<titles.size();i++){
+        for (int i = 0; i < titles.size(); i++) {
             spin.add(titles.get(i).category);
         }
       /*  for (int i = 0; i < MainActivity.titles.size(); i++) {
@@ -135,7 +142,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(Activity_Second_List.this, android.R.layout.simple_spinner_item, spin);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         list_category.setAdapter(adapter);
-        list_category.setSelection(pos);
+        list_category.setSelection(key);
         list_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -163,5 +170,24 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         if (extra != null) {
             title = extra.getString("titlechange");
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int LAUNCH_SECOND_ACTIVITY = 1;
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                category_1();
+                System.out.println("code pass"+resultCode);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // Write your code if there's no result
+                System.out.println("code fail"+resultCode);
+
+            }
+        }
+
     }
 }

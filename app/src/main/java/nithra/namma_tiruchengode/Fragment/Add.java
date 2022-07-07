@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +19,6 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import nithra.namma_tiruchengode.Enquiry.EnquiryMethod;
-import nithra.namma_tiruchengode.Enquiry.EnquiryPojo;
-import nithra.namma_tiruchengode.Enquiry.EnquiryRetrofitClient;
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.AddPojo;
 import nithra.namma_tiruchengode.Retrofit.Category;
@@ -30,6 +26,7 @@ import nithra.namma_tiruchengode.Retrofit.Category_Main;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
 import nithra.namma_tiruchengode.Retrofit.Sub_Category;
+import nithra.namma_tiruchengode.Utils_Class;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +37,7 @@ public class Add extends Fragment {
     Spinner list_category, list_subcategory;
     ArrayList<String> spin;
     ArrayList<String> spin_1;
-    TextInputEditText shop_txt, add_txt, num_txt, what_txt, email_txt, web_txt, open_txt, close_txt,details;
+    TextInputEditText shop_txt, add_txt, num_txt, what_txt, email_txt, web_txt, open_txt, close_txt, details;
     EditText locat_link, fb_link, insta_link, twit_link;
     TextView submit;
 
@@ -98,8 +95,8 @@ public class Add extends Fragment {
 
                 HashMap<String, String> map = new HashMap<>();
                 map.put("action", "add_post");
-                map.put("category", ""+list_category.getSelectedItemPosition());
-                map.put("sub_category", ""+list_category.getSelectedItemPosition());
+                map.put("category", "" + list_category.getSelectedItemPosition());
+                map.put("sub_category", "" + list_subcategory.getSelectedItemPosition());
                 map.put("sector_name", shop_name);
                 map.put("address", shop_add);
                 map.put("mobile", mob_num);
@@ -119,22 +116,39 @@ public class Add extends Fragment {
                     @Override
                     public void onResponse(Call<ArrayList<AddPojo>> call, Response<ArrayList<AddPojo>> response) {
                         if (response.isSuccessful()) {
-                            String result = new Gson().toJson(response.body());
-                            System.out.println("======response result:" + result);
-                            shop_txt.getText().clear();
-                            add_txt.getText().clear();
-                            num_txt.getText().clear();
-                            what_txt.getText().clear();
-                            email_txt.getText().clear();
-                            web_txt.getText().clear();
-                            open_txt.getText().clear();
-                            close_txt.getText().clear();
-                            locat_link.getText().clear();
-                            fb_link.getText().clear();
-                            insta_link.getText().clear();
-                            twit_link.getText().clear();
-                            details.getText().clear();
-                            Toast.makeText(getContext(), "Your shop added successfully, Thank you", Toast.LENGTH_SHORT).show();
+
+                            if (list_category.getSelectedItemPosition() == 0) {
+                                Utils_Class.toast_center(getContext(), "Please select category...");
+                            } else if (shop_name.equals("")) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
+                            } else if (shop_add.equals("")) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Your address...");
+                            } else if (mob_num.length() < 10) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
+                            } else if (what_num.length() < 10) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Correct Whatsapp Mobile Number...");
+                            } else if (email.equals("")) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
+                            } else if (description.equals("")) {
+                                Utils_Class.toast_center(getContext(), "Please Enter Your Details...");
+                            } else {
+                                String result = new Gson().toJson(response.body());
+                                System.out.println("======response result:" + result);
+                                shop_txt.getText().clear();
+                                add_txt.getText().clear();
+                                num_txt.getText().clear();
+                                what_txt.getText().clear();
+                                email_txt.getText().clear();
+                                web_txt.getText().clear();
+                                open_txt.getText().clear();
+                                close_txt.getText().clear();
+                                locat_link.getText().clear();
+                                fb_link.getText().clear();
+                                insta_link.getText().clear();
+                                twit_link.getText().clear();
+                                details.getText().clear();
+                                Toast.makeText(getContext(), "Your shop added successfully, Thank you", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         System.out.println("======response :" + response);
                     }

@@ -1,11 +1,9 @@
 package nithra.namma_tiruchengode;
 
-import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,21 +18,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import nithra.namma_tiruchengode.Retrofit.Sub_Category;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private LayoutInflater inflater;
-    ArrayList<Sub_Category> titles;
-    public Context context;
+    ArrayList<Sub_Category> sub_list;
+    public Activity context;
     Title_Interface re_touch;
     String title;
 
-
-    public ListAdapter(Context ctx,ArrayList<Sub_Category> titles,String tool_title) {
+    public ListAdapter(Activity ctx,ArrayList<Sub_Category> sub_list,String tool_title) {
         this.inflater = LayoutInflater.from(ctx);
-        this.titles = titles;
+        this.sub_list = sub_list;
         this.title=tool_title;
         this.context = ctx;
         re_touch=(Title_Interface) context;
@@ -53,23 +49,26 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int pos=position;
 
-        holder.cat_title.setText(titles.get(pos).subCategory);
-        //holder.count.setText(titles.get(pos).view_count);
-        System.out.println("checkcount"+titles.get(pos).view_count);
-        Glide.with(context).load(titles.get(pos).subCategoryLogo)
+        holder.cat_title.setText(sub_list.get(pos).subCategory);
+        holder.count.setText(sub_list.get(pos).view_count);
+        System.out.println("checkcount"+sub_list.get(pos).view_count);
+        Glide.with(context).load(sub_list.get(pos).subCategoryLogo)
                 .error(R.drawable.warning)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.cat_icon);
         holder.list_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int LAUNCH_SECOND_ACTIVITY = 1;
                 Intent i = new Intent(context, Activity_Third_List.class);
-                i.putExtra("list_title", titles.get(pos).subCategory);
+                i.putExtra("list_title", sub_list.get(pos).subCategory);
                 i.putExtra("id", pos);
-                i.putExtra("idd", titles.get(pos).getId());
-                System.out.println("==check id"+titles.get(pos).getId());
-                context.startActivity(i);
+                i.putExtra("idd", sub_list.get(pos).getId());
+                //i.putExtra("cont",sub_list.get(pos).view_count);
+                System.out.println("==check id"+sub_list.get(pos).getId());
+                context.startActivityForResult(i,LAUNCH_SECOND_ACTIVITY);
                 re_touch.category();
+
 
             }
         });
@@ -79,7 +78,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return titles.size();
+        return sub_list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,7 +90,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             cat_icon = itemView.findViewById(R.id.cat_icon);
             cat_title = itemView.findViewById(R.id.cat_title);
             list_click=itemView.findViewById(R.id.list_click);
-            //count=itemView.findViewById(R.id.count);
+            count=itemView.findViewById(R.id.count);
 
         }
     }

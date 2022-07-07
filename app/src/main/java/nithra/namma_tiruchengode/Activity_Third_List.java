@@ -1,6 +1,6 @@
 package nithra.namma_tiruchengode;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,6 +43,8 @@ public class Activity_Third_List extends AppCompatActivity {
     String idd;
     String list_title, title;
     ArrayList<Third_Category> third_category;
+    SharedPreference sharedPreference = new SharedPreference();
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +70,7 @@ public class Activity_Third_List extends AppCompatActivity {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
         show_cat.setLayoutManager(gridLayoutManager);
-        adapter = new ListAdapter_1(this, third_category, title);
-        show_cat.setAdapter(adapter);
+
         Utils_Class.mProgress(this, "Loading please wait...", false).show();
         third_category();
     }
@@ -77,6 +79,7 @@ public class Activity_Third_List extends AppCompatActivity {
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "get_post");
         map.put("sub_category", idd);
+        System.out.println("mapping" + map);
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
         Call<ArrayList<Third_Category>> call = retrofitAPI.getThirdCategory(map);
         System.out.println("======map:" + map);
@@ -87,6 +90,7 @@ public class Activity_Third_List extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
+                    third_category.clear();
                     third_category.addAll(response.body());
                     /*if (third_category.isEmpty()){
                         show_cat.setVisibility(View.GONE);
@@ -95,7 +99,8 @@ public class Activity_Third_List extends AppCompatActivity {
                         show_cat.setVisibility(View.VISIBLE);
                         nodata.setVisibility(View.GONE);
                     }*/
-                    adapter.notifyDataSetChanged();
+                    adapter = new ListAdapter_1(Activity_Third_List.this, third_category, title);
+                    show_cat.setAdapter(adapter);
                     Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
@@ -111,10 +116,10 @@ public class Activity_Third_List extends AppCompatActivity {
     public class ListAdapter_1 extends RecyclerView.Adapter<ListAdapter_1.ViewHolder> {
         private LayoutInflater inflater;
         ArrayList<Third_Category> titles;
-        public Context context;
+        public Activity context;
         String title;
 
-        public ListAdapter_1(Context ctx, ArrayList<Third_Category> titles, String tool_title) {
+        public ListAdapter_1(Activity ctx, ArrayList<Third_Category> titles, String tool_title) {
             this.inflater = LayoutInflater.from(ctx);
             this.titles = titles;
             this.title = tool_title;
@@ -156,7 +161,7 @@ public class Activity_Third_List extends AppCompatActivity {
             if (titles.get(pos).closingTime.trim().isEmpty()) {
                 holder.close_time.setVisibility(View.GONE);
             } else {
-                holder.close_time.setText("Closes "+titles.get(pos).closingTime);
+                holder.close_time.setText("Closes " + titles.get(pos).closingTime);
                 holder.close_time.setVisibility(View.VISIBLE);
             }
 
@@ -188,13 +193,15 @@ public class Activity_Third_List extends AppCompatActivity {
             holder.list_click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    int LAUNCH_SECOND_ACTIVITY = 1;
                     Intent i = new Intent(context, Category_Full_View.class);
                     i.putExtra("list_title", titles.get(pos).sectorName);
                     i.putExtra("id", pos);
                     i.putExtra("idd", titles.get(pos).getId());
-                    context.startActivity(i);
+                    context.startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
                 }
             });
+            holder.count.setText(titles.get(pos).view_count);
         }
 
 
@@ -205,7 +212,7 @@ public class Activity_Third_List extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             ImageView cat_icon;
-            TextView cat_title, adderss, start_time, close_time, work_day;
+            TextView cat_title, adderss, start_time, close_time, work_day, count;
             LinearLayout list_click;
 
             public ViewHolder(@NonNull View itemView) {
@@ -217,8 +224,33 @@ public class Activity_Third_List extends AppCompatActivity {
                 start_time = itemView.findViewById(R.id.start_time);
                 close_time = itemView.findViewById(R.id.close_time);
                 work_day = itemView.findViewById(R.id.work_day);
+                count = itemView.findViewById(R.id.count);
             }
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int LAUNCH_SECOND_ACTIVITY = 1;
+        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
+                third_category();
+                System.out.println("code pass" + resultCode);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // Write your code if there's no result
+                System.out.println("code fail" + resultCode);
+
+            }
+        }
+
+    }
 }

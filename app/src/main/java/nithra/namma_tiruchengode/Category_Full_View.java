@@ -1,5 +1,6 @@
 package nithra.namma_tiruchengode;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -466,6 +467,13 @@ public class Category_Full_View extends AppCompatActivity {
                 gridImage = itemView.findViewById(R.id.imageGrid);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 
 }

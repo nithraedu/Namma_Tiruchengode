@@ -14,6 +14,9 @@ public class Third_Category {
     @SerializedName("sector_name")
     @Expose
     public String sectorName;
+    @SerializedName("view_count")
+    @Expose
+    public String view_count;
     @SerializedName("opening_time")
     @Expose
     public String openingTime;
