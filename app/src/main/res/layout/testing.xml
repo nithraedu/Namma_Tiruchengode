@@ -454,14 +454,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/time"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/time_bg"
                     android:orientation="horizontal">
@@ -469,7 +470,7 @@
                     <TextView
                         android:id="@+id/start_time"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="08:50"
@@ -486,25 +487,31 @@
                     <TextView
                         android:id="@+id/close_time"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="04:00"
                         android:textColor="@color/black"
                         android:textSize="15dp" />
                 </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="3dp"
+                    android:background="@color/day_bg"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
                 <TextView
                     android:id="@+id/work_day"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/day_bg"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="All day"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

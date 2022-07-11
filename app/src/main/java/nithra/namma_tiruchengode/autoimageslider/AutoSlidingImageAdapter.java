@@ -44,11 +44,15 @@ public class AutoSlidingImageAdapter extends SliderViewAdapter<SliderViewAdapter
             SliderAdapterVHnew viewHolder = (SliderAdapterVHnew) holder;
        // viewHolder.slide_mat.setImageResource(images.get(position));
         int pos = position;
-        Glide.with(context).load(images.get(pos).getBanner_slider_image())
-                .error(R.drawable.tiruchengode)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(viewHolder.slide_mat);
-
+        if(images.get(pos).getBanner_slider_image().isEmpty()){
+            ((SliderAdapterVHnew) holder).slide_mat.setVisibility(View.GONE);
+        }
+        else {
+            Glide.with(context).load(images.get(pos).getBanner_slider_image())
+                    .error(R.drawable.tiruchengode)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(viewHolder.slide_mat);
+        }
     }
 
     @Override

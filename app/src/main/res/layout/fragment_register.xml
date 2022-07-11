@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_percent=".6"
-        app:layout_constraintHeight_percent=".3"
+        app:layout_constraintHeight_percent=".25"
         android:background="@drawable/ic_otp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"

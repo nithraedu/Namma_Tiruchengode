@@ -3,6 +3,7 @@ package nithra.namma_tiruchengode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 
@@ -37,7 +39,8 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
     ArrayList<Sub_Category> sub_category;
     ArrayList<Category> titles;
     RecyclerView show_cat;
-    int pos,key;
+    int pos,key,pos1;
+    int spinPosition=-1;
     String title;
     TextView cat_title;
     Intent intent;
@@ -55,11 +58,13 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         list_category = findViewById(R.id.list_category);
         show_cat = findViewById(R.id.show_cat);
         cat_title = findViewById(R.id.cat_title);
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
         intent = getIntent();
         extra = intent.getExtras();
         if (extra != null) {
             //title = extra.getString("toolbartitle");
             pos = extra.getInt("id");
+            pos1 = extra.getInt("idd");
         }
         key=sharedPreference.getInt(getApplicationContext(),"key_send");
         titles = new ArrayList<Category>();
@@ -74,6 +79,16 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         Utils_Class.mProgress(Activity_Second_List.this, "Loading please wait...", false).show();
         //subcategory(title);
         category_1();
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //list.setAdapter(adapter);// your code
+              /*  titles.clear();
+                spin.clear();
+                category_1();*/
+                pullToRefresh.setRefreshing(false);
+            }
+        });
     }
 
     public void category_1() {
@@ -87,6 +102,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
+                    titles.clear();
                     titles.addAll(response.body().get(0).getCategory());
                     spinner();
                     adapter.notifyDataSetChanged();
@@ -139,6 +155,8 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
       /*  for (int i = 0; i < MainActivity.titles.size(); i++) {
             spin.add(MainActivity.titles.get(i).category);
         }*/
+
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(Activity_Second_List.this, android.R.layout.simple_spinner_item, spin);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         list_category.setAdapter(adapter);
@@ -147,6 +165,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 cat_title.setText(titles.get(i).category);
+                spinPosition=i;
                 subcategory(titles.get(i).getId());
             }
 
@@ -179,7 +198,11 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
         int LAUNCH_SECOND_ACTIVITY = 1;
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                category_1();
+                //category_1();
+                //category_1();
+                Log.i("test_pos", "pos  : " + pos);
+                Log.i("test_pos", "pos1 : " + pos1);
+                subcategory(titles.get(spinPosition).getId());
                 System.out.println("code pass"+resultCode);
             }
             if (resultCode == Activity.RESULT_CANCELED) {

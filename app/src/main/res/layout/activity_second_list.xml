@@ -51,11 +51,16 @@
         android:layout_marginBottom="10dp"/>
     </LinearLayout>
     </LinearLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/show_cat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/list_data" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <TextView
         android:id="@+id/nodata"
         android:layout_width="match_parent"

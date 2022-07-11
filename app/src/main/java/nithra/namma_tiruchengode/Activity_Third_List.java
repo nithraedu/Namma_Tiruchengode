@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -55,6 +56,7 @@ public class Activity_Third_List extends AppCompatActivity {
         show_cat = findViewById(R.id.show_cat);
         cat_title = findViewById(R.id.cat_title);
         nodata = findViewById(R.id.nodata);
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
         intent = getIntent();
         extra = intent.getExtras();
         linear.setVisibility(View.GONE);
@@ -73,6 +75,14 @@ public class Activity_Third_List extends AppCompatActivity {
 
         Utils_Class.mProgress(this, "Loading please wait...", false).show();
         third_category();
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //list.setAdapter(adapter);// your code
+
+                pullToRefresh.setRefreshing(false);
+            }
+        });
     }
 
     public void third_category() {
@@ -111,6 +121,7 @@ public class Activity_Third_List extends AppCompatActivity {
                 System.out.println("======response t:" + t);
             }
         });
+
     }
 
     public class ListAdapter_1 extends RecyclerView.Adapter<ListAdapter_1.ViewHolder> {

@@ -1,6 +1,8 @@
 package nithra.namma_tiruchengode.Fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,8 @@ public class Add extends Fragment {
     TextInputEditText shop_txt, add_txt, num_txt, what_txt, email_txt, web_txt, open_txt, close_txt, details;
     EditText locat_link, fb_link, insta_link, twit_link;
     TextView submit;
+    String spin_id1, spin_id2;
+    String shop_name, shop_add, mob_num, what_num, email, description, web, open_time, close_time, location, facebook, insta, twitter;
 
     public Add() {
     }
@@ -76,94 +80,154 @@ public class Add extends Fragment {
         spin = new ArrayList<>();
         spin_1 = new ArrayList<>();
         sub_category = new ArrayList<Sub_Category>();
+
+        category_1();
+
+
+
+       /* email_txt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                String email = email_txt.getText().toString().trim();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if (email.matches(emailPattern) && s.length() > 0)
+                {
+                    Toast.makeText(getContext(),"valid email address",Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Invalid email address",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+*/
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shop_name = shop_txt.getText().toString().trim();
-                String shop_add = add_txt.getText().toString().trim();
-                String mob_num = num_txt.getText().toString().trim();
-                String what_num = what_txt.getText().toString().trim();
-                String email = email_txt.getText().toString().trim();
-                String web = web_txt.getText().toString().trim();
-                String open_time = open_txt.getText().toString().trim();
-                String close_time = close_txt.getText().toString().trim();
-                String location = locat_link.getText().toString().trim();
-                String facebook = fb_link.getText().toString().trim();
-                String insta = insta_link.getText().toString().trim();
-                String twitter = twit_link.getText().toString().trim();
-                String description = details.getText().toString().trim();
+                shop_name = shop_txt.getText().toString().trim();
+                shop_add = add_txt.getText().toString().trim();
+                mob_num = num_txt.getText().toString().trim();
+                what_num = what_txt.getText().toString().trim();
+                email = email_txt.getText().toString().trim();
+                web = web_txt.getText().toString().trim();
+                open_time = open_txt.getText().toString().trim();
+                close_time = close_txt.getText().toString().trim();
+                location = locat_link.getText().toString().trim();
+                facebook = fb_link.getText().toString().trim();
+                insta = insta_link.getText().toString().trim();
+                twitter = twit_link.getText().toString().trim();
+                description = details.getText().toString().trim();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+               /* if (email.matches(emailPattern))
+                {
+                    Toast.makeText(getContext(),"valid email address",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
+                }*/
 
-                HashMap<String, String> map = new HashMap<>();
-                map.put("action", "add_post");
-                map.put("category", "" + list_category.getSelectedItemPosition());
-                map.put("sub_category", "" + list_subcategory.getSelectedItemPosition());
-                map.put("sector_name", shop_name);
-                map.put("address", shop_add);
-                map.put("mobile", mob_num);
-                map.put("whats_app", what_num);
-                map.put("email", email);
-                map.put("website", web);
-                map.put("start_time", open_time);
-                map.put("end_time", close_time);
-                map.put("location", location);
-                map.put("facebook", facebook);
-                map.put("instagram", insta);
-                map.put("twitter", twitter);
-                map.put("description", description);
-                RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
-                Call<ArrayList<AddPojo>> call = retrofitAPI.getadd_user(map);
-                call.enqueue(new Callback<ArrayList<AddPojo>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<AddPojo>> call, Response<ArrayList<AddPojo>> response) {
-                        if (response.isSuccessful()) {
 
-                            if (list_category.getSelectedItemPosition() == 0) {
-                                Utils_Class.toast_center(getContext(), "Please select category...");
-                            } else if (shop_name.equals("")) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
-                            } else if (shop_add.equals("")) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Your address...");
-                            } else if (mob_num.length() < 10) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
-                            } else if (what_num.length() < 10) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Correct Whatsapp Mobile Number...");
-                            } else if (email.equals("")) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
-                            } else if (description.equals("")) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Your Details...");
-                            } else {
-                                String result = new Gson().toJson(response.body());
-                                System.out.println("======response result:" + result);
-                                shop_txt.getText().clear();
-                                add_txt.getText().clear();
-                                num_txt.getText().clear();
-                                what_txt.getText().clear();
-                                email_txt.getText().clear();
-                                web_txt.getText().clear();
-                                open_txt.getText().clear();
-                                close_txt.getText().clear();
-                                locat_link.getText().clear();
-                                fb_link.getText().clear();
-                                insta_link.getText().clear();
-                                twit_link.getText().clear();
-                                details.getText().clear();
-                                Toast.makeText(getContext(), "Your shop added successfully, Thank you", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        System.out.println("======response :" + response);
-                    }
+                if (list_category.getSelectedItemPosition() == 0) {
+                    Utils_Class.toast_center(getContext(), "Please select category...");
+                } else if (shop_name.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
+                } else if (shop_add.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your address...");
+                } else if (mob_num.length() < 10) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
+                } else if (what_num.length() < 10) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Correct Whatsapp Mobile Number...");
+                } else if (email.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
+                }else if (!email.matches(emailPattern)){
+                    Toast.makeText(getContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
+                }else if (description.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Details...");
+                } else {
 
-                    @Override
-                    public void onFailure(Call<ArrayList<AddPojo>> call, Throwable t) {
-                        System.out.println("======response t:" + t);
-                    }
-                });
+                    submit_res();
+
+                }
 
             }
         });
 
-        category_1();
         return view;
+
+    }
+
+
+    public void submit_res() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("action", "add_post");
+        map.put("category", "" + spin_id1);
+        map.put("sub_category", "" + spin_id2);
+        map.put("sector_name", shop_name);
+        map.put("address", shop_add);
+        map.put("mobile", mob_num);
+        map.put("whats_app", what_num);
+        map.put("email", email);
+        map.put("website", web);
+        map.put("start_time", open_time);
+        map.put("end_time", close_time);
+        map.put("location", location);
+        map.put("facebook", facebook);
+        map.put("instagram", insta);
+        map.put("twitter", twitter);
+        map.put("description", description);
+
+
+        RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
+        Call<ArrayList<AddPojo>> call = retrofitAPI.getadd_user(map);
+        call.enqueue(new Callback<ArrayList<AddPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<AddPojo>> call, Response<ArrayList<AddPojo>> response) {
+                if (response.isSuccessful()) {
+                    String result = new Gson().toJson(response.body());
+                    System.out.println("======response result:" + result);
+                    if (response.body().get(0).getStatus().equals("Success")) {
+                        /* list_category.setSelection(0);
+                       list_subcategory.setSelection(0);*/
+                        shop_txt.getText().clear();
+                        add_txt.getText().clear();
+                        num_txt.getText().clear();
+                        what_txt.getText().clear();
+                        email_txt.getText().clear();
+                        web_txt.getText().clear();
+                        open_txt.getText().clear();
+                        close_txt.getText().clear();
+                        locat_link.getText().clear();
+                        fb_link.getText().clear();
+                        insta_link.getText().clear();
+                        twit_link.getText().clear();
+                        details.getText().clear();
+                        Toast.makeText(getContext(), "Your shop added successfully, Thank you", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                System.out.println("======response :" + response);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<AddPojo>> call, Throwable t) {
+                System.out.println("======response t:" + t);
+            }
+        });
+
 
     }
 
@@ -210,6 +274,9 @@ public class Add extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
              /*   cat_title.setText(titles.get(i).category);
                 subcategory(titles.get(i).getId());*/
+                if (i != 0) {
+                    spin_id1 = titles.get(i - 1).getId();
+                }
                 if (i == 0) {
                     sub_category.clear();
                     spin_1.add(0, "Sub category");
@@ -285,6 +352,8 @@ public class Add extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
              /*   cat_title.setText(titles.get(i).category);
                 subcategory(titles.get(i).getId());*/
+                spin_id2 = sub_category.get(i).getId();
+
             }
 
             @Override

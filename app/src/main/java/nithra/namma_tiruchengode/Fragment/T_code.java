@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -50,6 +51,7 @@ public class T_code extends Fragment {
         View view = inflater.inflate(R.layout.fragment_t_code, container, false);
         recycle = view.findViewById(R.id.recycle);
         tcode = new ArrayList<T_codePojo>();
+        final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.pullToRefresh);
 
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
@@ -58,6 +60,15 @@ public class T_code extends Fragment {
         recycle.setAdapter(adapter);
         Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
         tcode();
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //list.setAdapter(adapter);// your code
+                tcode.clear();
+                tcode();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
         return view;
     }
 

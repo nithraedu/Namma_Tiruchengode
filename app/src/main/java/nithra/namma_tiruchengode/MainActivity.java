@@ -1,7 +1,6 @@
 package nithra.namma_tiruchengode;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     SharedPreference sharedPreference = new SharedPreference();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.app_lay);
 
         pref = getSharedPreferences("register", Context.MODE_PRIVATE);
-        System.out.println("=print="+pref.getInt("yes", 0));
+        System.out.println("=print=" + pref.getInt("yes", 0));
         System.out.println("android_id" + Utils_Class.android_id(this));
 
 
@@ -148,37 +146,50 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             switch (item.getItemId()) {
                 case R.id.bottom_home:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, firstFragment).commit();
-                    viewpager2.setCurrentItem(0,false);
+                    viewpager2.setCurrentItem(0, false);
                     return true;
 
                 case R.id.bottom_city:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
-                    viewpager2.setCurrentItem(6,false);
+                    viewpager2.setCurrentItem(6, false);
 
                     return true;
                 case R.id.bottom_shop:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
 
-                    if (sharedPreference.getInt(getApplicationContext(),"yes") == 0) {
-                        viewpager2.setCurrentItem(4,false);
+                    if (sharedPreference.getInt(getApplicationContext(), "yes") == 0) {
+                        viewpager2.setCurrentItem(4, false);
 
-                    }else {
-                        viewpager2.setCurrentItem(3,false);
+                    } else {
+                        viewpager2.setCurrentItem(3, false);
                     }
                     return true;
 
                 case R.id.bottom_helpline:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
-                    viewpager2.setCurrentItem(2,false);
+                    viewpager2.setCurrentItem(2, false);
                     return true;
 
                 case R.id.bottom_enquiry:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, thirdFragment).commit();
-                    viewpager2.setCurrentItem(1,false);
+                    viewpager2.setCurrentItem(1, false);
                     return true;
             }
             return false;
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (viewpager2.getCurrentItem() != 0 && viewpager2.getCurrentItem() != 5) {
+            viewpager2.setCurrentItem(0, false);
+            bottomnavigationview.getMenu().getItem(0).setChecked(true);
+        } else if (viewpager2.getCurrentItem() == 5) {
+            viewpager2.setCurrentItem(4, false);
+        } else {
+            finish();
+        }
     }
 
     @Override
@@ -188,24 +199,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void home() {
-        viewpager2.setCurrentItem(0,false);
+        viewpager2.setCurrentItem(0, false);
         bottomnavigationview.getMenu().getItem(0).setChecked(true);
     }
 
     @Override
     public void register() {
-        viewpager2.setCurrentItem(3,false);
+        viewpager2.setCurrentItem(3, false);
     }
 
     @Override
     public void verify() {
-        viewpager2.setCurrentItem(5,false);
+        viewpager2.setCurrentItem(5, false);
 
     }
 
     @Override
     public void enquiry() {
-        viewpager2.setCurrentItem(1,false);
+        viewpager2.setCurrentItem(1, false);
     }
 
    /* @Override
@@ -231,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             Utils.toast_normal(MainActivity.this, "Not Available in playstore");
 
-        } else if (id == R.id.nav_feedback) {
+            } else if (id == R.id.nav_feedback) {
             feedback();
 
         } else if (id == R.id.nav_policy) {

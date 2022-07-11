@@ -30,6 +30,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -134,6 +135,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         name = v.findViewById(R.id.name);
         code.setText("" + versionCode);
         name.setText(versionName);
+        final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.pullToRefresh);
 
         cat_main = new ArrayList<Slider>();
         cat_banner = new ArrayList<BannerSlider>();
@@ -184,6 +186,15 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
 
         Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
         category_main();
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //list.setAdapter(adapter);// your code
+                titles.clear();
+                category_main();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override

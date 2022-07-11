@@ -3,6 +3,7 @@ package nithra.namma_tiruchengode.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import nithra.namma_tiruchengode.Gotohome;
 import nithra.namma_tiruchengode.R;
@@ -63,13 +65,11 @@ public class Register extends Fragment {
         home = (Gotohome) getContext();
         otp_gene = new ArrayList<OtpGenerate>();
 
-
         get_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 otp_generate();
+                sharedPreference.putString(getContext(), "resend", "" +number);
                 /*SharedPreferences.Editor editor=pref.edit();
                 if (name.equals("nithra") && number.equals("0123456789"))
                 {

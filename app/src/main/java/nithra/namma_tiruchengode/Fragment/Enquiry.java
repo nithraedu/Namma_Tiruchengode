@@ -30,7 +30,7 @@ public class Enquiry extends Fragment {
     TextInputEditText name, contact_number, email, enquiry;
     TextView submit;
     Gotohome home;
-
+    String cus_name,cus_contact_number,cus_email,cus_enquiry;
     public Enquiry() {
     }
 
@@ -57,57 +57,64 @@ public class Enquiry extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cus_name = name.getText().toString().trim();
-                String cus_contact_number = contact_number.getText().toString().trim();
-                String cus_email = email.getText().toString().trim();
-                String cus_enquiry = enquiry.getText().toString().trim();
+                 cus_name = name.getText().toString().trim();
+                 cus_contact_number = contact_number.getText().toString().trim();
+                 cus_email = email.getText().toString().trim();
+                 cus_enquiry = enquiry.getText().toString().trim();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-
-
-
-                HashMap<String, String> map = new HashMap<>();
-                map.put("action","set_enquiry");
-                map.put("name", cus_name);
-                map.put("contact_number", cus_contact_number);
-                map.put("email", cus_email);
-                map.put("enquiry", cus_enquiry);
-                EnquiryMethod enquiryMethod = EnquiryRetrofitClient.getRetrofit().create(EnquiryMethod.class);
-                Call<ArrayList<EnquiryPojo>> call = enquiryMethod.getEnquiry(map);
-                call.enqueue(new Callback<ArrayList<EnquiryPojo>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<EnquiryPojo>> call, Response<ArrayList<EnquiryPojo>> response) {
-                        if (response.isSuccessful()) {
-                            if (cus_name.equals("")) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
-                            } else if (cus_contact_number.length() < 10) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
-                            } else if (cus_email.equals("")) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
-                            } else if (cus_enquiry.equals("")) {
-                                Utils_Class.toast_center(getContext(), "Please Enter Your enquiry...");
-                            }else {
-                                String result = new Gson().toJson(response.body());
-                                System.out.println("======response result:" + result);
-                                name.getText().clear();
-                                contact_number.getText().clear();
-                                email.getText().clear();
-                                enquiry.getText().clear();
-                                Toast.makeText(getContext(), "Enquiry sent, Thank you", Toast.LENGTH_SHORT).show();
-                                home.home();
-                            }
-                        }
-                        System.out.println("======response :" + response);
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<EnquiryPojo>> call, Throwable t) {
-                        System.out.println("======response t:" + t);
-                    }
-                });
-
+                if (cus_name.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
+                } else if (cus_contact_number.length() < 10) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
+                } else if (cus_email.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
+                }else if (!cus_email.matches(emailPattern)){
+                    Toast.makeText(getContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
+                }  else if (cus_enquiry.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your enquiry...");
+                }else{
+                    submit_res();;
+                }
             }
         });
 
         return view;
     }
+
+
+    public void submit_res(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("action","set_enquiry");
+        map.put("name", cus_name);
+        map.put("contact_number", cus_contact_number);
+        map.put("email", cus_email);
+        map.put("enquiry", cus_enquiry);
+        EnquiryMethod enquiryMethod = EnquiryRetrofitClient.getRetrofit().create(EnquiryMethod.class);
+        Call<ArrayList<EnquiryPojo>> call = enquiryMethod.getEnquiry(map);
+        call.enqueue(new Callback<ArrayList<EnquiryPojo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<EnquiryPojo>> call, Response<ArrayList<EnquiryPojo>> response) {
+                if (response.isSuccessful()) {
+                        String result = new Gson().toJson(response.body());
+                        System.out.println("======response result:" + result);
+                    if (response.body().get(0).getStatus().equals("Success")) {
+                        name.getText().clear();
+                        contact_number.getText().clear();
+                        email.getText().clear();
+                        enquiry.getText().clear();
+                        Toast.makeText(getContext(), "Enquiry sent, Thank you", Toast.LENGTH_SHORT).show();
+                        home.home();
+                    }
+                }
+                System.out.println("======response :" + response);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<EnquiryPojo>> call, Throwable t) {
+                System.out.println("======response t:" + t);
+            }
+        });
+    }
+
 }

@@ -107,7 +107,7 @@
                         android:layout_gravity="center"
                         android:imeOptions="actionDone"
                         android:minLines="1"
-                        android:inputType="textCapSentences" />
+                        android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
@@ -55,6 +56,7 @@ public class Helpline extends Fragment {
         View view = inflater.inflate(R.layout.fragment_helpline, container, false);
         recycle = view.findViewById(R.id.recycle);
         name_txt = view.findViewById(R.id.name_txt);
+        final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.pullToRefresh);
 
         titles = new ArrayList<Helplinepojo>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
@@ -74,12 +76,10 @@ public class Helpline extends Fragment {
                     if (titles.get(i).helplineCategory.toLowerCase(Locale.ROOT).contains(s.toString().toLowerCase(Locale.ROOT))) {
                         tempHistoryList.add(titles.get(i));
                         System.out.println("listprint" + titles.get(i).helplineCategory);
-
                     }
                 }
                 adapter = new Help_Adapter(getContext(), tempHistoryList);
                 recycle.setAdapter(adapter);
-
             }
 
             @Override
@@ -89,6 +89,15 @@ public class Helpline extends Fragment {
         });
         Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
         help();
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //list.setAdapter(adapter);// your code
+                titles.clear();
+                help();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
         return view;
     }
 
