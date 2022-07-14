@@ -45,6 +45,7 @@ public class Activity_Search extends AppCompatActivity {
     RecyclerView search_list;
     String title;
     String idd;
+    TextView nodata;
 
 
     @Override
@@ -56,6 +57,7 @@ public class Activity_Search extends AppCompatActivity {
         search_view = findViewById(R.id.search_view);
         name_txt = findViewById(R.id.name_txt);
         search_list = findViewById(R.id.search_list);
+        nodata = findViewById(R.id.nodata);
         search_view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -72,6 +74,9 @@ public class Activity_Search extends AppCompatActivity {
         adapter = new ListAdapter_1(this, searchlist, title);
         search_list.setAdapter(adapter);
 
+
+
+
         name_txt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -86,10 +91,18 @@ public class Activity_Search extends AppCompatActivity {
                     if (searchlist.get(i).sectorName.toLowerCase(Locale.ROOT).contains(s.toString().toLowerCase(Locale.ROOT))) {
                         tempHistoryList.add(searchlist.get(i));
                         System.out.println("listprint"   +searchlist.get(i).sectorName);
+
+                    }
+                    if (tempHistoryList.size()==0) {
+                        search_list.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        nodata.setVisibility(View.GONE);
+                        search_list.setVisibility(View.VISIBLE);
                     }
                 }
                 adapter = new ListAdapter_1(Activity_Search.this, tempHistoryList, title);
-
                 search_list.setAdapter(adapter);
 
             }
@@ -102,6 +115,7 @@ public class Activity_Search extends AppCompatActivity {
 
         Utils_Class.mProgress(this, "Loading please wait...", false).show();
         search_category();
+
     }
 
 
@@ -162,6 +176,7 @@ public class Activity_Search extends AppCompatActivity {
             holder.adderss.setText(titles.get(pos).address);
             Glide.with(context).load(titles.get(pos).logo)
                     .error(R.drawable.warning)
+                    .placeholder(R.drawable.warning)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.cat_icon);
             holder.list_click.setOnClickListener(new View.OnClickListener() {

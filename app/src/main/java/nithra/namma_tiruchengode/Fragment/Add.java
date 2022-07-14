@@ -1,8 +1,6 @@
 package nithra.namma_tiruchengode.Fragment;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +39,7 @@ public class Add extends Fragment {
     ArrayList<String> spin_1;
     TextInputEditText shop_txt, add_txt, num_txt, what_txt, email_txt, web_txt, open_txt, close_txt, details;
     EditText locat_link, fb_link, insta_link, twit_link;
-    TextView submit;
+    TextView submit, cancel;
     String spin_id1, spin_id2;
     String shop_name, shop_add, mob_num, what_num, email, description, web, open_time, close_time, location, facebook, insta, twitter;
 
@@ -74,6 +72,7 @@ public class Add extends Fragment {
         insta_link = view.findViewById(R.id.insta_link);
         twit_link = view.findViewById(R.id.twit_link);
         submit = view.findViewById(R.id.submit);
+        cancel = view.findViewById(R.id.cancel);
         details = view.findViewById(R.id.details);
 
         titles = new ArrayList<Category>();
@@ -143,6 +142,8 @@ public class Add extends Fragment {
 
                 if (list_category.getSelectedItemPosition() == 0) {
                     Utils_Class.toast_center(getContext(), "Please select category...");
+                } else if (list_subcategory.getSelectedItemPosition() == 0) {
+                    Utils_Class.toast_center(getContext(), "Please select Subcategory...");
                 } else if (shop_name.equals("")) {
                     Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
                 } else if (shop_add.equals("")) {
@@ -153,9 +154,9 @@ public class Add extends Fragment {
                     Utils_Class.toast_center(getContext(), "Please Enter Correct Whatsapp Mobile Number...");
                 } else if (email.equals("")) {
                     Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
-                }else if (!email.matches(emailPattern)){
-                    Toast.makeText(getContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
-                }else if (description.equals("")) {
+                } else if (!email.matches(emailPattern)) {
+                    Toast.makeText(getContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                } else if (description.equals("")) {
                     Utils_Class.toast_center(getContext(), "Please Enter Your Details...");
                 } else {
 
@@ -163,6 +164,14 @@ public class Add extends Fragment {
 
                 }
 
+            }
+        });
+
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clear();
             }
         });
 
@@ -200,8 +209,10 @@ public class Add extends Fragment {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
                     if (response.body().get(0).getStatus().equals("Success")) {
-                        /* list_category.setSelection(0);
-                       list_subcategory.setSelection(0);*/
+                        list_category.setSelection(0);
+                        //list_subcategory.setSelection(0);
+                        spin_1.clear();
+                        list_subcategory.setEnabled(false);
                         shop_txt.getText().clear();
                         add_txt.getText().clear();
                         num_txt.getText().clear();
@@ -334,7 +345,7 @@ public class Add extends Fragment {
     }
 
     public void spinner_1() {
-        //spin_1.add(0, "Sub category");
+        spin_1.add(0, "Sub category");
         for (int i = 0; i < sub_category.size(); i++) {
             spin_1.add(sub_category.get(i).subCategory);
         }
@@ -352,8 +363,9 @@ public class Add extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
              /*   cat_title.setText(titles.get(i).category);
                 subcategory(titles.get(i).getId());*/
-                spin_id2 = sub_category.get(i).getId();
-
+                if (i != 0) {
+                    spin_id2 = sub_category.get(i - 1).getId();
+                }
             }
 
             @Override
@@ -363,6 +375,25 @@ public class Add extends Fragment {
         });
         adapter.notifyDataSetChanged();
 
+    }
+
+    public void clear() {
+        list_category.setSelection(0);
+        spin_1.clear();
+        list_subcategory.setEnabled(false);
+        shop_txt.getText().clear();
+        add_txt.getText().clear();
+        num_txt.getText().clear();
+        what_txt.getText().clear();
+        email_txt.getText().clear();
+        web_txt.getText().clear();
+        open_txt.getText().clear();
+        close_txt.getText().clear();
+        locat_link.getText().clear();
+        fb_link.getText().clear();
+        insta_link.getText().clear();
+        twit_link.getText().clear();
+        details.getText().clear();
     }
 
 

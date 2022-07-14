@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -81,7 +82,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     Adapter adapter;
     AutoSlidingImageAdapter adapter2;
     AutoSlidingImageAdapterNew adapter3;
-    LinearLayout notification;
+    LinearLayout notification, title_view;
     TextView notifi_count;
     ImageView search;
     SQLiteDatabase db1;
@@ -111,6 +112,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         search = view.findViewById(R.id.search);
         slide = view.findViewById(R.id.slide);
         slide_2 = view.findViewById(R.id.slide_2);
+        title_view = view.findViewById(R.id.title_view);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         db1 = getContext().openOrCreateDatabase("myDB", MODE_PRIVATE, null);
         String tablenew = "noti_cal";
@@ -191,6 +193,8 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
             public void onRefresh() {
                 //list.setAdapter(adapter);// your code
                 titles.clear();
+                cat_main.clear();
+                cat_banner.clear();
                 category_main();
                 pullToRefresh.setRefreshing(false);
             }
@@ -386,14 +390,46 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result_Main:" + result);
-                    cat_main.addAll(response.body().get(1).getSlider());
-                 /*   cat_main.addAll(response.body().get(1).getSlider());
+                      /*   cat_main.addAll(response.body().get(1).getSlider());
                     cat_main.addAll(response.body().get(1).getSlider());*/
-                    cat_banner.addAll(response.body().get(2).getBanner_slider());
-                    titles.addAll(response.body().get(0).getCategory());
-                    adapter.notifyDataSetChanged();
-                    adapter3.notifyDataSetChanged();
-                    adapter2.notifyDataSetChanged();
+                    if (response.body().get(1).getSlider() != null) {
+                        cat_main.addAll(response.body().get(1).getSlider());
+                        Log.e("slideprint", "" + response.body().get(1).getSlider().toString());
+                    }
+                    if (cat_main.isEmpty()) {
+                        slide.setVisibility(View.GONE);
+                    } else {
+                        slide.setVisibility(View.VISIBLE);
+                        adapter3.notifyDataSetChanged();
+                    }
+
+                    if (response.body().get(2).getBanner_slider() != null) {
+                        cat_banner.addAll(response.body().get(2).getBanner_slider());
+                    }
+
+                    if (cat_banner.isEmpty()){
+                        slide_2.setVisibility(View.GONE);
+                    }else {
+                        slide_2.setVisibility(View.VISIBLE);
+                        adapter2.notifyDataSetChanged();
+                    }
+
+                    if (response.body().get(0).getCategory()!=null){
+                        titles.addAll(response.body().get(0).getCategory());
+                    }
+
+                    if (titles.isEmpty()){
+                        title_view.setVisibility(View.GONE);
+                    }else {
+                        title_view.setVisibility(View.VISIBLE);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    //cat_main.addAll(response.body().get(1).getSlider());
+                    //cat_banner.addAll(response.body().get(2).getBanner_slider());
+                    //titles.addAll(response.body().get(0).getCategory());
+
+
                     Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
@@ -497,7 +533,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                     i.putExtra("toolbartitle", titles.get(pos).category);
                     i.putExtra("id", pos);
                     i.putExtra("idd", titles.get(pos).id + 1);
-                    sharedPreference.putInt(getContext(),"key_send",pos);
+                    sharedPreference.putInt(getContext(), "key_send", pos);
                     startActivity(i);
                 }
             });

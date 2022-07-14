@@ -39,6 +39,7 @@ public class Helpline extends Fragment {
     RecyclerView recycle;
     Help_Adapter adapter;
     TextInputEditText name_txt;
+    TextView nodata;
 
 
     public Helpline() {
@@ -56,6 +57,7 @@ public class Helpline extends Fragment {
         View view = inflater.inflate(R.layout.fragment_helpline, container, false);
         recycle = view.findViewById(R.id.recycle);
         name_txt = view.findViewById(R.id.name_txt);
+        nodata = view.findViewById(R.id.nodata);
         final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.pullToRefresh);
 
         titles = new ArrayList<Helplinepojo>();
@@ -77,6 +79,15 @@ public class Helpline extends Fragment {
                         tempHistoryList.add(titles.get(i));
                         System.out.println("listprint" + titles.get(i).helplineCategory);
                     }
+                    if (tempHistoryList.size()==0) {
+                        recycle.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        nodata.setVisibility(View.GONE);
+                        recycle.setVisibility(View.VISIBLE);
+                    }
+
                 }
                 adapter = new Help_Adapter(getContext(), tempHistoryList);
                 recycle.setAdapter(adapter);
@@ -113,7 +124,22 @@ public class Helpline extends Fragment {
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
-                    titles.addAll(response.body());
+
+
+                    if (response.body()!=null){
+                        titles.addAll(response.body());
+                    }else {
+                        recycle.setVisibility(View.GONE);
+                    }
+
+                   /* if (titles.isEmpty()){
+                        recycle.setVisibility(View.GONE);
+                    }else {
+                        recycle.setVisibility(View.VISIBLE);
+                    }*/
+
+
+                   // titles.addAll(response.body());
                     adapter = new Help_Adapter(getContext(), titles);
                     recycle.setAdapter(adapter);
                     Utils_Class.mProgress.dismiss();

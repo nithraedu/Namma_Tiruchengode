@@ -1,10 +1,13 @@
 package nithra.namma_tiruchengode;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,6 +24,7 @@ public class AutoSlidingGalleryAdapter extends SliderViewAdapter<SliderViewAdapt
     LayoutInflater inflater;
     Context context;
     String[] glide_image;
+    private boolean zoomOut =  false;
 
 
     public AutoSlidingGalleryAdapter(Context ctx, ArrayList<Full_View> images, String[] check) {
@@ -51,6 +55,26 @@ public class AutoSlidingGalleryAdapter extends SliderViewAdapter<SliderViewAdapt
         System.out.println("imageurl"+glide_image[pos]);
 
 
+        ((SliderAdapterVHnew) holder).gridImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView img_view;
+                Dialog dialog = new Dialog(context, android.R.style.Theme_DeviceDefault);
+                dialog.setContentView(R.layout.image_view);
+                //dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.setCanceledOnTouchOutside(true);
+                img_view=dialog.findViewById(R.id.img_view);
+                Glide.with(context).load(glide_image[pos])
+                        .error(R.drawable.tiruchengode)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(img_view);
+                //Utils_Class.toast_center(context,"show image");
+                dialog.show();
+
+            }
+        });
+
+
     }
 
     @Override
@@ -62,8 +86,6 @@ public class AutoSlidingGalleryAdapter extends SliderViewAdapter<SliderViewAdapt
         View itemView;
         ImageView gridImage;
 
-
-
         public SliderAdapterVHnew(View view) {
             super(view);
 
@@ -72,5 +94,4 @@ public class AutoSlidingGalleryAdapter extends SliderViewAdapter<SliderViewAdapt
             this.itemView = view;
         }
     }
-
 }

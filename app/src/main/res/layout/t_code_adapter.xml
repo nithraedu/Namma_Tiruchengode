@@ -29,8 +29,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Heading"
+                android:maxLines="2"
                 android:paddingLeft="5dp"
                 android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/btShowmore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="Show more..."
+                android:paddingLeft="5dp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/holo_blue_light" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,6 +71,11 @@
                         android:textSize="10dp"
                         android:layout_weight="1"
                         android:textColor="@color/black"/>
+                <ImageView
+                    android:id="@+id/share_news"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_menu_share"/>
             </LinearLayout>
 
         </LinearLayout>

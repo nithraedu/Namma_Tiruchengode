@@ -1,6 +1,10 @@
 package nithra.namma_tiruchengode.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +22,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,7 +31,6 @@ import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
 import nithra.namma_tiruchengode.Retrofit.T_codePojo;
-import nithra.namma_tiruchengode.Retrofit.Third_Category;
 import nithra.namma_tiruchengode.Utils_Class;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +40,7 @@ public class T_code extends Fragment {
     Tcode adapter;
     RecyclerView recycle;
     ArrayList<T_codePojo> tcode;
+
 
     public T_code() {
     }
@@ -56,7 +61,7 @@ public class T_code extends Fragment {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         recycle.setLayoutManager(gridLayoutManager);
-        adapter = new Tcode(getContext(),tcode);
+        adapter = new Tcode(getContext(), tcode);
         recycle.setAdapter(adapter);
         Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
         tcode();
@@ -107,13 +112,12 @@ public class T_code extends Fragment {
     }
 
 
-
     public class Tcode extends RecyclerView.Adapter<Tcode.ViewHolder> {
         private LayoutInflater inflater;
         ArrayList<T_codePojo> data_load;
         public Context context;
 
-        Tcode(Context ctx,ArrayList<T_codePojo> data_load) {
+        Tcode(Context ctx, ArrayList<T_codePojo> data_load) {
             this.inflater = LayoutInflater.from(ctx);
             this.data_load = data_load;
             this.context = ctx;
@@ -140,6 +144,53 @@ public class T_code extends Fragment {
                     .into(holder.image);
             holder.image.setVisibility(View.VISIBLE);
 
+            if (holder.heading.getLineCount() > 2) {
+                holder.btShowmore.setVisibility(View.VISIBLE);
+            } else {
+                holder.btShowmore.setVisibility(View.GONE);
+            }
+
+            holder.btShowmore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (holder.btShowmore.getText().toString().equalsIgnoreCase("Show more...")) {
+                        holder.heading.setMaxLines(Integer.MAX_VALUE);//your TextView
+                        holder.btShowmore.setText("Show less");
+                    } else {
+                        holder.heading.setMaxLines(2);//your TextView
+                        holder.btShowmore.setText("Show more...");
+                    }
+                }
+            });
+            holder.share_news.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                  /*  try {
+                        URL url = new URL(data_load.get(pos).contentImage);
+                        Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                        intent.setType("image/jpeg");
+                        intent.putExtra(Intent.EXTRA_STREAM, image);
+                        startActivity(intent);
+
+                    } catch(IOException e) {
+                        System.out.println(e);
+                    }*/
+
+                    Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                    String shareBody = data_load.get(pos).newsContent;
+                    intent.setType("text/plain");
+                    //intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
+                    intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                    startActivity(intent);
+
+
+                }
+            });
+
+
         }
 
 
@@ -149,14 +200,17 @@ public class T_code extends Fragment {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            TextView heading,date;
-            ImageView image;
+            TextView heading, date, btShowmore;
+            ImageView image, share_news;
+
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 heading = itemView.findViewById(R.id.heading);
                 date = itemView.findViewById(R.id.date);
                 image = itemView.findViewById(R.id.image);
+                btShowmore = itemView.findViewById(R.id.btShowmore);
+                share_news = itemView.findViewById(R.id.share_news);
             }
         }
     }

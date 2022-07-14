@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Fragment.Enquiry">
 
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="திருச்செங்கோட்டில் உங்களுக்கு தேவைப்படும் பொருள்/சேவை அல்லது வேறு ஏதாவது தகவல்கள் தேவைபட்டால் அதை தெரிவிக்கவும் நாங்கள் அதை கண்டறிந்து பகிர்கிறோம்"
+                android:text="திருச்செங்கோட்டில் உங்களுக்கு தேவைப்படும் பொருள்/சேவை அல்லது வேறு ஏதாவது தகவல்கள் தேவைபட்டால் அதை தெரிவிக்கவும். நாங்கள் அதை கண்டறிந்து பகிர்கிறோம்"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
 
@@ -72,10 +72,10 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:hint="Contact Number *"
                     android:theme="@style/AppThemetextinput"
                     app:endIconMode="clear_text"
-                    android:layout_marginTop="5dp"
                     app:hintTextColor="@color/black"
                     app:prefixText="+91">
 
@@ -85,19 +85,19 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:imeOptions="actionDone"
+                        android:inputType="number"
                         android:maxLength="10"
-                        android:minLines="1"
-                        android:inputType="number" />
+                        android:minLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:hint="Email *"
                     android:theme="@style/AppThemetextinput"
                     app:endIconMode="clear_text"
-                    android:layout_marginTop="5dp"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -106,17 +106,17 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:imeOptions="actionDone"
-                        android:minLines="1"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:minLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:hint="Details of Enquiry *"
                     android:theme="@style/AppThemetextinput"
-                    android:layout_marginTop="5dp"
                     app:endIconMode="clear_text"
                     app:hintTextColor="@color/black">
 
@@ -124,34 +124,34 @@
                         android:id="@+id/enquiry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:imeOptions="actionDone"
-                        android:minHeight="150dp"
-                        android:minLines="6"
                         android:gravity="top|left"
-                        android:inputType="text|textMultiLine|textCapSentences" />
+                        android:imeOptions="actionDone"
+                        android:inputType="text|textMultiLine|textCapSentences"
+                        android:minHeight="150dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/background5"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/submit"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Submit"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/background5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

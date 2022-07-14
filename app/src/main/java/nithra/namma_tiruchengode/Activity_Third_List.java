@@ -199,6 +199,7 @@ public class Activity_Third_List extends AppCompatActivity {
             holder.work_day.setText(titles.get(pos).leaveDay);*/
             Glide.with(context).load(titles.get(pos).logo)
                     .error(R.drawable.warning)
+                    .placeholder(R.drawable.warning)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.cat_icon);
             holder.list_click.setOnClickListener(new View.OnClickListener() {

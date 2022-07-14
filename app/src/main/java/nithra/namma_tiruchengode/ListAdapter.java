@@ -54,6 +54,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         System.out.println("checkcount"+sub_list.get(pos).view_count);
         Glide.with(context).load(sub_list.get(pos).subCategoryLogo)
                 .error(R.drawable.warning)
+                .placeholder(R.drawable.warning)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.cat_icon);
         holder.list_click.setOnClickListener(new View.OnClickListener() {

@@ -190,9 +190,7 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
             title = extra.getString("titlechange");
         }
     }
-
-
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         int LAUNCH_SECOND_ACTIVITY = 1;
@@ -212,5 +210,5 @@ public class Activity_Second_List extends AppCompatActivity implements Title_Int
             }
         }
 
-    }
+    }*/
 }
