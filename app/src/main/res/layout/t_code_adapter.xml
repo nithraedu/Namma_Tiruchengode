@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         app:cardCornerRadius="8dp">
         <LinearLayout
+            android:id="@+id/layout_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp"

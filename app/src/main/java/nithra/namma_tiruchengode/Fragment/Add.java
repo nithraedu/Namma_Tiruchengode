@@ -1,6 +1,7 @@
 package nithra.namma_tiruchengode.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +22,18 @@ import java.util.HashMap;
 
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.AddPojo;
-import nithra.namma_tiruchengode.Retrofit.Category;
-import nithra.namma_tiruchengode.Retrofit.Category_Main;
+import nithra.namma_tiruchengode.Retrofit.Otp_check_and_category;
+import nithra.namma_tiruchengode.Retrofit.Otp_check_category;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
-import nithra.namma_tiruchengode.Retrofit.Sub_Category;
+import nithra.namma_tiruchengode.SharedPreference;
 import nithra.namma_tiruchengode.Utils_Class;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Add extends Fragment {
-    ArrayList<Category> titles;
-    ArrayList<Sub_Category> sub_category;
+    Otp_check_and_category main_titles;
     Spinner list_category, list_subcategory;
     ArrayList<String> spin;
     ArrayList<String> spin_1;
@@ -42,6 +42,8 @@ public class Add extends Fragment {
     TextView submit, cancel;
     String spin_id1, spin_id2;
     String shop_name, shop_add, mob_num, what_num, email, description, web, open_time, close_time, location, facebook, insta, twitter;
+    SharedPreference sharedPreference = new SharedPreference();
+
 
     public Add() {
     }
@@ -75,43 +77,12 @@ public class Add extends Fragment {
         cancel = view.findViewById(R.id.cancel);
         details = view.findViewById(R.id.details);
 
-        titles = new ArrayList<Category>();
+        main_titles = new Otp_check_and_category();
         spin = new ArrayList<>();
         spin_1 = new ArrayList<>();
-        sub_category = new ArrayList<Sub_Category>();
 
-        category_1();
+        otp_verify();
 
-
-
-       /* email_txt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                String email = email_txt.getText().toString().trim();
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-                if (email.matches(emailPattern) && s.length() > 0)
-                {
-                    Toast.makeText(getContext(),"valid email address",Toast.LENGTH_SHORT).show();
-
-                }
-                else
-                {
-                    Toast.makeText(getContext(),"Invalid email address",Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-*/
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,14 +101,6 @@ public class Add extends Fragment {
                 twitter = twit_link.getText().toString().trim();
                 description = details.getText().toString().trim();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-               /* if (email.matches(emailPattern))
-                {
-                    Toast.makeText(getContext(),"valid email address",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Toast.makeText(getContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
-                }*/
 
 
                 if (list_category.getSelectedItemPosition() == 0) {
@@ -166,7 +129,6 @@ public class Add extends Fragment {
 
             }
         });
-
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,53 +205,51 @@ public class Add extends Fragment {
     }
 
 
-    public void category_1() {
+    public void otp_verify() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("action", "get_category");
+        map.put("action", "get_cate_sub");
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
-        Call<ArrayList<Category_Main>> call = retrofitAPI.getCat_Main(map);
-        call.enqueue(new Callback<ArrayList<Category_Main>>() {
+        Call<Otp_check_and_category> call = retrofitAPI.getOtp_verify_category(map);
+        call.enqueue(new Callback<Otp_check_and_category>() {
             @Override
-            public void onResponse(Call<ArrayList<Category_Main>> call, Response<ArrayList<Category_Main>> response) {
+            public void onResponse(Call<Otp_check_and_category> call, Response<Otp_check_and_category> response) {
                 if (response.isSuccessful()) {
+                    //System.out.println("checkres"+response);
+                    Log.i("checkres : ", "" + response);
+
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
-                    titles.addAll(response.body().get(0).getCategory());
+                    main_titles = (response.body());
                     spinner();
-                    //adapter.notifyDataSetChanged();
                 }
                 System.out.println("======response :" + response);
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Category_Main>> call, Throwable t) {
+            public void onFailure(Call<Otp_check_and_category> call, Throwable t) {
                 System.out.println("======response t:" + t);
             }
         });
     }
 
+
     public void spinner() {
         spin.add(0, "All category");
-        for (int i = 0; i < titles.size(); i++) {
-            spin.add(titles.get(i).category);
+        for (int i = 1; i < main_titles.getCategory().size(); i++) {
+            spin.add(main_titles.getCategory().get(i).category);
         }
-      /*  for (int i = 0; i < MainActivity.titles.size(); i++) {
-            spin.add(MainActivity.titles.get(i).category);
-        }*/
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spin);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         list_category.setAdapter(adapter);
-        //list_category.setSelection(pos);
         list_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-             /*   cat_title.setText(titles.get(i).category);
-                subcategory(titles.get(i).getId());*/
                 if (i != 0) {
-                    spin_id1 = titles.get(i - 1).getId();
+                    spin_id1 = main_titles.getCategory().get(i - 1).getId();
                 }
                 if (i == 0) {
-                    sub_category.clear();
+                    //sub_title.clear();
                     spin_1.add(0, "Sub category");
                     list_subcategory.setEnabled(false);
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spin_1);
@@ -297,9 +257,8 @@ public class Add extends Fragment {
                     list_subcategory.setAdapter(adapter);
                 } else {
                     list_subcategory.setEnabled(true);
-                    sub_category.clear();
                     spin_1.clear();
-                    subcategory(titles.get(i - 1).id);
+                    spinner_1(i);
                 }
             }
 
@@ -312,59 +271,23 @@ public class Add extends Fragment {
 
     }
 
-    public void subcategory(String pos) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("action", "get_sub_category");
-        map.put("category_id", pos);
-        RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
-        Call<ArrayList<Sub_Category>> call = retrofitAPI.getSubCategory(map);
-        call.enqueue(new Callback<ArrayList<Sub_Category>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Sub_Category>> call, Response<ArrayList<Sub_Category>> response) {
-                if (response.isSuccessful()) {
-                    String result = new Gson().toJson(response.body());
-                    System.out.println("======response result:" + result);
-                   /* Sub_Category sub=new Sub_Category();
-                    sub.setId("0");
-                    sub.setSubCategory("Sub category");
-                    sub_category.add(0, sub);*/
-                    sub_category.addAll(response.body());
-                    spinner_1();
-                    //adapter = new ListAdapter(Activity_Second_List.this, sub_category, title);
-                    //show_cat.setAdapter(adapter);
-                    //adapter.notifyDataSetChanged();
-                }
-                System.out.println("======response :" + response);
-            }
 
-            @Override
-            public void onFailure(Call<ArrayList<Sub_Category>> call, Throwable t) {
-                System.out.println("======response t:" + t);
-            }
-        });
-    }
-
-    public void spinner_1() {
+    public void spinner_1(int pos) {
         spin_1.add(0, "Sub category");
-        for (int i = 0; i < sub_category.size(); i++) {
-            spin_1.add(sub_category.get(i).subCategory);
+        for (int i = 0; i < main_titles.getCategory().get(pos).getSubCategory().size(); i++) {
+            spin_1.add(main_titles.getCategory().get(pos).getSubCategory().get(i).subCategory);
         }
 
 
-      /*  for (int i = 0; i < MainActivity.titles.size(); i++) {
-            spin.add(MainActivity.titles.get(i).category);
-        }*/
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spin_1);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         list_subcategory.setAdapter(adapter);
-        //list_subcategory.setSelection(pos);
         list_subcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-             /*   cat_title.setText(titles.get(i).category);
-                subcategory(titles.get(i).getId());*/
+
                 if (i != 0) {
-                    spin_id2 = sub_category.get(i - 1).getId();
+                    spin_id2 = main_titles.getCategory().get(pos).getSubCategory().get(i-1).getId();
                 }
             }
 

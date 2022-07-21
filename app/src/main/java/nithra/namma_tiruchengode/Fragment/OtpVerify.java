@@ -56,7 +56,6 @@ public class OtpVerify extends Fragment {
         home = (Gotohome) getContext();
         TextView _tv = view.findViewById(R.id.timer);
         otp_gene = new ArrayList<OtpGenerate>();
-
         new CountDownTimer(30000, 1000) { // adjust the milli seconds here
             public void onTick(long millisUntilFinished) {
                 _tv.setText("If you didn't receive a otp?" + millisUntilFinished / 1000);
@@ -73,7 +72,7 @@ public class OtpVerify extends Fragment {
             public void onClick(View v) {
                 //sharedPreference.putString(getContext(), "register_otp_1", "register_otp");
                 otp_generate();
-                new CountDownTimer(30000, 1000) { // adjust the milli seconds here
+                new CountDownTimer(60000, 1000) { // adjust the milli seconds here
 
                     public void onTick(long millisUntilFinished) {
 
@@ -124,7 +123,7 @@ public class OtpVerify extends Fragment {
         verify = otp.getText().toString().trim();
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "check_otp");
-        //map.put("mobile_num", number);
+        //map.put("mobile_num", "" + sharedPreference.getString(getContext(), "resend"));
         map.put("otp", verify);
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
         Call<ArrayList<OtpVerifyPojo>> call = retrofitAPI.getOtp_verify(map);

@@ -70,20 +70,6 @@ public class Register extends Fragment {
             public void onClick(View v) {
                 otp_generate();
                 sharedPreference.putString(getContext(), "resend", "" +number);
-                /*SharedPreferences.Editor editor=pref.edit();
-                if (name.equals("nithra") && number.equals("0123456789"))
-                {
-                    editor.putString("Username",name);
-                    editor.putString("Password",number);
-                    editor.putInt("yes", 1);
-                    editor.commit();
-
-                    home.verify();
-
-                }
-                else {
-                    Toast.makeText(getContext(),"Not Valid",Toast.LENGTH_SHORT).show();
-                }*/
             }
         });
         return view;

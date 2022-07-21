@@ -44,6 +44,10 @@ public interface RetrofitAPI {
 
     @FormUrlEncoded
     @POST("data.php")
+    Call<Otp_check_and_category> getOtp_verify_category(@FieldMap HashMap<String, String> data);
+
+    @FormUrlEncoded
+    @POST("data.php")
     Call<ArrayList<AddPojo>> getadd_user(@FieldMap HashMap<String, String> data);
 
     @FormUrlEncoded
