@@ -50,7 +50,6 @@ public class T_code extends Fragment {
     RecyclerView recycle;
     ArrayList<T_codePojo> tcode;
 
-
     public T_code() {
     }
 
@@ -175,7 +174,7 @@ public class T_code extends Fragment {
             holder.share_news.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    File dir = getContext().getFilesDir();
+                  /*  File dir = getContext().getFilesDir();
                     Uri uri = FileProvider.getUriForFile(getContext(), "com.example.provider", new File(String.valueOf(dir)));
                     Intent share = ShareCompat.IntentBuilder.from((Activity) context)
                             .setStream(uri) // uri from FileProvider
@@ -185,8 +184,7 @@ public class T_code extends Fragment {
                             .setDataAndType(uri, "image/*")
                             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                    startActivity(Intent.createChooser(share, data_load.get(pos).contentImage));
-
+                    startActivity(Intent.createChooser(share, data_load.get(pos).contentImage));*/
 
                   /*  try {
                         URL url = new URL(data_load.get(pos).contentImage);
@@ -200,14 +198,12 @@ public class T_code extends Fragment {
                         System.out.println(e);
                     }*/
 
-                   /* Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                    Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                     String shareBody = data_load.get(pos).newsContent;
                     intent.setType("text/plain");
                     //intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
                     intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                    startActivity(intent);*/
-
-
+                    startActivity(intent);
                 }
             });
 

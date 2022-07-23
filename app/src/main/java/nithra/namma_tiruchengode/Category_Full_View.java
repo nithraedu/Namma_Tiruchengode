@@ -206,7 +206,7 @@ public class Category_Full_View extends AppCompatActivity {
                     if (titles.get(0).getLeaveDay().trim().isEmpty()) {
                         work_day.setVisibility(View.GONE);
                     } else {
-                        work_day.setText(titles.get(0).getLeaveDay());
+                        work_day.setText(titles.get(0).getLeaveDay().trim());
                         work_day.setVisibility(View.VISIBLE);
                     }
 
@@ -282,7 +282,6 @@ public class Category_Full_View extends AppCompatActivity {
                                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "நம்ம ஊரு திருச்செங்கோடு");
                                 emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
                                 startActivity(Intent.createChooser(emailIntent, "Send email..."));*/
-
                                     Intent intent = new Intent(Intent.ACTION_SENDTO);
                                     intent.setData(Uri.parse("mailto:")); // only email apps should handle this
                                     intent.putExtra(Intent.EXTRA_EMAIL, new String[]{titles.get(0).getEmail().trim()});
@@ -291,14 +290,11 @@ public class Category_Full_View extends AppCompatActivity {
                                     if (intent.resolveActivity(getPackageManager()) != null) {
                                         startActivity(intent);
                                     }
-
-
                                 } else {
                                     Utils_Class.toast_center(Category_Full_View.this, "Check Your Internet Connection...");
                                 }
                             } else {
                                 Utils_Class.toast_center(Category_Full_View.this, "Email not available...");
-
                             }
                         }
                     });
@@ -312,7 +308,6 @@ public class Category_Full_View extends AppCompatActivity {
                                 Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
                                 startActivity(intent);
                             }
-
                         }
                     });
                     whatsapp.setOnClickListener(new View.OnClickListener() {

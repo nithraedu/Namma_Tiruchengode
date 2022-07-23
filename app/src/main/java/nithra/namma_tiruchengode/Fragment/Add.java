@@ -130,6 +130,9 @@ public class Add extends Fragment {
             }
         });
 
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
+
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,6 +224,7 @@ public class Add extends Fragment {
                     System.out.println("======response result:" + result);
                     main_titles = (response.body());
                     spinner();
+                    Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
             }

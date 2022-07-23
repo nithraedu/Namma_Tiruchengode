@@ -390,7 +390,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result_Main:" + result);
-                      /*   cat_main.addAll(response.body().get(1).getSlider());
+                      /*cat_main.addAll(response.body().get(1).getSlider());
                     cat_main.addAll(response.body().get(1).getSlider());*/
                     if (response.body().get(1).getSlider() != null) {
                         cat_main.addAll(response.body().get(1).getSlider());
