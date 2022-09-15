@@ -40,22 +40,39 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
                     android:text="Title"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textColor="@color/black"
                     android:textSize="18dp"
                     android:textStyle="bold" />
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
                 <TextView
                     android:id="@+id/adderss"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
                     android:text="Address"
+                    android:maxLines="3"
+                    android:ellipsize="end"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
-
+                <TextView
+                    android:id="@+id/btShowmore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Show more..."
+                    android:visibility="gone"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/holo_blue_light" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <LinearLayout

@@ -53,9 +53,9 @@ public class Category_Full_View extends AppCompatActivity {
     RecyclerView list3;
     SliderView slide;
     LinearLayout time, mobile_call, owner_lay;
-    TextView btShowmore;
-
-
+    TextView btShowmore,btShowmore1;
+    String path;
+    Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,20 +76,9 @@ public class Category_Full_View extends AppCompatActivity {
         work_day = findViewById(R.id.work_day);
         time = findViewById(R.id.time);
         btShowmore = findViewById(R.id.btShowmore);
+        btShowmore1 = findViewById(R.id.btShowmore1);
 
-        btShowmore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if (btShowmore.getText().toString().equalsIgnoreCase("Show more...")) {
-                    description.setMaxLines(Integer.MAX_VALUE);//your TextView
-                    btShowmore.setText("Show less");
-                } else {
-                    description.setMaxLines(3);//your TextView
-                    btShowmore.setText("Show more...");
-                }
-            }
-        });
 
 
         titles = new ArrayList<Full_View>();
@@ -109,12 +98,53 @@ public class Category_Full_View extends AppCompatActivity {
         name_divider = findViewById(R.id.name_divider);
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
+         uri=getIntent().getData();
+
+
         if (extra != null) {
             list_title = extra.getString("list_title");
             pos = extra.getInt("id");
             idd = extra.getString("idd");
             cat_title.setText("Details of " + list_title);
         }
+
+        if(uri!=null){
+            path=uri.toString();
+
+        }
+
+
+
+        btShowmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (btShowmore.getText().toString().equalsIgnoreCase("Show more...")) {
+                    description.setMaxLines(Integer.MAX_VALUE);//your TextView
+                    btShowmore.setText("Show less");
+                } else {
+                    description.setMaxLines(3);//your TextView
+                    btShowmore.setText("Show more...");
+                }
+            }
+        });
+
+        btShowmore1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (btShowmore1.getText().toString().equalsIgnoreCase("Show more...")) {
+                    text_address.setMaxLines(Integer.MAX_VALUE);//your TextView
+                    btShowmore1.setText("Show less");
+                } else {
+                    text_address.setMaxLines(3);//your TextView
+                    btShowmore1.setText("Show more...");
+                }
+            }
+        });
+
+
+
 
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         GridLayoutManager gridLayoutManager3 = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
@@ -145,7 +175,7 @@ public class Category_Full_View extends AppCompatActivity {
                     String currentString = titles.get(0).getSliderImage();
                     System.out.println("image_print" + titles.get(0).getSliderImage());
                     String[] separated = currentString.split(",");
-                    adapter2 = new AutoSlidingGalleryAdapter(Category_Full_View.this, images2, separated);
+                    adapter2 = new AutoSlidingGalleryAdapter(Category_Full_View.this, images2, separated,currentString);
                     slide.setSliderAdapter(adapter2);
                     slide.setSliderTransformAnimation(
                             SliderAnimations.SIMPLETRANSFORMATION
@@ -222,6 +252,12 @@ public class Category_Full_View extends AppCompatActivity {
                         btShowmore.setVisibility(View.VISIBLE);
                     } else {
                         btShowmore.setVisibility(View.GONE);
+                    }
+
+                    if (text_address.getLineCount() > 3) {
+                        btShowmore1.setVisibility(View.VISIBLE);
+                    } else {
+                        btShowmore1.setVisibility(View.GONE);
                     }
 
 
@@ -390,7 +426,12 @@ public class Category_Full_View extends AppCompatActivity {
                     share.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Utils_Class.toast_center(Category_Full_View.this, "Details not available...");
+                            String sharebody = "https://www.tiruchengode.com";
+                            Intent intent = new Intent(Intent.ACTION_SEND);
+                            intent.setType("text/plain");
+                            intent.putExtra(Intent.EXTRA_SUBJECT, "நம்ம ஊரு திருச்செங்கோடு");
+                            intent.putExtra(Intent.EXTRA_TEXT, sharebody);
+                            startActivity(Intent.createChooser(intent, "Share Via"));
                         }
                     });
 

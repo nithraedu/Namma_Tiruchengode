@@ -237,7 +237,6 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
             intent.setAction(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=nithra.tamil.andaal.thiruppavai"));
             startActivity(intent);*/
-
             Utils_Class.toast_normal(getContext(), "Not Available in playstore");
 
         } else if (id == R.id.nav_feedback) {

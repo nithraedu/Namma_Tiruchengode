@@ -1,13 +1,11 @@
 package nithra.namma_tiruchengode;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -24,41 +22,41 @@ public class AutoSlidingGalleryAdapter extends SliderViewAdapter<SliderViewAdapt
     LayoutInflater inflater;
     Context context;
     String[] glide_image;
-    private boolean zoomOut =  false;
+    private boolean zoomOut = false;
+    String slide;
 
-
-    public AutoSlidingGalleryAdapter(Context ctx, ArrayList<Full_View> images, String[] check) {
+    public AutoSlidingGalleryAdapter(Context ctx, ArrayList<Full_View> images, String[] check, String slide_img) {
         this.images = images;
         this.inflater = LayoutInflater.from(ctx);
         this.context = ctx;
         this.glide_image = check;
-
+        this.slide = slide_img;
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
 
-            return new SliderAdapterVHnew(LayoutInflater.from(parent.getContext()).inflate(R.layout.best_seller, null));
+        return new SliderAdapterVHnew(LayoutInflater.from(parent.getContext()).inflate(R.layout.best_seller, null));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
 
-            SliderAdapterVHnew viewHolder = (SliderAdapterVHnew) holder;
+        SliderAdapterVHnew viewHolder = (SliderAdapterVHnew) holder;
         int pos = position;
         Glide.with(context).load(glide_image[pos])
                 .error(R.drawable.tiruchengode)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.gridImage);
-        System.out.println("imageurl"+glide_image[pos]);
+        System.out.println("imageurl" + glide_image[pos]);
 
 
         ((SliderAdapterVHnew) holder).gridImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView img_view;
+               /* ImageView img_view;
                 Dialog dialog = new Dialog(context, android.R.style.Theme_DeviceDefault);
                 dialog.setContentView(R.layout.image_view);
                 //dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -69,7 +67,15 @@ public class AutoSlidingGalleryAdapter extends SliderViewAdapter<SliderViewAdapt
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(img_view);
                 //Utils_Class.toast_center(context,"show image");
-                dialog.show();
+                dialog.show();*/
+
+                Intent i = new Intent(context, ImageSlide.class);
+                i.putExtra("pos", pos);
+                i.putExtra("imageArray", slide);
+                System.out.println("imageurl1" + glide_image[pos]);
+                //System.out.println("imageurl2" + slide);
+
+                context.startActivity(i);
 
             }
         });
@@ -79,7 +85,7 @@ public class AutoSlidingGalleryAdapter extends SliderViewAdapter<SliderViewAdapt
 
     @Override
     public int getCount() {
-            return glide_image.length;
+        return glide_image.length;
     }
 
     static class SliderAdapterVHnew extends ViewHolder {

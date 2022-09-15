@@ -81,7 +81,7 @@ public class Add extends Fragment {
         spin = new ArrayList<>();
         spin_1 = new ArrayList<>();
 
-        otp_verify();
+            otp_verify();
 
 
         submit.setOnClickListener(new View.OnClickListener() {

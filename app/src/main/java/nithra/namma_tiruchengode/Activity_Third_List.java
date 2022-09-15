@@ -176,6 +176,8 @@ public class Activity_Third_List extends AppCompatActivity {
                 holder.close_time.setVisibility(View.VISIBLE);
             }
 
+
+
            /* if (titles.get(pos).leaveDay.trim().isEmpty()) {
                 holder.work_day.setVisibility(View.GONE);
             } else {
@@ -213,6 +215,30 @@ public class Activity_Third_List extends AppCompatActivity {
                     context.startActivityForResult(i, LAUNCH_SECOND_ACTIVITY);
                 }
             });
+
+
+            holder.btShowmore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (holder.btShowmore.getText().toString().equalsIgnoreCase("Show more...")) {
+                        holder.adderss.setMaxLines(Integer.MAX_VALUE);//your TextView
+                        holder.btShowmore.setText("Show less");
+                    } else {
+                        holder.adderss.setMaxLines(3);//your TextView
+                        holder.btShowmore.setText("Show more...");
+                    }
+                }
+            });
+
+           /* if (holder.adderss.getLineCount() > 3) {
+                holder.btShowmore.setVisibility(View.VISIBLE);
+            } else {
+                holder.btShowmore.setVisibility(View.GONE);
+            }*/
+
+
+
             holder.count.setText(titles.get(pos).view_count);
         }
 
@@ -226,6 +252,7 @@ public class Activity_Third_List extends AppCompatActivity {
             ImageView cat_icon;
             TextView cat_title, adderss, start_time, close_time, work_day, count;
             LinearLayout list_click;
+            TextView btShowmore;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -237,6 +264,8 @@ public class Activity_Third_List extends AppCompatActivity {
                 close_time = itemView.findViewById(R.id.close_time);
                 work_day = itemView.findViewById(R.id.work_day);
                 count = itemView.findViewById(R.id.count);
+                btShowmore = itemView.findViewById(R.id.btShowmore);
+
             }
         }
     }

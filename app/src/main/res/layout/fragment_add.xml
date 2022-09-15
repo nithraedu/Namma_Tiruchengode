@@ -114,7 +114,7 @@
                             android:layout_gravity="center"
                             android:gravity="top"
                             android:imeOptions="actionDone"
-                            android:inputType="text|textMultiLine|textCapSentences"/>
+                            android:inputType="text|textMultiLine|textCapSentences" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -200,9 +200,8 @@
                             android:gravity="top|left"
                             android:imeOptions="actionDone"
                             android:inputType="text|textMultiLine|textCapSentences"
-                            android:minHeight="150dp"/>
+                            android:minHeight="150dp" />
                     </com.google.android.material.textfield.TextInputLayout>
-
 
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -212,9 +211,9 @@
                         android:layout_height="wrap_content"
                         android:hint="Website"
                         android:theme="@style/AppThemetextinput"
+                        android:visibility="gone"
                         app:endIconMode="clear_text"
-                        app:hintTextColor="@color/black"
-                        android:visibility="gone">
+                        app:hintTextColor="@color/black">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/web_txt"
@@ -233,9 +232,9 @@
                         android:layout_height="wrap_content"
                         android:hint="Shop Opening Time"
                         android:theme="@style/AppThemetextinput"
+                        android:visibility="gone"
                         app:endIconMode="clear_text"
-                        app:hintTextColor="@color/black"
-                        android:visibility="gone">
+                        app:hintTextColor="@color/black">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/open_txt"
@@ -254,9 +253,9 @@
                         android:layout_height="wrap_content"
                         android:hint="Shop Closing Time"
                         android:theme="@style/AppThemetextinput"
+                        android:visibility="gone"
                         app:endIconMode="clear_text"
-                        app:hintTextColor="@color/black"
-                        android:visibility="gone">
+                        app:hintTextColor="@color/black">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/close_txt"
@@ -277,8 +276,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                app:cardCornerRadius="8dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -423,56 +422,57 @@
         </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:background="@drawable/background5"
+            android:layout_margin="10dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/submit"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Submit"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/background5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/background5"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:background="@drawable/background5"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/cancel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Cancel"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-    </LinearLayout>
 
     </LinearLayout>
 

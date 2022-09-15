@@ -11,6 +11,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background3.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/background6.xml" value="0.173" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/bottom_tint.xml" value="0.1675" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/button_circle.xml" value="0.1965" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/card_back.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/circle2.xml" value="0.2005" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/default_dot.xml" value="0.1815" />
@@ -20,6 +21,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_add.xml" value="0.173" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1815" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_call.xml" value="0.186" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_check_box_outline_blank.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_check_box_white_24dp.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/ic_city.xml" value="0.173" />
@@ -37,6 +39,7 @@
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/tab_selector.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/drawable/test1.xml" value="0.1815" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_category_full_view.xml" value="0.25" />
+        <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_image_slide.xml" value="0.2359375" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_otp.xml" value="0.25" />
         <entry key="..\:/nithra/Namma_Tiruchengode/app/src/main/res/layout/activity_privacy_policy.xml" value="0.25" />
