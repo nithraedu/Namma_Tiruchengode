@@ -27,7 +27,6 @@
             android:id="@+id/back"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="20dp"
             android:background="@drawable/button_circle"
             android:backgroundTint="@color/toolbar"
             android:gravity="center">

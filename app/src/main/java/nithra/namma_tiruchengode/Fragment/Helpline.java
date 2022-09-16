@@ -98,7 +98,6 @@ public class Helpline extends Fragment {
 
             }
         });
-        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
         help();
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -114,6 +113,8 @@ public class Helpline extends Fragment {
 
 
     public void help() {
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
+
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "get_helpline");
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
@@ -124,13 +125,12 @@ public class Helpline extends Fragment {
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
-
-
-                    if (response.body()!=null){
-                        titles.addAll(response.body());
-                    }else {
-                        recycle.setVisibility(View.GONE);
-                    }
+                    if (response.body().get(0).getStatus().equals("Success")) {
+                        if (response.body() != null) {
+                            titles.addAll(response.body());
+                        } else {
+                            recycle.setVisibility(View.GONE);
+                        }
 
                    /* if (titles.isEmpty()){
                         recycle.setVisibility(View.GONE);
@@ -138,10 +138,10 @@ public class Helpline extends Fragment {
                         recycle.setVisibility(View.VISIBLE);
                     }*/
 
-
-                   // titles.addAll(response.body());
-                    adapter = new Help_Adapter(getContext(), titles);
-                    recycle.setAdapter(adapter);
+                        // titles.addAll(response.body());
+                        adapter = new Help_Adapter(getContext(), titles);
+                        recycle.setAdapter(adapter);
+                    }
                     Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);

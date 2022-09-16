@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.app_lay);
 
         pref = getSharedPreferences("register", Context.MODE_PRIVATE);
-        System.out.println("=print=" + pref.getInt("yes", 0));
+        System.out.println("=print=" + sharedPreference.getInt(getApplicationContext(), "yes"));
         System.out.println("android_id" + Utils_Class.android_id(this));
 
 
@@ -157,11 +157,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 case R.id.bottom_shop:
                     //getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
 
-                    if (sharedPreference.getInt(getApplicationContext(), "yes") == 0) {
-                        viewpager2.setCurrentItem(4, false);
+                    if (sharedPreference.getInt(MainActivity.this, "profile") == 1) {
+                        viewpager2.setCurrentItem(3, false);
 
                     } else {
-                        viewpager2.setCurrentItem(3, false);
+                        viewpager2.setCurrentItem(4, false);
                     }
                     return true;
 
@@ -235,10 +235,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             intent.putExtra(Intent.EXTRA_TEXT, sharebody);
             startActivity(Intent.createChooser(intent, "Share Via"));
         } else if (id == R.id.nav_rateus) {
-            *//*Intent intent = new Intent();
+            */
+    /*Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=nithra.tamil.andaal.thiruppavai"));
-            startActivity(intent);*//*
+            startActivity(intent);*/
+    /*
 
             Utils.toast_normal(MainActivity.this, "Not Available in playstore");
 
@@ -345,11 +347,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-               *//* if (a == 1) {
+               */
+    /* if (a == 1) {
                     finish();
                     Intent intent = new Intent(MainActivity.this, ExitScreen.class);
                     startActivity(intent);
-                }*//*
+                }*/
+    /*
                 dialog.dismiss();
             }
         });

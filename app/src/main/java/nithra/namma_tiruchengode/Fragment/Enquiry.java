@@ -104,8 +104,8 @@ public class Enquiry extends Fragment {
                         email.getText().clear();
                         enquiry.getText().clear();
                         Toast.makeText(getContext(), "Enquiry sent, Thank you", Toast.LENGTH_SHORT).show();
-                        home.home();
                     }
+                    home.home();
                 }
                 System.out.println("======response :" + response);
             }

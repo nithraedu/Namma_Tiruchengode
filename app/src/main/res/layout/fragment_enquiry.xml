@@ -56,7 +56,6 @@
                     android:layout_height="wrap_content"
                     android:hint="Name *"
                     android:theme="@style/AppThemetextinput"
-                    app:endIconMode="clear_text"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -64,7 +63,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:inputType="textCapSentences" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,7 +74,6 @@
                     android:layout_marginTop="5dp"
                     android:hint="Contact Number *"
                     android:theme="@style/AppThemetextinput"
-                    app:endIconMode="clear_text"
                     app:hintTextColor="@color/black"
                     app:prefixText="+91">
 
@@ -84,7 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:inputType="number"
                         android:maxLength="10"
                         android:minLines="1" />
@@ -97,7 +95,6 @@
                     android:layout_marginTop="5dp"
                     android:hint="Email *"
                     android:theme="@style/AppThemetextinput"
-                    app:endIconMode="clear_text"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -105,7 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:minLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -117,7 +114,6 @@
                     android:layout_marginTop="5dp"
                     android:hint="Details of Enquiry *"
                     android:theme="@style/AppThemetextinput"
-                    app:endIconMode="clear_text"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText

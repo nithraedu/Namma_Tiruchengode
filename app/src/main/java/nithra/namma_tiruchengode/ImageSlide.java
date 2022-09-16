@@ -126,8 +126,8 @@ public class ImageSlide extends AppCompatActivity {
         public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
 
             Glide.with(getApplicationContext()).load(image[position])
-                    /*.error(R.drawable.ic_gift_default_img)
-                    .placeholder(R.drawable.ic_gift_default_img)*/
+                    .error(R.drawable.tiruchengode)
+                    .error(R.drawable.tiruchengode)
                     //.diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.img_view);
         }

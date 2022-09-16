@@ -100,7 +100,6 @@ public class Category_Full_View extends AppCompatActivity {
         Bundle extra = intent.getExtras();
          uri=getIntent().getData();
 
-
         if (extra != null) {
             list_title = extra.getString("list_title");
             pos = extra.getInt("id");
@@ -113,6 +112,7 @@ public class Category_Full_View extends AppCompatActivity {
 
         }
 
+     //   uri.getQueryParameter(idd);
 
 
         btShowmore.setOnClickListener(new View.OnClickListener() {
@@ -201,7 +201,7 @@ public class Category_Full_View extends AppCompatActivity {
                         text_address.setVisibility(View.VISIBLE);
                     }
 
-             /*       if (titles.get(0).getPersonName().trim().trim().isEmpty()) {
+                    /*       if (titles.get(0).getPersonName().trim().trim().isEmpty()) {
                         owner_lay.setVisibility(View.GONE);
                         name_divider.setVisibility(View.GONE);
                     } else {
@@ -209,8 +209,7 @@ public class Category_Full_View extends AppCompatActivity {
                         owner_lay.setVisibility(View.VISIBLE);
                         name_divider.setVisibility(View.VISIBLE);
                     }*/
-
-                   /* if (titles.get(0).getMobile().trim().isEmpty()) {
+                    /* if (titles.get(0).getMobile().trim().isEmpty()) {
                         mobile_call.setVisibility(View.GONE);
                         mobile_divider.setVisibility(View.GONE);
                     } else {
@@ -428,6 +427,7 @@ public class Category_Full_View extends AppCompatActivity {
                         public void onClick(View v) {
                             String sharebody = "https://www.tiruchengode.com";
                             Intent intent = new Intent(Intent.ACTION_SEND);
+                            //intent.setData(Uri.parse(sharebody));
                             intent.setType("text/plain");
                             intent.putExtra(Intent.EXTRA_SUBJECT, "நம்ம ஊரு திருச்செங்கோடு");
                             intent.putExtra(Intent.EXTRA_TEXT, sharebody);

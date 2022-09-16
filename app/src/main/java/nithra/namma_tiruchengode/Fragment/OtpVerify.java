@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import nithra.namma_tiruchengode.Gotohome;
 import nithra.namma_tiruchengode.R;
@@ -35,7 +34,7 @@ public class OtpVerify extends Fragment {
     String verify;
     SharedPreference sharedPreference = new SharedPreference();
     ArrayList<OtpGenerate> otp_gene;
-
+    CountDownTimer val;
 
     public OtpVerify() {
     }
@@ -56,10 +55,12 @@ public class OtpVerify extends Fragment {
         home = (Gotohome) getContext();
         TextView _tv = view.findViewById(R.id.timer);
         otp_gene = new ArrayList<OtpGenerate>();
-        new CountDownTimer(30000, 1000) { // adjust the milli seconds here
+
+        val = new CountDownTimer(120000, 1000) { // adjust the milli seconds here
             public void onTick(long millisUntilFinished) {
                 _tv.setText("If you didn't receive a otp?" + millisUntilFinished / 1000);
             }
+
             public void onFinish() {
                 _tv.setText("If you didn't receive a otp? Resend");
                 sharedPreference.putString(getContext(), "register_otp", "" + 0);
@@ -70,9 +71,8 @@ public class OtpVerify extends Fragment {
         _tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //sharedPreference.putString(getContext(), "register_otp_1", "register_otp");
                 otp_generate();
-                new CountDownTimer(60000, 1000) { // adjust the milli seconds here
+                new CountDownTimer(120000, 1000) { // adjust the milli seconds here
 
                     public void onTick(long millisUntilFinished) {
 
@@ -91,28 +91,15 @@ public class OtpVerify extends Fragment {
         verify_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (otp.getText().toString().equals("")) {
+                if (sharedPreference.getString(getContext(), "register_otp").equals("0")) {
+                    Utils_Class.toast_center(getContext(), "Click Resend button");
+                } else if (otp.getText().toString().equals("")) {
                     Utils_Class.toast_center(getContext(), "Enter your otp");
                 } else if (sharedPreference.getString(getContext(), "register_otp").equals(otp.getText().toString())) {
                     otp_verify();
-                    home.register();
                 } else {
-                    Utils_Class.toast_center(getContext(), "Invalid otp");
+                    Utils_Class.toast_center(getContext(), "You entered wrong otp...");
                 }
-
-
-               /* if (sharedPreference.getString(getContext(), "register_otp").equals(otp.getText().toString()) ) {
-                    otp_verify();
-                    home.register();
-                }else {
-                    Utils_Class.toast_center(getContext(),"Invalid otp");
-                }*/
-
-
-                /*if (name.equals("1234") ) {
-                    home.register();
-                }*/
             }
         });
 
@@ -120,10 +107,12 @@ public class OtpVerify extends Fragment {
     }
 
     public void otp_verify() {
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
+
         verify = otp.getText().toString().trim();
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "check_otp");
-        //map.put("mobile_num", "" + sharedPreference.getString(getContext(), "resend"));
+        map.put("mobile_num", "" + sharedPreference.getString(getContext(), "resend"));
         map.put("otp", verify);
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
         Call<ArrayList<OtpVerifyPojo>> call = retrofitAPI.getOtp_verify(map);
@@ -133,8 +122,17 @@ public class OtpVerify extends Fragment {
                 if (response.isSuccessful()) {
                     String result = new Gson().toJson(response.body());
                     System.out.println("======response result:" + result);
-                        sharedPreference.putInt(getContext(), "yes", 1);
-                        otp.getText().toString();
+                    if (response.body().get(0).getStatus().equals("success")) {
+                        sharedPreference.putInt(requireActivity(), "profile", 1);
+                        System.out.println("print_int==" + sharedPreference.getInt(getContext(), "profile"));
+                        otp.getText().clear();
+                        Utils_Class.toast_center(getContext(), "OTP Verified");
+                        home.register();
+                        val.cancel();
+                    } else {
+                        Utils_Class.toast_center(getContext(), "Invalid otp");
+                    }
+                    Utils_Class.mProgress.dismiss();
 
                 }
                 System.out.println("======response :" + response);
@@ -149,6 +147,8 @@ public class OtpVerify extends Fragment {
 
 
     public void otp_generate() {
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
+
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "otp_generate");
         //map.put("name","" );
@@ -161,11 +161,15 @@ public class OtpVerify extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<OtpGenerate>> call, Response<ArrayList<OtpGenerate>> response) {
                 if (response.isSuccessful()) {
+                    if (response.body().get(0).getStatus().equals("success")) {
 
-                    String result = new Gson().toJson(response.body());
-                    otp_gene.addAll(response.body());
-                    System.out.println("======response result:" + result);
-                    sharedPreference.putString(getContext(), "register_otp", ""+ otp_gene.get(0).getOtp());
+                        String result = new Gson().toJson(response.body());
+                        otp_gene.addAll(response.body());
+                        System.out.println("======response result:" + result);
+                        sharedPreference.putString(requireActivity(), "register_otp", "" + otp_gene.get(0).getOtp());
+                    }
+                    Utils_Class.mProgress.dismiss();
+
                 }
                 System.out.println("======response :" + response);
             }

@@ -3,11 +3,9 @@ package nithra.namma_tiruchengode.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,7 +16,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import nithra.namma_tiruchengode.Gotohome;
 import nithra.namma_tiruchengode.R;
@@ -57,7 +54,6 @@ public class Register extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         pref = getContext().getSharedPreferences("register", Context.MODE_PRIVATE);
-        System.out.println("=print=" + pref.getInt("yes", 0));
         reg_name = view.findViewById(R.id.reg_name);
         reg_number = view.findViewById(R.id.reg_number);
         get_otp = view.findViewById(R.id.get_otp);
@@ -68,8 +64,18 @@ public class Register extends Fragment {
         get_otp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                otp_generate();
-                sharedPreference.putString(getContext(), "resend", "" +number);
+                name = reg_name.getText().toString().trim();
+                number = reg_number.getText().toString().trim();
+                if (name.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
+                } else if (number.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Mobile Number...");
+                } else if (number.length() !=10) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
+                }else {
+                    otp_generate();
+                    sharedPreference.putString(requireActivity(), "resend", "" + number);
+                }
             }
         });
         return view;
@@ -77,8 +83,9 @@ public class Register extends Fragment {
 
 
     public void otp_generate() {
-        name = reg_name.getText().toString().trim();
-        number = reg_number.getText().toString().trim();
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
+
+
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "otp_generate");
         map.put("name", name);
@@ -91,20 +98,16 @@ public class Register extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<OtpGenerate>> call, Response<ArrayList<OtpGenerate>> response) {
                 if (response.isSuccessful()) {
-                    if (name.equals("")) {
-                        Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
-                    } else if (number.length() < 10) {
-                        Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
-                    }else {
-                        String result = new Gson().toJson(response.body());
-                        System.out.println("======response result:" + result);
-                        otp_gene.addAll(response.body());
-                        sharedPreference.putString(getContext(), "register_otp", "" + otp_gene.get(0).getOtp());
-                        reg_name.getText().clear();
-                        reg_number.getText().clear();
-                        home.verify();
+                    String result = new Gson().toJson(response.body());
+                    System.out.println("======response result:" + result);
+                    if (response.body().get(0).getStatus().equals("success")) {
+                            otp_gene.addAll(response.body());
+                            sharedPreference.putString(requireActivity(), "register_otp", "" + otp_gene.get(0).getOtp());
+                            reg_name.getText().clear();
+                            reg_number.getText().clear();
+                            home.verify();
                     }
-
+                    Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
             }

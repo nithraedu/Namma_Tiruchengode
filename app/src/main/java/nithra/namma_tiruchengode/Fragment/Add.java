@@ -20,10 +20,10 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import nithra.namma_tiruchengode.Gotohome;
 import nithra.namma_tiruchengode.R;
 import nithra.namma_tiruchengode.Retrofit.AddPojo;
 import nithra.namma_tiruchengode.Retrofit.Otp_check_and_category;
-import nithra.namma_tiruchengode.Retrofit.Otp_check_category;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPI;
 import nithra.namma_tiruchengode.Retrofit.RetrofitAPIClient;
 import nithra.namma_tiruchengode.SharedPreference;
@@ -43,6 +43,7 @@ public class Add extends Fragment {
     String spin_id1, spin_id2;
     String shop_name, shop_add, mob_num, what_num, email, description, web, open_time, close_time, location, facebook, insta, twitter;
     SharedPreference sharedPreference = new SharedPreference();
+    Gotohome home;
 
 
     public Add() {
@@ -76,12 +77,13 @@ public class Add extends Fragment {
         submit = view.findViewById(R.id.submit);
         cancel = view.findViewById(R.id.cancel);
         details = view.findViewById(R.id.details);
+        home = (Gotohome) getContext();
 
         main_titles = new Otp_check_and_category();
         spin = new ArrayList<>();
         spin_1 = new ArrayList<>();
 
-            otp_verify();
+        otp_verify();
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -109,17 +111,21 @@ public class Add extends Fragment {
                     Utils_Class.toast_center(getContext(), "Please select Subcategory...");
                 } else if (shop_name.equals("")) {
                     Utils_Class.toast_center(getContext(), "Please Enter Your Name...");
-                } else if (shop_add.equals("")) {
-                    Utils_Class.toast_center(getContext(), "Please Enter Your address...");
-                } else if (mob_num.length() < 10) {
+                }  else if (mob_num.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Mobile Number...");
+                }else if (mob_num.length() !=10) {
                     Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
-                } else if (what_num.length() < 10) {
+                }else if (what_num.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your Whatsapp Mobile Number...");
+                } else if (what_num.length()!= 10) {
                     Utils_Class.toast_center(getContext(), "Please Enter Correct Whatsapp Mobile Number...");
                 } else if (email.equals("")) {
                     Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
                 } else if (!email.matches(emailPattern)) {
                     Toast.makeText(getContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
-                } else if (description.equals("")) {
+                } else if (shop_add.equals("")) {
+                    Utils_Class.toast_center(getContext(), "Please Enter Your address...");
+                }else if (description.equals("")) {
                     Utils_Class.toast_center(getContext(), "Please Enter Your Details...");
                 } else {
 
@@ -129,8 +135,6 @@ public class Add extends Fragment {
 
             }
         });
-
-        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
 
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +150,8 @@ public class Add extends Fragment {
 
 
     public void submit_res() {
+        //Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
+
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "add_post");
         map.put("category", "" + spin_id1);
@@ -192,7 +198,9 @@ public class Add extends Fragment {
                         twit_link.getText().clear();
                         details.getText().clear();
                         Toast.makeText(getContext(), "Your shop added successfully, Thank you", Toast.LENGTH_SHORT).show();
+                        home.home();
                     }
+                    //Utils_Class.mProgress.dismiss();
 
                 }
                 System.out.println("======response :" + response);
@@ -224,7 +232,6 @@ public class Add extends Fragment {
                     System.out.println("======response result:" + result);
                     main_titles = (response.body());
                     spinner();
-                    Utils_Class.mProgress.dismiss();
                 }
                 System.out.println("======response :" + response);
             }
@@ -291,7 +298,7 @@ public class Add extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if (i != 0) {
-                    spin_id2 = main_titles.getCategory().get(pos).getSubCategory().get(i-1).getId();
+                    spin_id2 = main_titles.getCategory().get(pos).getSubCategory().get(i - 1).getId();
                 }
             }
 

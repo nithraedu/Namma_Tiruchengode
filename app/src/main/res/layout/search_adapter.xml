@@ -51,6 +51,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:text="Address"
+                    android:maxLines="3"
+                    android:ellipsize="end"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
 

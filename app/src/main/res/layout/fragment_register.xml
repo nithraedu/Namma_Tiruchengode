@@ -88,7 +88,6 @@
             android:layout_height="wrap_content"
             android:hint="Name *"
             android:theme="@style/AppThemetextinput"
-            app:endIconMode="clear_text"
             app:hintTextColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -96,6 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:maxLines="1"
                 android:imeOptions="actionDone"
                 android:inputType="textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +107,6 @@
             android:layout_marginTop="10dp"
             android:hint="Moible Number *"
             android:theme="@style/AppThemetextinput"
-            app:endIconMode="clear_text"
             app:hintTextColor="@color/black"
             app:prefixText="+91">
 
@@ -116,6 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:maxLength="10"
+                android:maxLines="1"
                 android:imeOptions="actionDone"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
