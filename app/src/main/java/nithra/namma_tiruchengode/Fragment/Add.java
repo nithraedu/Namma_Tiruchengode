@@ -129,7 +129,11 @@ public class Add extends Fragment {
                     Utils_Class.toast_center(getContext(), "Please Enter Your Details...");
                 } else {
 
-                    submit_res();
+                    if (Utils_Class.isNetworkAvailable(getContext())) {
+                        submit_res();
+                    } else {
+                        Utils_Class.toast_normal(getContext(), "Please connect to your internet");
+                    }
 
                 }
 

@@ -73,7 +73,14 @@ public class Register extends Fragment {
                 } else if (number.length() !=10) {
                     Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
                 }else {
-                    otp_generate();
+
+                    if (Utils_Class.isNetworkAvailable(getContext())) {
+
+                        otp_generate();
+                    } else {
+                        Utils_Class.toast_normal(getContext(), "Please connect to your internet");
+                    }
+
                     sharedPreference.putString(requireActivity(), "resend", "" + number);
                 }
             }

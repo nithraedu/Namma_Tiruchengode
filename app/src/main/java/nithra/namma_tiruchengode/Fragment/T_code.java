@@ -1,14 +1,11 @@
 package nithra.namma_tiruchengode.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ShareCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,11 +24,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,6 +42,7 @@ public class T_code extends Fragment {
     Tcode adapter;
     RecyclerView recycle;
     ArrayList<T_codePojo> tcode;
+    LinearLayout nointernet, withinternet;
 
     public T_code() {
     }
@@ -66,19 +60,40 @@ public class T_code extends Fragment {
         tcode = new ArrayList<T_codePojo>();
         final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.pullToRefresh);
 
+        nointernet = view.findViewById(R.id.nointernet);
+        withinternet = view.findViewById(R.id.withinternet);
+
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         recycle.setLayoutManager(gridLayoutManager);
         adapter = new Tcode(getContext(), tcode);
         recycle.setAdapter(adapter);
-        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
-        tcode();
+
+        if (Utils_Class.isNetworkAvailable(getContext())) {
+            withinternet.setVisibility(View.VISIBLE);
+            nointernet.setVisibility(View.GONE);
+            tcode();
+        } else {
+            withinternet.setVisibility(View.GONE);
+            nointernet.setVisibility(View.VISIBLE);
+        }
+
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 //list.setAdapter(adapter);// your code
-                tcode.clear();
-                tcode();
+
+                if (Utils_Class.isNetworkAvailable(getContext())) {
+                    withinternet.setVisibility(View.VISIBLE);
+                    nointernet.setVisibility(View.GONE);
+                    tcode.clear();
+                    tcode();
+
+                } else {
+                    withinternet.setVisibility(View.GONE);
+                    nointernet.setVisibility(View.VISIBLE);
+                }
+
                 pullToRefresh.setRefreshing(false);
             }
         });
@@ -86,6 +101,8 @@ public class T_code extends Fragment {
     }
 
     public void tcode() {
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
+
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "get_news");
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
@@ -228,7 +245,7 @@ public class T_code extends Fragment {
                 image = itemView.findViewById(R.id.image);
                 btShowmore = itemView.findViewById(R.id.btShowmore);
                 share_news = itemView.findViewById(R.id.share_news);
-                layout=itemView.findViewById(R.id.layout_one);
+                layout = itemView.findViewById(R.id.layout_one);
             }
         }
 
@@ -259,7 +276,7 @@ public class T_code extends Fragment {
 
                     if (file.exists()) {
                         //Uri data = FileProvider.getUriForFile(mContext, mContext.getPackageName() + "", new File(file[0]));
-                        Uri uri = FileProvider.getUriForFile(getContext(),getContext().getPackageName(),file);
+                        Uri uri = FileProvider.getUriForFile(getContext(), getContext().getPackageName(), file);
                         Intent share = new Intent();
                         share.setAction(Intent.ACTION_SEND);
                         share.setType("image/*");
@@ -268,7 +285,7 @@ public class T_code extends Fragment {
                                 "மகளிர் மட்டும் செயலி");
                         share.putExtra(
                                 Intent.EXTRA_TEXT,
-                                "\n\nஇது போன்று பெண்களுக்கு தேவையான அனைத்து தகவல்களையும் கொண்ட  நித்ரா மகளிர் மட்டும் செயலியை இலவசமாக பதிவிறக்கம் செய்ய இங்கே கிளிக் செய்யுங்கள்."+ "\n\nhttps://goo.gl/3RxJ2J");
+                                "\n\nஇது போன்று பெண்களுக்கு தேவையான அனைத்து தகவல்களையும் கொண்ட  நித்ரா மகளிர் மட்டும் செயலியை இலவசமாக பதிவிறக்கம் செய்ய இங்கே கிளிக் செய்யுங்கள்." + "\n\nhttps://goo.gl/3RxJ2J");
                         startActivity(Intent.createChooser(share, "Share"));
                     }
 
@@ -280,8 +297,6 @@ public class T_code extends Fragment {
 
 
     }
-
-
 
 
 }

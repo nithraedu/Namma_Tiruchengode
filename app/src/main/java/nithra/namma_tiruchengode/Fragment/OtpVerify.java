@@ -71,7 +71,11 @@ public class OtpVerify extends Fragment {
         _tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                otp_generate();
+                if (Utils_Class.isNetworkAvailable(getContext())) {
+                    otp_generate();
+                } else {
+                    Utils_Class.toast_normal(getContext(), "Please connect to your internet");
+                }
                 new CountDownTimer(120000, 1000) { // adjust the milli seconds here
 
                     public void onTick(long millisUntilFinished) {
@@ -96,7 +100,11 @@ public class OtpVerify extends Fragment {
                 } else if (otp.getText().toString().equals("")) {
                     Utils_Class.toast_center(getContext(), "Enter your otp");
                 } else if (sharedPreference.getString(getContext(), "register_otp").equals(otp.getText().toString())) {
-                    otp_verify();
+                    if (Utils_Class.isNetworkAvailable(getContext())) {
+                        otp_verify();
+                    } else {
+                        Utils_Class.toast_normal(getContext(), "Please connect to your internet");
+                    }
                 } else {
                     Utils_Class.toast_center(getContext(), "You entered wrong otp...");
                 }
@@ -107,8 +115,8 @@ public class OtpVerify extends Fragment {
     }
 
     public void otp_verify() {
-        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
 
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
         verify = otp.getText().toString().trim();
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "check_otp");

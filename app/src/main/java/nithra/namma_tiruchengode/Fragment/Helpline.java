@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class Helpline extends Fragment {
     Help_Adapter adapter;
     TextInputEditText name_txt;
     TextView nodata;
+    LinearLayout nointernet, withinternet;
 
 
     public Helpline() {
@@ -59,7 +61,8 @@ public class Helpline extends Fragment {
         name_txt = view.findViewById(R.id.name_txt);
         nodata = view.findViewById(R.id.nodata);
         final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.pullToRefresh);
-
+        nointernet = view.findViewById(R.id.nointernet);
+        withinternet = view.findViewById(R.id.withinternet);
         titles = new ArrayList<Helplinepojo>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         recycle.setLayoutManager(gridLayoutManager);
@@ -98,13 +101,33 @@ public class Helpline extends Fragment {
 
             }
         });
-        help();
+
+        if (Utils_Class.isNetworkAvailable(getContext())) {
+            withinternet.setVisibility(View.VISIBLE);
+            nointernet.setVisibility(View.GONE);
+            help();
+        } else {
+            withinternet.setVisibility(View.GONE);
+            nointernet.setVisibility(View.VISIBLE);
+        }
+
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 //list.setAdapter(adapter);// your code
-                titles.clear();
-                help();
+
+                if (Utils_Class.isNetworkAvailable(getContext())) {
+                    withinternet.setVisibility(View.VISIBLE);
+                    nointernet.setVisibility(View.GONE);
+                    titles.clear();
+                    help();
+
+                } else {
+                    withinternet.setVisibility(View.GONE);
+                    nointernet.setVisibility(View.VISIBLE);
+                }
+
+
                 pullToRefresh.setRefreshing(false);
             }
         });

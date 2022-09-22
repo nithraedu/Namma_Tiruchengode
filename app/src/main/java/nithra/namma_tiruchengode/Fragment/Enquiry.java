@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +29,8 @@ public class Enquiry extends Fragment {
     TextInputEditText name, contact_number, email, enquiry;
     TextView submit;
     Gotohome home;
-    String cus_name,cus_contact_number,cus_email,cus_enquiry;
+    String cus_name, cus_contact_number, cus_email, cus_enquiry;
+
     public Enquiry() {
     }
 
@@ -51,16 +51,16 @@ public class Enquiry extends Fragment {
         email = view.findViewById(R.id.email);
         enquiry = view.findViewById(R.id.enquiry);
         submit = view.findViewById(R.id.submit);
-        home=(Gotohome)getContext();
+        home = (Gotohome) getContext();
 
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 cus_name = name.getText().toString().trim();
-                 cus_contact_number = contact_number.getText().toString().trim();
-                 cus_email = email.getText().toString().trim();
-                 cus_enquiry = enquiry.getText().toString().trim();
+                cus_name = name.getText().toString().trim();
+                cus_contact_number = contact_number.getText().toString().trim();
+                cus_email = email.getText().toString().trim();
+                cus_enquiry = enquiry.getText().toString().trim();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
                 if (cus_name.equals("")) {
@@ -69,12 +69,16 @@ public class Enquiry extends Fragment {
                     Utils_Class.toast_center(getContext(), "Please Enter Correct Mobile Number...");
                 } else if (cus_email.equals("")) {
                     Utils_Class.toast_center(getContext(), "Please Enter Your Email...");
-                }else if (!cus_email.matches(emailPattern)){
-                    Toast.makeText(getContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
-                }  else if (cus_enquiry.equals("")) {
+                } else if (!cus_email.matches(emailPattern)) {
+                    Toast.makeText(getContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                } else if (cus_enquiry.equals("")) {
                     Utils_Class.toast_center(getContext(), "Please Enter Your enquiry...");
-                }else{
-                    submit_res();;
+                } else {
+                    if (Utils_Class.isNetworkAvailable(getContext())) {
+                        submit_res();
+                    } else {
+                        Utils_Class.toast_normal(getContext(), "Please connect to your internet");
+                    }
                 }
             }
         });
@@ -83,9 +87,9 @@ public class Enquiry extends Fragment {
     }
 
 
-    public void submit_res(){
+    public void submit_res() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("action","set_enquiry");
+        map.put("action", "set_enquiry");
         map.put("name", cus_name);
         map.put("contact_number", cus_contact_number);
         map.put("email", cus_email);
@@ -96,8 +100,8 @@ public class Enquiry extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<EnquiryPojo>> call, Response<ArrayList<EnquiryPojo>> response) {
                 if (response.isSuccessful()) {
-                        String result = new Gson().toJson(response.body());
-                        System.out.println("======response result:" + result);
+                    String result = new Gson().toJson(response.body());
+                    System.out.println("======response result:" + result);
                     if (response.body().get(0).getStatus().equals("Success")) {
                         name.getText().clear();
                         contact_number.getText().clear();

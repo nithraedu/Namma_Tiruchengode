@@ -92,7 +92,7 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     DrawerLayout drawer;
     SliderView slide, slide_2;
     SharedPreference sharedPreference = new SharedPreference();
-
+    LinearLayout nointernet,withinternet;
 
     public Home() {
     }
@@ -113,6 +113,8 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         slide = view.findViewById(R.id.slide);
         slide_2 = view.findViewById(R.id.slide_2);
         title_view = view.findViewById(R.id.title_view);
+        nointernet = view.findViewById(R.id.nointernet);
+        withinternet = view.findViewById(R.id.withinternet);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         db1 = getContext().openOrCreateDatabase("myDB", MODE_PRIVATE, null);
         String tablenew = "noti_cal";
@@ -154,6 +156,16 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         RecyclerView list = view.findViewById(R.id.list);
         RecyclerView list2 = view.findViewById(R.id.list2);
 
+
+        if (Utils_Class.isNetworkAvailable(getContext())) {
+            withinternet.setVisibility(View.VISIBLE);
+            nointernet.setVisibility(View.GONE);
+            category_main();
+        } else {
+            withinternet.setVisibility(View.GONE);
+            nointernet.setVisibility(View.VISIBLE);
+        }
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false);
         list.setLayoutManager(gridLayoutManager);
 
@@ -186,16 +198,23 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
         slide_2.startAutoCycle();
 
 
-        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
-        category_main();
+
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 //list.setAdapter(adapter);// your code
-                titles.clear();
-                cat_main.clear();
-                cat_banner.clear();
-                category_main();
+                if (Utils_Class.isNetworkAvailable(getContext())) {
+                    withinternet.setVisibility(View.VISIBLE);
+                    nointernet.setVisibility(View.GONE);
+                    titles.clear();
+                    cat_main.clear();
+                    cat_banner.clear();
+                    category_main();
+                } else {
+                    withinternet.setVisibility(View.GONE);
+                    nointernet.setVisibility(View.VISIBLE);
+                }
+
                 pullToRefresh.setRefreshing(false);
             }
         });
@@ -379,6 +398,8 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
     }
 
     public void category_main() {
+        Utils_Class.mProgress(getContext(), "Loading please wait...", false).show();
+
         HashMap<String, String> map = new HashMap<>();
         map.put("action", "get_category");
         RetrofitAPI retrofitAPI = RetrofitAPIClient.getRetrofit().create(RetrofitAPI.class);
@@ -406,20 +427,20 @@ public class Home extends Fragment implements NavigationView.OnNavigationItemSel
                         cat_banner.addAll(response.body().get(2).getBanner_slider());
                     }
 
-                    if (cat_banner.isEmpty()){
+                    if (cat_banner.isEmpty()) {
                         slide_2.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         slide_2.setVisibility(View.VISIBLE);
                         adapter2.notifyDataSetChanged();
                     }
 
-                    if (response.body().get(0).getCategory()!=null){
+                    if (response.body().get(0).getCategory() != null) {
                         titles.addAll(response.body().get(0).getCategory());
                     }
 
-                    if (titles.isEmpty()){
+                    if (titles.isEmpty()) {
                         title_view.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         title_view.setVisibility(View.VISIBLE);
                         adapter.notifyDataSetChanged();
                     }
